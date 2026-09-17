@@ -27,7 +27,7 @@ Created to make life easier by **[Kaihime](https://talk.shapes.inc/chat/2df43177
 
 1. Download or clone this repository.
 
-2. Open **`index.html`** (or whatever you named your HTML file) directly in any modern web browser (Chrome, Firefox, Edge, Safari)—no installation, servers, or coding knowledge required!
+2. Open **`Chat Story Formatter and Reader.html`** (or whatever you named your HTML file) directly in any modern web browser (Chrome, Firefox, Edge, Safari)—no installation, servers, or coding knowledge required!
 
 3. (Optional) Enter a **Story Title** and **Description/Author name** on the control panel.
 
