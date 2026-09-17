@@ -1,4 +1,4 @@
-# 📖 Chat Story Formatter, Reader & Extractor
+# Chat Story Formatter, Reader & Extractor
 
 A complete toolkit designed to extract, format, and transform raw chat transcripts from **Shapes.inc** into a beautiful, customizable, distraction-free reading and storytelling experience.
 
@@ -6,7 +6,7 @@ Created to make life easier by **[Kaihime](https://talk.shapes.inc/chat/2df43177
 
 ---
 
-## 🛠️ The Complete Workflow
+## The Complete Workflow
 
 To turn your chat room memories into a clean story book, the process uses two parts:
 
