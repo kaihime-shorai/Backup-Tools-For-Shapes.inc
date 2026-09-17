@@ -162,39 +162,39 @@ overflow-x: auto;
 border: 1px solid var(--border);
 font-family: ui-monospace, "SF Mono", Menlo, monospace;
 font-size: 0.82rem;
-margin-top: 12px;
+margin: 14px 0 0;
 }
 
 pre code { background: none; color: inherit; padding: 0; }
 
-button { 
-    background-color: #0e639c; 
-    color: white; 
-    border: none; 
-    padding: 12px 20px; 
-    cursor: pointer; 
-    border-radius: 6px; 
-    font-size: 15px; 
-    font-weight: bold; 
-    margin-top: 10px; 
-    margin-bottom: 15px;
-    transition: background-color 0.2s;
+.copy-btn {
+background: var(--accent);
+color: #1a1508;
+border: none;
+padding: 9px 18px;
+border-radius: 6px;
+cursor: pointer;
+font-weight: 700;
+font-size: 0.9rem;
+margin-top: 12px;
+transition: background 0.15s;
 }
-button:hover { background-color: #1177bb; }
 
-/* Collapsible script block */
+.copy-btn:hover { background: var(--accent-soft); }
+
+/* Collapsible script block styling matched to your Knowledge Base theme */
 details.code-block {
-    margin-top: 4px;
+    margin-top: 10px;
 }
 details.code-block summary {
     cursor: pointer;
     list-style: none;
     color: var(--accent);
     font-weight: bold;
-    font-size: 14px;
+    font-size: 0.95rem;
     padding: 10px 14px;
-    background-color: #16261f;
-    border: 1px solid #2d4a3f;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--border);
     border-radius: 6px;
     user-select: none;
 }
@@ -311,117 +311,118 @@ font-size: 0.95rem;
   <div class="step-body">
     <h2>Paste and run the script</h2>
     <p>Click the copy button below, paste the script into the console, and press <kbd>Enter</kbd>. The floating panel should appear immediately in the corner of the page.</p>
-    <button onclick="copyCode()">📋 Copy Script Code</button>
+    
+    <button class="copy-btn" id="copy-btn" style="margin-top: 0; margin-bottom: 10px;">📋 Copy script to clipboard</button>
     <details class="code-block">
       <summary>View script code (optional)</summary>
       <pre id="scriptText">(function() {
-    // 1. Find the shape name
-    let shapeName = "Shape";
-    const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
-    if (nameInput && nameInput.value) shapeName = nameInput.value.trim();
+// 1. Find the shape name
+let shapeName = "Shape";
+const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
+if (nameInput &amp;&amp; nameInput.value) shapeName = nameInput.value.trim();
 
-    const allTabsData = {};
+const allTabsData = {};
 
-    // 2. Create a non-blocking floating UI panel
-    const panel = document.createElement('div');
-    panel.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #1c1c20;
-        color: #e7e5e2;
-        border: 1px solid #34343c;
-        padding: 15px;
-        border-radius: 8px;
-        z-index: 999999;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-        width: 300px;
-    `;
+// 2. Create a non-blocking floating UI panel
+const panel = document.createElement('div');
+panel.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1c1c20;
+    color: #e7e5e2;
+    border: 1px solid #34343c;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    width: 300px;
+`;
 
-    panel.innerHTML = `
-        <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;">📦 Knowledge Exporter</h3>
-        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-            <div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;">
-                <div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;">Tabs</div>
-                <div id="tab-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;">0</div>
-            </div>
-            <div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;">
-                <div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;">Entries</div>
-                <div id="entry-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;">0</div>
-            </div>
-        </div>
-        <p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;">Switch to a tab, then click capture.</p>
-        <div style="display: flex; gap: 8px;">
-            <button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;">📸 Capture Tab</button>
-            <button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;">💾 Download</button>
-        </div>
-    `;
+panel.innerHTML = `
+    &lt;h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;"&gt;📦 Knowledge Exporter&lt;/h3&gt;
+    &lt;div style="display: flex; gap: 8px; margin-bottom: 12px;"&gt;
+        &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
+            &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Tabs&lt;/div&gt;
+            &lt;div id="tab-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
+            &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Entries&lt;/div&gt;
+            &lt;div id="entry-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;"&gt;Switch to a tab, then click capture.&lt;/p&gt;
+    &lt;div style="display: flex; gap: 8px;"&gt;
+        &lt;button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;📸 Capture Tab&lt;/button&gt;
+        &lt;button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;💾 Download&lt;/button&gt;
+    &lt;/div&gt;
+`;
 
-    document.body.appendChild(panel);
+document.body.appendChild(panel);
 
-    const statusEl = panel.querySelector('#export-status');
-    const captureBtn = panel.querySelector('#capture-btn');
-    const finishBtn = panel.querySelector('#finish-btn');
-    const tabCountEl = panel.querySelector('#tab-count');
-    const entryCountEl = panel.querySelector('#entry-count');
+const statusEl = panel.querySelector('#export-status');
+const captureBtn = panel.querySelector('#capture-btn');
+const finishBtn = panel.querySelector('#finish-btn');
+const tabCountEl = panel.querySelector('#tab-count');
+const entryCountEl = panel.querySelector('#entry-count');
 
-    function updateTotals() {
-        const tabNames = Object.keys(allTabsData);
-        const totalEntries = tabNames.reduce((sum, name) => sum + allTabsData[name].length, 0);
-        tabCountEl.textContent = tabNames.length;
-        entryCountEl.textContent = totalEntries;
+function updateTotals() {
+    const tabNames = Object.keys(allTabsData);
+    const totalEntries = tabNames.reduce((sum, name) =&gt; sum + allTabsData[name].length, 0);
+    tabCountEl.textContent = tabNames.length;
+    entryCountEl.textContent = totalEntries;
+}
+
+// 3. Capture button logic
+captureBtn.onclick = () =&gt; {
+    let activeTabName = "General";
+    const activeTab = document.querySelector('.page_tab__StlPv[data-active="true"]');
+    if (activeTab) {
+        activeTabName = activeTab.textContent.trim().replace(/[^a-zA-Z0-9]/g, "_");
     }
 
-    // 3. Capture button logic
-    captureBtn.onclick = () => {
-        let activeTabName = "General";
-        const activeTab = document.querySelector('.page_tab__StlPv[data-active="true"]');
-        if (activeTab) {
-            activeTabName = activeTab.textContent.trim().replace(/[^a-zA-Z0-9]/g, "_");
-        }
+    const cards = document.querySelectorAll('.page_knowledgeCard__QPCDk');
+    const scrapedCards = [];
 
-        const cards = document.querySelectorAll('.page_knowledgeCard__QPCDk');
-        const scrapedCards = [];
+    cards.forEach((card, cardIndex) =&gt; {
+        const contentEl = card.querySelector('.page_content__BdS5v');
+        const metaEl = card.querySelector('.page_meta__chVMO');
 
-        cards.forEach((card, cardIndex) => {
-            const contentEl = card.querySelector('.page_content__BdS5v');
-            const metaEl = card.querySelector('.page_meta__chVMO');
-
-            scrapedCards.push({
-                id: cardIndex + 1,
-                content: contentEl ? contentEl.innerText.trim() : "",
-                metadata: metaEl ? metaEl.innerText.trim() : ""
-            });
+        scrapedCards.push({
+            id: cardIndex + 1,
+            content: contentEl ? contentEl.innerText.trim() : "",
+            metadata: metaEl ? metaEl.innerText.trim() : ""
         });
+    });
 
-        allTabsData[activeTabName] = scrapedCards;
-        updateTotals();
-        statusEl.innerHTML = `✅ Captured <b>${activeTabName}</b> (${scrapedCards.length} entries). Switch tabs and capture next!`;
-        console.log(`Captured tab: "${activeTabName}" with ${scrapedCards.length} items.`);
+    allTabsData[activeTabName] = scrapedCards;
+    updateTotals();
+    statusEl.innerHTML = `✅ Captured &lt;b&gt;${activeTabName}&lt;/b&gt; (${scrapedCards.length} entries). Switch tabs and capture next!`;
+    console.log(`Captured tab: "${activeTabName}" with ${scrapedCards.length} items.`);
+};
+
+// 4. Finish and download logic
+finishBtn.onclick = () =&gt; {
+    const exportPayload = {
+        Shape: shapeName,
+        ExportedAt: new Date().toISOString(),
+        Tabs: allTabsData
     };
 
-    // 4. Finish and download logic
-    finishBtn.onclick = () => {
-        const exportPayload = {
-            Shape: shapeName,
-            ExportedAt: new Date().toISOString(),
-            Tabs: allTabsData
-        };
+    const fileName = `${shapeName}_Knowledge_Complete_Export.json`.replace(/\s+/g, "_");
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
 
-        const fileName = `${shapeName}_Knowledge_Complete_Export.json`.replace(/\s+/g, "_");
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", fileName);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
 
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", fileName);
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-
-        panel.remove();
-        console.log(`🎉 Knowledge export downloaded as: ${fileName}`);
-    };
+    panel.remove();
+    console.log(`🎉 Knowledge export downloaded as: ${fileName}`);
+};
 })();</pre>
     </details>
   </div>
@@ -479,12 +480,15 @@ font-size: 0.95rem;
   </div>
 
   <script>
-    function copyCode() {
-        const code = document.getElementById('scriptText').textContent;
-        navigator.clipboard.writeText(code).then(() => {
-            alert('Guide code copied to clipboard!');
-        });
-    }
+    document.getElementById('copy-btn').addEventListener('click', function() {
+      const codeText = document.getElementById('scriptText').textContent;
+      const btn = this;
+      navigator.clipboard.writeText(codeText).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = original; }, 1800);
+      });
+    });
   </script>
 
 </body>
