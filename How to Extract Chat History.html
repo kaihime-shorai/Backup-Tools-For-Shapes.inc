@@ -159,26 +159,26 @@
     `;
     
     guideBox.innerHTML = `
-        <div style="font-size: 18px; font-weight: bold; color: #4ec9b0; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 22px;">📦</span> Shape Chat Exporter Active
-        </div>
-        <div id="exporter-status-text" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px; line-height: 1.5; background: #252525; padding: 12px; border-radius: 8px; border-left: 5px solid #ffcc00;">
-            <b>Step 1:</b> Scroll <u>all the way up</u> to the very top of your chat history to load older messages.
-        </div>
-        <div style="font-size: 15px; margin-bottom: 15px; background: #111111; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #333;">
-            Messages Captured: <b id="exporter-count" style="color: #4ec9b0; font-size: 22px;">0</b>
-        </div>
-        <div style="font-size: 13px; color: #ccc; line-height: 1.6; margin-bottom: 15px;">
-            <b>How to use:</b><br>
-            1️⃣ Scroll to the top (watch the count go up)<br>
-            2️⃣ Scroll back down to the bottom (grabs recent messages)<br>
+        &lt;div style="font-size: 18px; font-weight: bold; color: #4ec9b0; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;"&gt;
+            &lt;span style="font-size: 22px;"&gt;📦&lt;/span&gt; Shape Chat Exporter Active
+        &lt;/div&gt;
+        &lt;div id="exporter-status-text" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px; line-height: 1.5; background: #252525; padding: 12px; border-radius: 8px; border-left: 5px solid #ffcc00;"&gt;
+            &lt;b&gt;Step 1:&lt;/b&gt; Scroll &lt;u&gt;all the way up&lt;/u&gt; to the very top of your chat history to load older messages.
+        &lt;/div&gt;
+        &lt;div style="font-size: 15px; margin-bottom: 15px; background: #111111; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #333;"&gt;
+            Messages Captured: &lt;b id="exporter-count" style="color: #4ec9b0; font-size: 22px;"&gt;0&lt;/b&gt;
+        &lt;/div&gt;
+        &lt;div style="font-size: 13px; color: #ccc; line-height: 1.6; margin-bottom: 15px;"&gt;
+            &lt;b&gt;How to use:&lt;/b&gt;&lt;br&gt;
+            1️⃣ Scroll to the top (watch the count go up)&lt;br&gt;
+            2️⃣ Scroll back down to the bottom (grabs recent messages)&lt;br&gt;
             3️⃣ Click the download button below when done!
-        </div>
-        <button id="exporter-download-btn" onclick="window.downloadChat()" style="
+        &lt;/div&gt;
+        &lt;button id="exporter-download-btn" onclick="window.downloadChat()" style="
             width: 100%; background-color: #0e639c; color: white; border: none;
             padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold;
             cursor: pointer; transition: background-color 0.2s;
-        ">📥 Download Chat File Now</button>
+        "&gt;📥 Download Chat File Now&lt;/button&gt;
     `;
     document.body.appendChild(guideBox);
 
@@ -187,18 +187,18 @@
         document.getElementById('exporter-count').innerText = count;
         
         const statusText = document.getElementById('exporter-status-text');
-        if (count > 0) {
+        if (count &gt; 0) {
             statusText.style.borderLeftColor = '#4ec9b0';
             statusText.style.color = '#4ec9b0';
-            statusText.innerHTML = `<b>Active:</b> Keep scrolling up until no more history loads, then scroll down to the bottom!`;
+            statusText.innerHTML = `&lt;b&gt;Active:&lt;/b&gt; Keep scrolling up until no more history loads, then scroll down to the bottom!`;
         }
     }
 
     function parseParts(partsArray) {
         if (!Array.isArray(partsArray)) return '';
-        return partsArray.map(part => {
+        return partsArray.map(part =&gt; {
             if (typeof part === 'string') return part;
-            if (part && typeof part === 'object') {
+            if (part &amp;&amp; typeof part === 'object') {
                 return part.text || part.content || part.value || '';
             }
             return '';
@@ -209,27 +209,27 @@
         let arr = [];
         if (Array.isArray(data)) arr = data;
         else if (Array.isArray(data.messages)) arr = data.messages;
-        else if (data.data && Array.isArray(data.data.messages)) arr = data.data.messages;
-        else if (data.chat && Array.isArray(data.chat.messages)) arr = data.chat.messages;
+        else if (data.data &amp;&amp; Array.isArray(data.data.messages)) arr = data.data.messages;
+        else if (data.chat &amp;&amp; Array.isArray(data.chat.messages)) arr = data.chat.messages;
 
-        arr.forEach(msg => {
+        arr.forEach(msg =&gt; {
             if (!msg.role) return;
             let text = '';
             let engine = '';
 
-            if (msg.parts && Array.isArray(msg.parts)) {
+            if (msg.parts &amp;&amp; Array.isArray(msg.parts)) {
                 text = parseParts(msg.parts);
-                let enginePart = msg.parts.find(p => p && typeof p === 'object' && p.ai_engine);
-                if (enginePart && enginePart.ai_engine.label) {
+                let enginePart = msg.parts.find(p =&gt; p &amp;&amp; typeof p === 'object' &amp;&amp; p.ai_engine);
+                if (enginePart &amp;&amp; enginePart.ai_engine.label) {
                     engine = enginePart.ai_engine.label;
                 }
-            } else if (msg.partsHistory && msg.selectedVariantIndex !== undefined) {
+            } else if (msg.partsHistory &amp;&amp; msg.selectedVariantIndex !== undefined) {
                 text = parseParts(msg.partsHistory[msg.selectedVariantIndex]);
             }
 
             if (text.trim() !== '') {
                 if (!engine) {
-                    engine = msg.model || msg.engine || (msg.metadata && msg.metadata.model) || '';
+                    engine = msg.model || msg.engine || (msg.metadata &amp;&amp; msg.metadata.model) || '';
                 }
                 
                 let engineLabel = engine ? ` [${engine}]` : '';
@@ -253,7 +253,7 @@
         window.fetch = async function(...args) {
             const response = await window._originalFetch.apply(this, args);
             const url = args[0];
-            if (typeof url === 'string' && (url.includes('/chat') || url.includes('/messages'))) {
+            if (typeof url === 'string' &amp;&amp; (url.includes('/chat') || url.includes('/messages'))) {
                 try {
                     const clone = response.clone();
                     const data = await clone.json();
@@ -266,10 +266,10 @@
 
     window.downloadChat = function() {
         let sorted = Array.from(window._interceptedMessages.values());
-        sorted.sort((a, b) => a.timestamp - b.timestamp);
+        sorted.sort((a, b) =&gt; a.timestamp - b.timestamp);
 
-        let textOutput = sorted.map(m => {
-            let timeString = m.timestamp > 0 ? new Date(m.timestamp).toLocaleString() : "Unknown Time";
+        let textOutput = sorted.map(m =&gt; {
+            let timeString = m.timestamp &gt; 0 ? new Date(m.timestamp).toLocaleString() : "Unknown Time";
             return `[${timeString}] ${m.name}:\n${m.text}\n\n-----------------------------------\n\n`;
         }).join('');
         
@@ -283,7 +283,7 @@
         let statusText = document.getElementById('exporter-status-text');
         statusText.style.borderLeftColor = '#569cd6';
         statusText.style.color = '#569cd6';
-        statusText.innerHTML = `<b>Success!</b> Downloaded ${sorted.length} messages.`;
+        statusText.innerHTML = `&lt;b&gt;Success!&lt;/b&gt; Downloaded ${sorted.length} messages.`;
 
         let btn = document.getElementById('exporter-download-btn');
         btn.style.backgroundColor = '#4ec9b0';
