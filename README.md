@@ -28,11 +28,11 @@ Pulls a raw chat transcript out of your chat room and turns it into a clean, dis
 
 ---
 
-# 📚 Knowledge Base Exporter
+# 📚 Knowledge Base Exporter (COMING SOON)
 Backs up everything on your Shape's Knowledge page — General, Commands, Relationships, and any custom tabs — into one JSON file. Run it alongside the chat extraction above for a full backup of both your conversations *and* your Shape's memory/persona data.
 
 **How to use:**
-1. **[Open the Knowledge Base Exporter](Knowledge%20Base%20Exporter.html)** and follow the guide.
+1. OPEN HERE and follow the guide.
 2. On your Shape's Knowledge page, open your browser console and paste in the script.
 3. Capture each tab one at a time, then click download to save the combined file.
 
