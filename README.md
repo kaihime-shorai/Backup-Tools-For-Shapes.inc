@@ -2,7 +2,7 @@
 
 A complete toolkit designed to extract, format, and transform raw chat transcripts from **Shapes.inc** into a beautiful, customizable, distraction-free reading and storytelling experience.
 
-❗**NOTE:** You require a pc for this so that you can use the browser inspect/dev tools on your pages. 
+> ❗**NOTE:** You require a pc for this so that you can use the browser inspect/dev tools on your pages. 
 
 Created to make life easier by **Kaihime (@Shorai)** to help archive and relive cherished chat memories! 
 
