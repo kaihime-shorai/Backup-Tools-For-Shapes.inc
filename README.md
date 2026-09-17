@@ -2,7 +2,7 @@
 
 A complete toolkit designed to extract, format, and transform raw chat transcripts from **Shapes.inc** into a beautiful, customizable, distraction-free reading and storytelling experience.
 
-Created to make life easier by **[Kaihime](Shorai)** to help archive and relive cherished chat memories! 
+Created to make life easier by **Kaihime (@Shorai)** to help archive and relive cherished chat memories! 
 
 ---
 
