@@ -286,7 +286,7 @@
     // 1. Find the shape name
     let shapeName = "Shape";
     const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
-    if (nameInput && nameInput.value) shapeName = nameInput.value.trim();
+    if (nameInput &amp;&amp; nameInput.value) shapeName = nameInput.value.trim();
 
     const allTabsData = {};
 
@@ -308,12 +308,22 @@
     `;
 
     panel.innerHTML = `
-        <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;">📦 Knowledge Exporter</h3>
-        <p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;">Switch to a tab, then click capture.</p>
-        <div style="display: flex; gap: 8px;">
-            <button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;">📸 Capture Tab</button>
-            <button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;">💾 Download</button>
-        </div>
+        &lt;h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;"&gt;📦 Knowledge Exporter&lt;/h3&gt;
+        &lt;div style="display: flex; gap: 8px; margin-bottom: 12px;"&gt;
+            &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
+                &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Tabs&lt;/div&gt;
+                &lt;div id="tab-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
+                &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Entries&lt;/div&gt;
+                &lt;div id="entry-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;"&gt;Switch to a tab, then click capture.&lt;/p&gt;
+        &lt;div style="display: flex; gap: 8px;"&gt;
+            &lt;button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;📸 Capture Tab&lt;/button&gt;
+            &lt;button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;💾 Download&lt;/button&gt;
+        &lt;/div&gt;
     `;
 
     document.body.appendChild(panel);
@@ -321,9 +331,18 @@
     const statusEl = panel.querySelector('#export-status');
     const captureBtn = panel.querySelector('#capture-btn');
     const finishBtn = panel.querySelector('#finish-btn');
+    const tabCountEl = panel.querySelector('#tab-count');
+    const entryCountEl = panel.querySelector('#entry-count');
+
+    function updateTotals() {
+        const tabNames = Object.keys(allTabsData);
+        const totalEntries = tabNames.reduce((sum, name) =&gt; sum + allTabsData[name].length, 0);
+        tabCountEl.textContent = tabNames.length;
+        entryCountEl.textContent = totalEntries;
+    }
 
     // 3. Capture button logic
-    captureBtn.onclick = () => {
+    captureBtn.onclick = () =&gt; {
         let activeTabName = "General";
         const activeTab = document.querySelector('.page_tab__StlPv[data-active="true"]');
         if (activeTab) {
@@ -333,7 +352,7 @@
         const cards = document.querySelectorAll('.page_knowledgeCard__QPCDk');
         const scrapedCards = [];
 
-        cards.forEach((card, cardIndex) => {
+        cards.forEach((card, cardIndex) =&gt; {
             const contentEl = card.querySelector('.page_content__BdS5v');
             const metaEl = card.querySelector('.page_meta__chVMO');
 
@@ -345,12 +364,13 @@
         });
 
         allTabsData[activeTabName] = scrapedCards;
-        statusEl.innerHTML = `✅ Captured <b>${activeTabName}</b> (${scrapedCards.length} entries). Switch tabs and capture next!`;
+        updateTotals();
+        statusEl.innerHTML = `✅ Captured &lt;b&gt;${activeTabName}&lt;/b&gt; (${scrapedCards.length} entries). Switch tabs and capture next!`;
         console.log(`Captured tab: "${activeTabName}" with ${scrapedCards.length} items.`);
     };
 
     // 4. Finish and download logic
-    finishBtn.onclick = () => {
+    finishBtn.onclick = () =&gt; {
         const exportPayload = {
             Shape: shapeName,
             ExportedAt: new Date().toISOString(),
