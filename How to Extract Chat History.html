@@ -112,6 +112,243 @@
         <button onclick="copyCode()">📋 Copy Script Code</button>
         <pre id="scriptText">(function() {
     window._interceptedMessages = window._interceptedMessages || new Map();
+
+    // Remove any old badge if it exists
+    let oldBadge = document.getElementById('chat-exporter-guide');
+    if (oldBadge) oldBadge.remove();
+
+    // Create a larger, readable guide box with a built-in download button
+    let guideBox = document.createElement('div');
+    guideBox.id = 'chat-exporter-guide';
+    guideBox.style.cssText = `
+        position: fixed; bottom: 30px; right: 30px; z-index: 999999;
+        background: #181818; color: #ffffff; padding: 25px;
+        border-radius: 14px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        width: 440px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 3px solid #4ec9b0;
+    `;
+    
+    guideBox.innerHTML = `
+        <div style="font-size: 18px; font-weight: bold; color: #4ec9b0; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 22px;">📦</span> Shape Chat Exporter Active
+        </div>
+        <div id="exporter-status-text" style="font-size: 14px; color: #ffcc00; margin-bottom: 15px; line-height: 1.5; background: #252525; padding: 12px; border-radius: 8px; border-left: 5px solid #ffcc00;">
+            <b>Step 1:</b> Scroll <u>all the way up</u> to the very top of your chat history to load older messages.
+        </div>
+        <div style="font-size: 15px; margin-bottom: 15px; background: #111111; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #333;">
+            Messages Captured: <b id="exporter-count" style="color: #4ec9b0; font-size: 22px;">0</b>
+        </div>
+        <div style="font-size: 13px; color: #ccc; line-height: 1.6; margin-bottom: 15px;">
+            <b>How to use:</b><br>
+            1️⃣ Scroll to the top (watch the count go up)<br>
+            2️⃣ Scroll back down to the bottom (grabs recent messages)<br>
+            3️⃣ Click the download button below when done!
+        </div>
+        <button id="exporter-download-btn" onclick="window.downloadChat()" style="
+            width: 100%; background-color: #0e639c; color: white; border: none;
+            padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold;
+            cursor: pointer; transition: background-color 0.2s;
+        ">📥 Download Chat File Now</button>
+    `;
+    document.body.appendChild(guideBox);
+
+    function updateUI() {
+        const count = window._interceptedMessages.size;
+        document.getElementById('exporter-count').innerText = count;
+        
+        const statusText = document.getElementById('exporter-status-text');
+        if (count > 0) {
+            statusText.style.borderLeftColor = '#4ec9b0';
+            statusText.style.color = '#4ec9b0';
+            statusText.innerHTML = `<b>Active:</b> Keep scrolling up until no more history loads, then scroll down to the bottom!`;
+        }
+    }
+
+    function parseParts(partsArray) {
+        if (!Array.isArray(partsArray)) return '';
+        return partsArray.map(part => {
+            if (typeof part === 'string') return part;
+            if (part && typeof part === 'object') {
+                return part.text || part.content || part.value || '';
+            }
+            return '';
+        }).join('');
+    }
+
+    async function processData(data) {
+        let arr = [];
+        if (Array.isArray(data)) arr = data;
+        else if (Array.isArray(data.messages)) arr = data.messages;
+        else if (data.data && Array.isArray(data.data.messages)) arr = data.data.messages;
+        else if (data.chat && Array.isArray(data.chat.messages)) arr = data.chat.messages;
+
+        arr.forEach(msg => {
+            if (!msg.role) return;
+            let text = '';
+            let engine = '';
+
+            if (msg.parts && Array.isArray(msg.parts)) {
+                text = parseParts(msg.parts);
+                let enginePart = msg.parts.find(p => p && typeof p === 'object' && p.ai_engine);
+                if (enginePart && enginePart.ai_engine.label) {
+                    engine = enginePart.ai_engine.label;
+                }
+            } else if (msg.partsHistory && msg.selectedVariantIndex !== undefined) {
+                text = parseParts(msg.partsHistory[msg.selectedVariantIndex]);
+            }
+
+            if (text.trim() !== '') {
+                if (!engine) {
+                    engine = msg.model || msg.engine || (msg.metadata && msg.metadata.model) || '';
+                }
+                
+                let engineLabel = engine ? ` [${engine}]` : '';
+                const senderName = (msg.senderName || (msg.role.toLowerCase() === 'user' ? 'You' : 'AI')) + engineLabel;
+                const key = msg.id || `${senderName}:${text.substring(0, 40)}`;
+                
+                let timestamp = 0;
+                if (msg.createdAt) timestamp = new Date(msg.createdAt).getTime();
+                else if (msg.timestamp) timestamp = new Date(msg.timestamp).getTime();
+
+                if (!window._interceptedMessages.has(key)) {
+                    window._interceptedMessages.set(key, { name: senderName, text: text, timestamp: timestamp });
+                }
+            }
+        });
+        updateUI();
+    }
+
+    if (!window._originalFetch) {
+        window._originalFetch = window.fetch;
+        window.fetch = async function(...args) {
+            const response = await window._originalFetch.apply(this, args);
+            const url = args[0];
+            if (typeof url === 'string' && (url.includes('/chat') || url.includes('/messages'))) {
+                try {
+                    const clone = response.clone();
+                    const data = await clone.json();
+                    processData(data);
+                } catch (e) {}
+            }
+            return response;
+        };
+    }
+
+    window.downloadChat = function() {
+        let sorted = Array.from(window._interceptedMessages.values());
+        sorted.sort((a, b) => a.timestamp - b.timestamp);
+
+        let textOutput = sorted.map(m => {
+            let timeString = m.timestamp > 0 ? new Date(m.timestamp).toLocaleString() : "Unknown Time";
+            return `[${timeString}] ${m.name}:\n${m.text}\n\n-----------------------------------\n\n`;
+        }).join('');
+        
+        const blob = new Blob([textOutput], { type: 'text/plain;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'full_chat_history.txt';
+        link.click();
+
+        guideBox.style.borderColor = '#569cd6';
+        let statusText = document.getElementById('exporter-status-text');
+        statusText.style.borderLeftColor = '#569cd6';
+        statusText.style.color = '#569cd6';
+        statusText.innerHTML = `<b>Success!</b> Downloaded ${sorted.length} messages.`;
+
+        let btn = document.getElementById('exporter-download-btn');
+        btn.style.backgroundColor = '#4ec9b0';
+        btn.innerText = '✅ Download Complete!';
+    };
+
+    console.log("🟢 Big Guided Interceptor Active with UI Button!");
+})();</pre>
+    </div>
+
+    <div class="step">
+        <h2>Step 3: Scroll & Download</h2>
+        <ol>
+            <li>Gradually scroll from the bottom of your chat up to the very beginning, waiting 1-2 seconds for older messages to appear.</li>
+            <li>After reaching the top, scroll back down to the bottom to lock in the newest messages.</li>
+            <li>Click the <strong>📥 Download Chat File Now</strong> button right on your floating screen panel!</li>
+            <li>Your <code>full_chat_history.txt</code> file will instantly download to your device!</li>
+        </ol>
+    </div>
+
+    <div class="next-steps-box">
+        <h3>✨ Next Step: Make It Beautiful!</h3>
+        <p style="margin-bottom: 0;">Once you have your raw <code>.txt</code> file, you can use the <strong>Chat Story Formatter and Reader</strong> to automatically clean up the formatting, apply custom colors, and read your history like a real book. Check out the reader tool on this site to try it out!</p>
+    </div>
+
+    <script>
+        function copyCode() {
+            const code = document.getElementById('scriptText').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Guide code copied to clipboard!');
+            });
+        }
+    </script>
+
+    <div class="footer">
+        <p style="margin-bottom: 8px;">Created to make life easier and allow you to save your cherished chat memories by <strong>Kaihime</strong><br>
+        <span style="font-size: 12px; opacity: 0.7;">(with a little syntax help from AI)</span></p>
+        
+        <p style="font-size: 13px; color: #aaa; margin-bottom: 8px;"><em>Please give credit if you share this tool, and do not claim it as your own work.</em></p>
+        
+        <p style="font-size: 14px;">Need help? Find me in my <a href="https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390" target="_blank">Shapes.inc room</a>!</p>
+    </div>
+</body>
+</html>            font-weight: bold; 
+            margin-top: 10px; 
+            margin-bottom: 15px;
+            transition: background-color 0.2s;
+        }
+        button:hover { background-color: #1177bb; }
+        
+        .footer {
+            text-align: center; 
+            margin-top: 50px; 
+            padding-top: 25px; 
+            border-top: 1px solid #333; 
+            color: #888; 
+            font-size: 14px; 
+        }
+        .footer a {
+            color: #4ec9b0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>How to Export Your Full Chat History</h1>
+    <p class="subtitle">Use this simple guide to safely capture 100% of your chat history directly in your browser.</p>
+
+    <div class="alert-box">
+        <h3>⚠️ Important Limitations & Disclaimer</h3>
+        <ul>
+            <li><strong>Text Only:</strong> This tool captures text, code snippets, and markdown. It <strong>cannot</strong> capture or download embedded images, GIFs, videos, or file attachments.</li>
+            <li><strong>Verify Before Deleting:</strong> While this tool is highly reliable, network glitches can happen. <strong>Always</strong> open your downloaded text file and verify that your entire chat was captured successfully BEFORE you delete any chat rooms!</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h2>Step 1: Open Your Chat & Dev Console</h2>
+        <ol>
+            <li>Navigate to your specific chat room page.</li>
+            <li>Hit <code>F12</code> on your keyboard (or use <code>Ctrl+Shift+J</code> on Windows / <code>Cmd+Option+J</code> on Mac).</li>
+            <li>Select the <strong>Console</strong> tab at the top of the developer tools panel.</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h2>Step 2: Copy & Paste the Interceptor Code</h2>
+        <p>Click the copy button below, paste the script into your browser's console prompt, and press <strong>Enter</strong>.</p>
+        <button onclick="copyCode()">📋 Copy Script Code</button>
+        <pre id="scriptText">(function() {
+    window._interceptedMessages = window._interceptedMessages || new Map();
     
     function parseParts(partsArray) {
         if (!Array.isArray(partsArray)) return '';
