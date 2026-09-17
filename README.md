@@ -4,6 +4,10 @@ A complete toolkit designed to extract, format, and transform raw chat transcrip
 
 Created to make life easier by **Kaihime (@Shorai)** to help archive and relive cherished chat memories! 
 
+## Launch the Tools Online
+* **[📖 Read the Extraction Guide](How%20to%20Extract%20Chat%20History.html)**
+* **[👉 Open the Chat Story Formatter & Reader](Chat%20Story%20Formatter%20and%20Reader.html)**
+
 ---
 
 ## The Complete Workflow
@@ -12,11 +16,11 @@ To turn your chat room memories into a clean story book, the process uses two pa
 
 ### Part 1: Extracting the Chat (.txt)
 Before formatting, you need to pull your conversation history out of your chat room:
-1. Open the **How to extract chat history** file and follow th steps.
-2. This will generate a raw `.txt` transcript file containing your messages, timestamps, and model/engine metadata.
+1. Launch from here: * **[📖 Read the Extraction Guide](How%20to%20Extract%20Chat%20History.html)**
+2. Once this step is completed, it will generate a raw `.txt` transcript file containing your messages, timestamps, and model/engine metadata.
 
 ### Part 2: Formatting & Reading
-1. Open the **Story Formatter & Reader**  directly in any modern web browser—no installation or servers required!
+1. * Launch the page from here: **[👉 Open the Chat Story Formatter & Reader](Chat%20Story%20Formatter%20and%20Reader.html)**
 2. (Optional) Enter a **Story Title** and **Description/Author name** on the control panel.
 3. Adjust your display preferences:
    - Toggle timestamps on/off.
