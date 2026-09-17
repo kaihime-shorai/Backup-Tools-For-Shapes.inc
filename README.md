@@ -2,14 +2,14 @@
 
 A complete toolkit designed to extract, format, and transform raw chat transcripts from **Shapes.inc** into a beautiful, customizable, distraction-free reading and storytelling experience.
 
-> ❗**NOTE:** You require a pc for this so that you can use the browser inspect/dev tools on your pages. 
+> ❗**NOTE:** You require a pc for this so that you can use the browser inspect/dev tools on your pages.
 
-Created to make life easier by **Kaihime (@Shorai)** to help archive and relive cherished chat memories! 
+Created to make life easier by **Kaihime (@Shorai)** to help archive and relive cherished chat memories!
 
 ## Launch the Tools Online
 * **[📖 Read the Extraction Guide](How%20to%20Extract%20Chat%20History.html)**
 * **[👉 Open the Chat Story Formatter & Reader](Chat%20Story%20Formatter%20and%20Reader.html)**
-* **[📚 Knowledge Base Exporter](Knowledge%20Base%20Exporter.html)**
+* **[📚 Open the Knowledge Base Exporter](Knowledge%20Base%20Exporter.html)**
 ---
 
 ## The Complete Workflow
@@ -31,6 +31,13 @@ Before formatting, you need to pull your conversation history out of your chat r
 4. Customize your theme colors or use the **Light/Dark Mode toggle**.
 5. Upload your raw chat transcript `.txt` file and click **Open Styled Reader**.
 
+### Optional: Backing Up Your Shape's Knowledge Base
+Separate from the chat-story workflow above, this tool lets you back up everything on your Shape's Knowledge page — General, Commands, Relationships, and any custom tabs — into one JSON file. Handy to run alongside Part 1 if you want a full backup of both your conversations *and* your Shape's memory/persona data.
+
+1. Launch the guide here: **[📚 Open the Knowledge Base Exporter](Knowledge%20Base%20Exporter.html)**
+2. On your Shape's Knowledge page, open your browser console and paste in the script.
+3. Capture each tab one at a time, then download the combined file.
+
 ---
 
 ## Key Reader Features
@@ -38,8 +45,14 @@ Before formatting, you need to pull your conversation history out of your chat r
 - **Immersive Layout:** Formats flat transcripts into clean dialogue blocks with word counts, message counters, and estimated reading time.
 - **Custom Theming:** Personalize text colors, bold text, and italicized elements.
 - **Command Cleanup:** Manage raw bot-interaction commands seamlessly without cluttering narrative pacing.
-- **Export & Print:** Export your cleaned transcript back out as a `.txt` file or print/save it directly to PDF using your browser's print utility. 
-> NOTE: PLEASE ALWAYS SAVE YOUR ORIGINAL FILE THAT WAS EXPORTED AS WELL even if exporting from here. I don't take responsibility if this accidently removes or missed a message. 
+- **Export & Print:** Export your cleaned transcript back out as a `.txt` file or print/save it directly to PDF using your browser's print utility.
+> NOTE: PLEASE ALWAYS SAVE YOUR ORIGINAL FILE THAT WAS EXPORTED AS WELL even if exporting from here. I don't take responsibility if this accidently removes or missed a message.
+
+## Key Exporter Features
+
+- **Multi-Tab Capture:** Walk through General, Commands, Relationships, and custom tabs one at a time via a floating on-page panel.
+- **Single Combined File:** Everything bundles into one JSON file, tagged with the Shape name and export timestamp.
+- **Fully Local:** Same guarantee as the other tools — nothing is uploaded, and the file goes straight to your Downloads folder.
 
 ---
 
@@ -63,7 +76,7 @@ Before formatting, you need to pull your conversation history out of your chat r
 
 * **No.** The code does not make any network requests (`fetch`, `XMLHttpRequest`, or API calls). It doesn't talk to an external server or send data anywhere.
 
-* Because everything happens entirely offline inside your browser’s local memory, platform developers have zero visibility or logs indicating that you exported your data.
+* Because everything happens entirely offline inside your browser's local memory, platform developers have zero visibility or logs indicating that you exported your data.
 
 #### Where does my data go? Does it leave my computer?
 
@@ -83,6 +96,6 @@ Before formatting, you need to pull your conversation history out of your chat r
 ## Credits & Sharing
 
 - **Creator:** Designed and conceptualized by **Kaihime**.
-- **License / Usage:** Please give proper credit if you share or fork this tool, and do not claim it as your own original work. 
+- **License / Usage:** Please give proper credit if you share or fork this tool, and do not claim it as your own original work.
 
-Need help, want to suggest improvements, or just hang out? Find me in my [Shapes.inc room](https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390)!(https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390)!
+Need help, want to suggest improvements, or just hang out? Find me in my [Shapes.inc room](https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390)!
