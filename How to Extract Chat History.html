@@ -113,9 +113,11 @@
         <pre id="scriptText">(function() {
     window._interceptedMessages = window._interceptedMessages || new Map();
 
+    // Remove any old badge if it exists
     let oldBadge = document.getElementById('chat-exporter-guide');
     if (oldBadge) oldBadge.remove();
 
+    // Create a larger, readable guide box with a built-in download button
     let guideBox = document.createElement('div');
     guideBox.id = 'chat-exporter-guide';
     guideBox.style.cssText = `
