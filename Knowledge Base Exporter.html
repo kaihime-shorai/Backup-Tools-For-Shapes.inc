@@ -86,35 +86,6 @@
             background: #2ea043;
         }
 
-        /* Collapsible script block styling */
-        details.code-block {
-            margin-top: 15px;
-        }
-        details.code-block summary {
-            cursor: pointer;
-            list-style: none;
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 14px;
-            padding: 10px 14px;
-            background-color: var(--container-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            user-select: none;
-        }
-        details.code-block summary::-webkit-details-marker { display: none; }
-        details.code-block summary::before { content: "▶ "; }
-        details.code-block[open] summary::before { content: "▼ "; }
-        details.code-block[open] summary {
-            border-radius: 6px 6px 0 0;
-            margin-bottom: 0;
-            border-bottom: none;
-        }
-        details.code-block[open] pre {
-            margin-top: 0;
-            border-radius: 0 0 6px 6px;
-        }
-
         a {
             color: var(--accent-color);
             text-decoration: none;
@@ -154,13 +125,9 @@
 
     <div class="step">
         <h2>Step 3: Run the Floating-UI Script</h2>
-        <p>Click the copy button below, paste the script into your console, and press <strong>Enter</strong>:</p>
+        <p>Copy the script below, paste it into your console, and press <strong>Enter</strong>:</p>
         
-        <button class="copy-btn" onclick="copyScript()" style="margin-top: 0; margin-bottom: 5px;">📋 Copy Script to Clipboard</button>
-
-        <details class="code-block">
-            <summary>View script code (optional)</summary>
-            <pre><code id="script-code">(function() {
+        <pre><code id="script-code">(function() {
     // 1. Find the shape name
     let shapeName = "Shape";
     const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
@@ -187,16 +154,6 @@
     
     panel.innerHTML = `
         <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #58a6ff;">📦 Knowledge Exporter</h3>
-        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-            <div style="flex: 1; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 8px; text-align: center;">
-                <div style="font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.03em;">Tabs</div>
-                <div id="tab-count" style="font-size: 18px; font-weight: bold; color: #58a6ff;">0</div>
-            </div>
-            <div style="flex: 1; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 8px; text-align: center;">
-                <div style="font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.03em;">Entries</div>
-                <div id="entry-count" style="font-size: 18px; font-weight: bold; color: #58a6ff;">0</div>
-            </div>
-        </div>
         <p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #8b949e;">Switch to a tab, then click capture.</p>
         <div style="display: flex; gap: 8px;">
             <button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;">📸 Capture Tab</button>
@@ -209,15 +166,6 @@
     const statusEl = panel.querySelector('#export-status');
     const captureBtn = panel.querySelector('#capture-btn');
     const finishBtn = panel.querySelector('#finish-btn');
-    const tabCountEl = panel.querySelector('#tab-count');
-    const entryCountEl = panel.querySelector('#entry-count');
-
-    function updateTotals() {
-        const tabNames = Object.keys(allTabsData);
-        const totalEntries = tabNames.reduce((sum, name) => sum + allTabsData[name].length, 0);
-        if (tabCountEl) tabCountEl.textContent = tabNames.length;
-        if (entryCountEl) entryCountEl.textContent = totalEntries;
-    }
 
     // 3. Capture button logic
     captureBtn.onclick = () => {
@@ -242,9 +190,8 @@
         });
 
         allTabsData[activeTabName] = scrapedCards;
-        updateTotals();
-        statusEl.innerHTML = \`✅ Captured <b>\${activeTabName}</b> (\${scrapedCards.length} entries). Switch tabs and capture next!\`;
-        console.log(\`Captured tab: "\${activeTabName}" with \${scrapedCards.length} items.\`);
+        statusEl.innerHTML = `✅ Captured <b>${activeTabName}</b> (${scrapedCards.length} entries). Switch tabs and capture next!`;
+        console.log(`Captured tab: "${activeTabName}" with ${scrapedCards.length} items.`);
     };
 
     // 4. Finish and download logic
@@ -255,7 +202,7 @@
             Tabs: allTabsData
         };
 
-        const fileName = \`\${shapeName}_Knowledge_Complete_Export.json\`.replace(/\\s+/g, "_");
+        const fileName = `${shapeName}_Knowledge_Complete_Export.json`.replace(/\s+/g, "_");
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
         
         const downloadAnchor = document.createElement('a');
@@ -266,20 +213,20 @@
         downloadAnchor.remove();
         
         panel.remove();
-        console.log(\`🎉 Knowledge export downloaded as: \${fileName}\`);
+        console.log(`🎉 Knowledge export downloaded as: ${fileName}`);
     };
 })();</code></pre>
-        </details>
+        <button class="copy-btn" onclick="copyScript()">Copy Script to Clipboard</button>
     </div>
 
     <script>
         function copyScript() {
-            // .textContent pulls the text cleanly even while hidden inside the details block.
-            const codeText = document.getElementById('script-code').textContent;
+            const codeText = document.getElementById('script-code').innerText;
             navigator.clipboard.writeText(codeText).then(() => {
                 alert('Script copied to clipboard!');
             });
         }
     </script>
+
 </body>
 </html>
