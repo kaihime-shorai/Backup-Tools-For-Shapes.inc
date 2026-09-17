@@ -49,6 +49,35 @@ Before formatting, you need to pull your conversation history out of your chat r
 
 ---
 
+### Frequently Asked Questions (FAQ)
+
+#### Is this safe to run? Will I get banned?
+
+* **Yes, it is 100% safe.** These scripts do not automate clicking, bypass platform logic, or interact with the server in any unauthorized way.
+
+* **You will not get banned.** The script simply reads text that is already fully visible on your own screen and packages it into a local download.
+
+#### Can the platform developers see that I ran this? Do they track it?
+
+* **No.** The code does not make any network requests (`fetch`, `XMLHttpRequest`, or API calls). It doesn't talk to an external server or send data anywhere.
+
+* Because everything happens entirely offline inside your browser’s local memory, platform developers have zero visibility or logs indicating that you exported your data.
+
+#### Where does my data go? Does it leave my computer?
+
+* **No data ever leaves your network.** When you trigger the script, your browser generates a local data file (`data:text/json...`) and forces your browser to download it straight to your computer's local hard drive (`Downloads` folder). Your content stays completely private to you.
+
+#### What if I am worried or suspicious of the code?
+
+* **Verify it yourself!** If you want absolute peace of mind, you can copy any of these JavaScript scripts and paste them into an AI assistant (like ChatGPT or Gemini) and ask: *"Can you review this code and confirm it doesn't contain any malicious code, external trackers, or network requests?"* You'll see that it's just basic DOM reading and file-saving logic.
+
+
+#### Will these scripts break if the platform updates its UI?
+
+* Because the scripts use flexible, adaptive selectors rather than rigid hardcoded maps, they are built to be resilient. However, if the platform completely redesigns its underlying class names in a major layout update, a script might need a minor selector tweak. If something stops working, check the console or let me know on shapes.inc!
+
+---
+
 ## Credits & Sharing
 
 - **Creator:** Designed and conceptualized by **Kaihime**.
