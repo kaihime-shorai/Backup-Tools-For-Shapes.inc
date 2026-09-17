@@ -162,25 +162,54 @@ overflow-x: auto;
 border: 1px solid var(--border);
 font-family: ui-monospace, "SF Mono", Menlo, monospace;
 font-size: 0.82rem;
-margin: 14px 0 0;
+margin-top: 12px;
 }
 
 pre code { background: none; color: inherit; padding: 0; }
 
-.copy-btn {
-background: var(--accent);
-color: #1a1508;
-border: none;
-padding: 9px 18px;
-border-radius: 6px;
-cursor: pointer;
-font-weight: 700;
-font-size: 0.9rem;
-margin-top: 12px;
-transition: background 0.15s;
+button { 
+    background-color: #0e639c; 
+    color: white; 
+    border: none; 
+    padding: 12px 20px; 
+    cursor: pointer; 
+    border-radius: 6px; 
+    font-size: 15px; 
+    font-weight: bold; 
+    margin-top: 10px; 
+    margin-bottom: 15px;
+    transition: background-color 0.2s;
 }
+button:hover { background-color: #1177bb; }
 
-.copy-btn:hover { background: var(--accent-soft); }
+/* Collapsible script block styled exactly like the working page */
+details.code-block {
+    margin-top: 4px;
+}
+details.code-block summary {
+    cursor: pointer;
+    list-style: none;
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px 14px;
+    background-color: #16261f;
+    border: 1px solid #2d4a3f;
+    border-radius: 6px;
+    user-select: none;
+}
+details.code-block summary::-webkit-details-marker { display: none; }
+details.code-block summary::before { content: "▶ "; }
+details.code-block[open] summary::before { content: "▼ "; }
+details.code-block[open] summary {
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 0;
+}
+details.code-block[open] pre {
+    margin-top: 0;
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+}
 
 .schema {
 font-size: 0.9rem;
@@ -282,9 +311,10 @@ font-size: 0.95rem;
   <div class="step-body">
     <h2>Paste and run the script</h2>
     <p>Click the copy button below, paste the script into the console, and press <kbd>Enter</kbd>. The floating panel should appear immediately in the corner of the page.</p>
-    <details open>
-      <summary>Show script</summary>
-      <pre><code id="script-code">(function() {
+    <button onclick="copyCode()">📋 Copy Script Code</button>
+    <details class="code-block">
+      <summary>View script code (optional)</summary>
+      <pre id="scriptText">(function() {
 // 1. Find the shape name
 let shapeName = "Shape";
 const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
@@ -392,8 +422,8 @@ finishBtn.onclick = () => {
     panel.remove();
     console.log(`🎉 Knowledge export downloaded as: ${fileName}`);
 };
-})();</code></pre></details>
-    <button class="copy-btn" id="copy-btn">Copy script to clipboard</button>
+})();</pre>
+    </details>
   </div>
 </div>
 
@@ -449,15 +479,12 @@ finishBtn.onclick = () => {
   </div>
 
   <script>
-    document.getElementById('copy-btn').addEventListener('click', function() {
-      const codeText = document.getElementById('script-code').textContent;
-      const btn = this;
-      navigator.clipboard.writeText(codeText).then(() => {
-        const original = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = original; }, 1800);
-      });
-    });
+    function copyCode() {
+        const code = document.getElementById('scriptText').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            alert('Guide code copied to clipboard!');
+        });
+    }
   </script>
 
 </body>
