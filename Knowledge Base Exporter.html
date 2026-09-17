@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -236,8 +235,8 @@ color: var(--text-secondary);
 font-size: 0.95rem;
 }
 
-.footer strong { color: var(--accent-soft); } </style>
-
+.footer strong { color: var(--accent-soft); } 
+</style>
 </head>
 <body>
 
@@ -261,7 +260,6 @@ font-size: 0.95rem;
 
   <div class="steps">
 
-
 <div class="step">
   <div class="step-number">1</div>
   <div class="step-body">
@@ -283,14 +281,14 @@ font-size: 0.95rem;
   <div class="step-number">3</div>
   <div class="step-body">
     <h2>Paste and run the script</h2>
-    <p>Copy the script below, paste it into the console, and press <kbd>Enter</kbd>. The floating panel should appear immediately in the corner of the page.</p>
+    <p>Click the copy button below, paste the script into the console, and press <kbd>Enter</kbd>. The floating panel should appear immediately in the corner of the page.</p>
     <details>
       <summary>Show script</summary>
       <pre><code id="script-code">(function() {
 // 1. Find the shape name
 let shapeName = "Shape";
 const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
-if (nameInput &amp;&amp; nameInput.value) shapeName = nameInput.value.trim();
+if (nameInput && nameInput.value) shapeName = nameInput.value.trim();
 
 const allTabsData = {};
 
@@ -312,22 +310,22 @@ panel.style.cssText = `
 `;
 
 panel.innerHTML = `
-    &lt;h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;"&gt;📦 Knowledge Exporter&lt;/h3&gt;
-    &lt;div style="display: flex; gap: 8px; margin-bottom: 12px;"&gt;
-        &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
-            &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Tabs&lt;/div&gt;
-            &lt;div id="tab-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
-            &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Entries&lt;/div&gt;
-            &lt;div id="entry-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;"&gt;Switch to a tab, then click capture.&lt;/p&gt;
-    &lt;div style="display: flex; gap: 8px;"&gt;
-        &lt;button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;📸 Capture Tab&lt;/button&gt;
-        &lt;button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;💾 Download&lt;/button&gt;
-    &lt;/div&gt;
+    <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;">📦 Knowledge Exporter</h3>
+    <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;">
+            <div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;">Tabs</div>
+            <div id="tab-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;">0</div>
+        </div>
+        <div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;">
+            <div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;">Entries</div>
+            <div id="entry-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;">0</div>
+        </div>
+    </div>
+    <p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;">Switch to a tab, then click capture.</p>
+    <div style="display: flex; gap: 8px;">
+        <button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;">📸 Capture Tab</button>
+        <button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;">💾 Download</button>
+    </div>
 `;
 
 document.body.appendChild(panel);
@@ -340,13 +338,13 @@ const entryCountEl = panel.querySelector('#entry-count');
 
 function updateTotals() {
     const tabNames = Object.keys(allTabsData);
-    const totalEntries = tabNames.reduce((sum, name) =&gt; sum + allTabsData[name].length, 0);
+    const totalEntries = tabNames.reduce((sum, name) => sum + allTabsData[name].length, 0);
     tabCountEl.textContent = tabNames.length;
     entryCountEl.textContent = totalEntries;
 }
 
 // 3. Capture button logic
-captureBtn.onclick = () =&gt; {
+captureBtn.onclick = () => {
     let activeTabName = "General";
     const activeTab = document.querySelector('.page_tab__StlPv[data-active="true"]');
     if (activeTab) {
@@ -356,7 +354,7 @@ captureBtn.onclick = () =&gt; {
     const cards = document.querySelectorAll('.page_knowledgeCard__QPCDk');
     const scrapedCards = [];
 
-    cards.forEach((card, cardIndex) =&gt; {
+    cards.forEach((card, cardIndex) => {
         const contentEl = card.querySelector('.page_content__BdS5v');
         const metaEl = card.querySelector('.page_meta__chVMO');
 
@@ -369,12 +367,12 @@ captureBtn.onclick = () =&gt; {
 
     allTabsData[activeTabName] = scrapedCards;
     updateTotals();
-    statusEl.innerHTML = `✅ Captured &lt;b&gt;${activeTabName}&lt;/b&gt; (${scrapedCards.length} entries). Switch tabs and capture next!`;
+    statusEl.innerHTML = `✅ Captured <b>${activeTabName}</b> (${scrapedCards.length} entries). Switch tabs and capture next!`;
     console.log(`Captured tab: "${activeTabName}" with ${scrapedCards.length} items.`);
 };
 
 // 4. Finish and download logic
-finishBtn.onclick = () =&gt; {
+finishBtn.onclick = () => {
     const exportPayload = {
         Shape: shapeName,
         ExportedAt: new Date().toISOString(),
@@ -394,10 +392,10 @@ finishBtn.onclick = () =&gt; {
     panel.remove();
     console.log(`🎉 Knowledge export downloaded as: ${fileName}`);
 };
-```
-
-})();</code></pre> </details> <button class="copy-btn" id="copy-btn">Copy script to clipboard</button> </div> </div>
-
+})();</code></pre></details>
+    <button class="copy-btn" id="copy-btn">Copy script to clipboard</button>
+  </div>
+</div>
 
 <div class="step">
   <div class="step-number">4</div>
@@ -445,17 +443,14 @@ finishBtn.onclick = () =&gt; {
     <p style="margin-bottom: 8px;">Created to make life easier and allow you to save your cherished chat memories by <strong>Kaihime</strong><br>
     <span style="font-size: 12px; opacity: 0.7;">(with a little syntax help from AI)</span></p>
 
+    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;"><em>Please give credit if you share this tool, and do not claim it as your own work.</em></p>
 
-<p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;"><em>Please give credit if you share this tool, and do not claim it as your own work.</em></p>
-
-<p style="font-size: 14px;">Need help? Find me in my <a href="https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390" target="_blank">Shapes.inc room</a>!</p>
-
-
+    <p style="font-size: 14px;">Need help? Find me in my <a href="https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390" target="_blank">Shapes.inc room</a>!</p>
   </div>
 
   <script>
     document.getElementById('copy-btn').addEventListener('click', function() {
-      const codeText = document.getElementById('script-code').innerText;
+      const codeText = document.getElementById('script-code').textContent;
       const btn = this;
       navigator.clipboard.writeText(codeText).then(() => {
         const original = btn.textContent;
