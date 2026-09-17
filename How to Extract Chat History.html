@@ -38,20 +38,7 @@
         .next-steps-box h3 { color: #4ec9b0; margin-top: 0; margin-bottom: 10px; }
 
         code { background-color: #2d2d2d; padding: 3px 7px; border-radius: 4px; color: #ce9178; font-family: monospace; font-size: 0.9em; }
-        
-        /* Compact scrollable code box so it doesn't take up the whole screen */
-        pre { 
-            background-color: #1e1e1e; 
-            padding: 15px; 
-            border-radius: 8px; 
-            overflow-x: auto; 
-            max-height: 200px; 
-            overflow-y: auto; 
-            border: 1px solid #333; 
-            color: #9cdcfe; 
-            font-family: monospace; 
-            line-height: 1.5; 
-        }
+        pre { background-color: #1e1e1e; padding: 20px; border-radius: 8px; overflow-x: auto; border: 1px solid #333; color: #9cdcfe; font-family: monospace; line-height: 1.5; }
         
         .step { 
             background-color: #1e1e1e; 
@@ -123,7 +110,6 @@
         <h2>Step 2: Copy & Paste the Interceptor Code</h2>
         <p>Click the copy button below, paste the script into your browser's console prompt, and press <strong>Enter</strong>.</p>
         <button onclick="copyCode()">📋 Copy Script Code</button>
-        
         <pre id="scriptText">(function() {
     window._interceptedMessages = window._interceptedMessages || new Map();
 
