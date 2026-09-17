@@ -9,7 +9,7 @@ Created to make life easier by **Kaihime (@Shorai)** to help archive and relive 
 ## Launch the Tools Online
 * **[📖 Read the Extraction Guide](How%20to%20Extract%20Chat%20History.html)**
 * **[👉 Open the Chat Story Formatter & Reader](Chat%20Story%20Formatter%20and%20Reader.html)**
-
+* **[📚 Knowledge Base Exporter](https://github.com/Shapes.inc-Backup-Tools/blob/main/Knowledge%20Base%20Exporter.html).**
 ---
 
 ## The Complete Workflow
