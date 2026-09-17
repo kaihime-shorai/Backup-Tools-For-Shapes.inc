@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -25,218 +26,218 @@
     --step-number-bg: #22302e;
   }
 
-  * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.65;
-    color: var(--text-primary);
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 64px 24px 40px;
-    background-color: var(--bg);
-  }
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+line-height: 1.65;
+color: var(--text-primary);
+max-width: 720px;
+margin: 0 auto;
+padding: 64px 24px 40px;
+background-color: var(--bg);
+}
 
-  h1, h2 {
-    font-family: "Fraunces", Georgia, serif;
-    color: var(--text-primary);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
+h1, h2 {
+font-family: "Fraunces", Georgia, serif;
+color: var(--text-primary);
+font-weight: 600;
+letter-spacing: -0.01em;
+}
 
-  h1 {
-    font-size: 2.15rem;
-    line-height: 1.2;
-    margin: 0 0 16px;
-  }
+h1 {
+font-size: 2.15rem;
+line-height: 1.2;
+margin: 0 0 16px;
+}
 
-  h2 {
-    font-size: 1.3rem;
-    margin: 0 0 12px;
-  }
+h2 {
+font-size: 1.3rem;
+margin: 0 0 12px;
+}
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--accent);
-    font-size: 0.85rem;
-    margin-bottom: 18px;
-  }
+.eyebrow {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+color: var(--accent);
+font-size: 0.85rem;
+margin-bottom: 18px;
+}
 
-  .eyebrow svg { flex-shrink: 0; }
+.eyebrow svg { flex-shrink: 0; }
 
-  .lede {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    max-width: 58ch;
-  }
+.lede {
+font-size: 1.05rem;
+color: var(--text-secondary);
+max-width: 58ch;
+}
 
-  .privacy-note {
-    margin-top: 18px;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    border-left: 2px solid var(--accent-dim);
-    padding-left: 12px;
-  }
+.privacy-note {
+margin-top: 18px;
+font-size: 0.9rem;
+color: var(--text-secondary);
+border-left: 2px solid var(--accent-dim);
+padding-left: 12px;
+}
 
-  section { margin-top: 40px; }
+section { margin-top: 40px; }
 
-  .callout {
-    background: var(--warn-bg);
-    border: 1px solid var(--warn-border);
-    padding: 20px 22px;
-    border-radius: 10px;
-  }
+.callout {
+background: var(--warn-bg);
+border: 1px solid var(--warn-border);
+padding: 20px 22px;
+border-radius: 10px;
+}
 
-  .callout h2 { color: var(--text-primary); font-size: 1.1rem; }
+.callout h2 { color: var(--text-primary); font-size: 1.1rem; }
 
-  .callout ul {
-    margin: 10px 0 0 20px;
-    padding: 0;
-    color: var(--text-primary);
-  }
+.callout ul {
+margin: 10px 0 0 20px;
+padding: 0;
+color: var(--text-primary);
+}
 
-  .callout li { margin-bottom: 6px; }
+.callout li { margin-bottom: 6px; }
 
-  .steps { margin-top: 40px; }
+.steps { margin-top: 40px; }
 
-  .step {
-    display: flex;
-    gap: 18px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 22px 24px;
-    margin-bottom: 16px;
-    border-radius: 10px;
-  }
+.step {
+display: flex;
+gap: 18px;
+background: var(--surface);
+border: 1px solid var(--border);
+padding: 22px 24px;
+margin-bottom: 16px;
+border-radius: 10px;
+}
 
-  .step-number {
-    flex-shrink: 0;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: var(--step-number-bg);
-    color: var(--accent-soft);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
+.step-number {
+flex-shrink: 0;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background: var(--step-number-bg);
+color: var(--accent-soft);
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: "Fraunces", Georgia, serif;
+font-weight: 600;
+font-size: 0.95rem;
+}
 
-  .step-body { flex: 1; min-width: 0; }
+.step-body { flex: 1; min-width: 0; }
 
-  .step h2 { margin-bottom: 6px; }
+.step h2 { margin-bottom: 6px; }
 
-  .step p { color: var(--text-secondary); margin: 0 0 4px; }
+.step p { color: var(--text-secondary); margin: 0 0 4px; }
 
-  .step p + p { margin-top: 8px; }
+.step p + p { margin-top: 8px; }
 
-  kbd {
-    background: var(--surface-raised);
-    border: 1px solid var(--border);
-    border-bottom-width: 2px;
-    padding: 1px 7px;
-    border-radius: 5px;
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 0.85em;
-  }
+kbd {
+background: var(--surface-raised);
+border: 1px solid var(--border);
+border-bottom-width: 2px;
+padding: 1px 7px;
+border-radius: 5px;
+font-family: ui-monospace, "SF Mono", Menlo, monospace;
+font-size: 0.85em;
+}
 
-  code {
-    background: var(--code-bg);
-    color: var(--accent-soft);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 0.9em;
-  }
+code {
+background: var(--code-bg);
+color: var(--accent-soft);
+padding: 2px 6px;
+border-radius: 4px;
+font-family: ui-monospace, "SF Mono", Menlo, monospace;
+font-size: 0.9em;
+}
 
-  pre {
-    background: var(--code-bg);
-    color: var(--code-text);
-    padding: 16px;
-    border-radius: 8px;
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 0.82rem;
-    margin: 14px 0 0;
-  }
+pre {
+background: var(--code-bg);
+color: var(--code-text);
+padding: 16px;
+border-radius: 8px;
+overflow-x: auto;
+border: 1px solid var(--border);
+font-family: ui-monospace, "SF Mono", Menlo, monospace;
+font-size: 0.82rem;
+margin: 14px 0 0;
+}
 
-  pre code { background: none; color: inherit; padding: 0; }
+pre code { background: none; color: inherit; padding: 0; }
 
-  .copy-btn {
-    background: var(--accent);
-    color: #1a1508;
-    border: none;
-    padding: 9px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin-top: 12px;
-    transition: background 0.15s;
-  }
+.copy-btn {
+background: var(--accent);
+color: #1a1508;
+border: none;
+padding: 9px 18px;
+border-radius: 6px;
+cursor: pointer;
+font-weight: 700;
+font-size: 0.9rem;
+margin-top: 12px;
+transition: background 0.15s;
+}
 
-  .copy-btn:hover { background: var(--accent-soft); }
+.copy-btn:hover { background: var(--accent-soft); }
 
-  .schema {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-  }
+.schema {
+font-size: 0.9rem;
+color: var(--text-secondary);
+}
 
-  .schema dl {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 6px 16px;
-    margin: 14px 0 0;
-  }
+.schema dl {
+display: grid;
+grid-template-columns: max-content 1fr;
+gap: 6px 16px;
+margin: 14px 0 0;
+}
 
-  .schema dt {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    color: var(--text-primary);
-    font-size: 0.85rem;
-  }
+.schema dt {
+font-family: ui-monospace, "SF Mono", Menlo, monospace;
+color: var(--text-primary);
+font-size: 0.85rem;
+}
 
-  .schema dd { margin: 0; }
+.schema dd { margin: 0; }
 
-  .tips {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 12px;
-  }
+.tips {
+list-style: none;
+margin: 0;
+padding: 0;
+display: grid;
+gap: 12px;
+}
 
-  .tips li {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 0.92rem;
-    color: var(--text-secondary);
-  }
+.tips li {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 8px;
+padding: 14px 16px;
+font-size: 0.92rem;
+color: var(--text-secondary);
+}
 
-  .tips strong { color: var(--text-primary); }
+.tips strong { color: var(--text-primary); }
 
-  a { color: var(--accent-soft); text-decoration: underline; text-underline-offset: 2px; }
-  a:hover { color: var(--accent); }
+a { color: var(--accent-soft); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--accent); }
 
-  hr.divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 48px 0 28px;
-  }
+hr.divider {
+border: none;
+border-top: 1px solid var(--border);
+margin: 48px 0 28px;
+}
 
-  .footer {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-  }
+.footer {
+color: var(--text-secondary);
+font-size: 0.95rem;
+}
 
-  .footer strong { color: var(--accent-soft); }
-</style>
+.footer strong { color: var(--accent-soft); } </style>
+
 </head>
 <body>
 
@@ -260,148 +261,152 @@
 
   <div class="steps">
 
-    <div class="step">
-      <div class="step-number">1</div>
-      <div class="step-body">
-        <h2>Open your Shape's Knowledge page</h2>
-        <p>Navigate to the Knowledge page for the Shape you want to export, and land on whichever tab you'd like to capture first — General is a good place to start.</p>
-      </div>
-    </div>
+```
+<div class="step">
+  <div class="step-number">1</div>
+  <div class="step-body">
+    <h2>Open your Shape's Knowledge page</h2>
+    <p>Navigate to the Knowledge page for the Shape you want to export, and land on whichever tab you'd like to capture first — General is a good place to start.</p>
+  </div>
+</div>
 
-    <div class="step">
-      <div class="step-number">2</div>
-      <div class="step-body">
-        <h2>Open your browser's console</h2>
-        <p>Press <kbd>F12</kbd>, or right-click anywhere on the page and choose <strong>Inspect</strong>, then open the <strong>Console</strong> tab.</p>
-        <p>If your browser warns you about pasting code here: that warning exists because pasted console scripts can do real damage on sites you don't trust. Only run scripts from sources you trust — including this one, so read it over if you'd like before pasting it.</p>
-      </div>
-    </div>
+<div class="step">
+  <div class="step-number">2</div>
+  <div class="step-body">
+    <h2>Open your browser's console</h2>
+    <p>Press <kbd>F12</kbd>, or right-click anywhere on the page and choose <strong>Inspect</strong>, then open the <strong>Console</strong> tab.</p>
+    <p>If your browser warns you about pasting code here: that warning exists because pasted console scripts can do real damage on sites you don't trust. Only run scripts from sources you trust — including this one, so read it over if you'd like before pasting it.</p>
+  </div>
+</div>
 
-    <div class="step">
-      <div class="step-number">3</div>
-      <div class="step-body">
-        <h2>Paste and run the script</h2>
-        <p>Copy the script below, paste it into the console, and press <kbd>Enter</kbd>. The floating panel should appear immediately in the corner of the page.</p>
-        <pre><code id="script-code">(function() {
-    // 1. Find the shape name
-    let shapeName = "Shape";
-    const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
-    if (nameInput &amp;&amp; nameInput.value) shapeName = nameInput.value.trim();
+<div class="step">
+  <div class="step-number">3</div>
+  <div class="step-body">
+    <h2>Paste and run the script</h2>
+    <p>Copy the script below, paste it into the console, and press <kbd>Enter</kbd>. The floating panel should appear immediately in the corner of the page.</p>
+    <details>
+      <summary>Show script</summary>
+      <pre><code id="script-code">(function() {
+// 1. Find the shape name
+let shapeName = "Shape";
+const nameInput = document.querySelector('input[placeholder="tenshi"]') || document.querySelector('input[value="Mihairi"]');
+if (nameInput &amp;&amp; nameInput.value) shapeName = nameInput.value.trim();
 
-    const allTabsData = {};
+const allTabsData = {};
 
-    // 2. Create a non-blocking floating UI panel
-    const panel = document.createElement('div');
-    panel.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #1c1c20;
-        color: #e7e5e2;
-        border: 1px solid #34343c;
-        padding: 15px;
-        border-radius: 8px;
-        z-index: 999999;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-        width: 300px;
-    `;
+// 2. Create a non-blocking floating UI panel
+const panel = document.createElement('div');
+panel.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1c1c20;
+    color: #e7e5e2;
+    border: 1px solid #34343c;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    width: 300px;
+`;
 
-    panel.innerHTML = `
-        &lt;h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;"&gt;📦 Knowledge Exporter&lt;/h3&gt;
-        &lt;div style="display: flex; gap: 8px; margin-bottom: 12px;"&gt;
-            &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
-                &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Tabs&lt;/div&gt;
-                &lt;div id="tab-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
-                &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Entries&lt;/div&gt;
-                &lt;div id="entry-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
-            &lt;/div&gt;
+panel.innerHTML = `
+    &lt;h3 style="margin: 0 0 10px 0; font-size: 14px; color: #6fb3ad;"&gt;📦 Knowledge Exporter&lt;/h3&gt;
+    &lt;div style="display: flex; gap: 8px; margin-bottom: 12px;"&gt;
+        &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
+            &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Tabs&lt;/div&gt;
+            &lt;div id="tab-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
         &lt;/div&gt;
-        &lt;p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;"&gt;Switch to a tab, then click capture.&lt;/p&gt;
-        &lt;div style="display: flex; gap: 8px;"&gt;
-            &lt;button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;📸 Capture Tab&lt;/button&gt;
-            &lt;button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;💾 Download&lt;/button&gt;
+        &lt;div style="flex: 1; background: #16211f; border: 1px solid #2c4644; border-radius: 6px; padding: 8px; text-align: center;"&gt;
+            &lt;div style="font-size: 10px; color: #97949e; text-transform: uppercase; letter-spacing: 0.03em;"&gt;Entries&lt;/div&gt;
+            &lt;div id="entry-count" style="font-size: 18px; font-weight: bold; color: #a4d1cc;"&gt;0&lt;/div&gt;
         &lt;/div&gt;
-    `;
+    &lt;/div&gt;
+    &lt;p id="export-status" style="margin: 0 0 12px 0; font-size: 12px; color: #97949e;"&gt;Switch to a tab, then click capture.&lt;/p&gt;
+    &lt;div style="display: flex; gap: 8px;"&gt;
+        &lt;button id="capture-btn" style="flex: 1; background: #238636; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;📸 Capture Tab&lt;/button&gt;
+        &lt;button id="finish-btn" style="flex: 1; background: #da3633; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px;"&gt;💾 Download&lt;/button&gt;
+    &lt;/div&gt;
+`;
 
-    document.body.appendChild(panel);
+document.body.appendChild(panel);
 
-    const statusEl = panel.querySelector('#export-status');
-    const captureBtn = panel.querySelector('#capture-btn');
-    const finishBtn = panel.querySelector('#finish-btn');
-    const tabCountEl = panel.querySelector('#tab-count');
-    const entryCountEl = panel.querySelector('#entry-count');
+const statusEl = panel.querySelector('#export-status');
+const captureBtn = panel.querySelector('#capture-btn');
+const finishBtn = panel.querySelector('#finish-btn');
+const tabCountEl = panel.querySelector('#tab-count');
+const entryCountEl = panel.querySelector('#entry-count');
 
-    function updateTotals() {
-        const tabNames = Object.keys(allTabsData);
-        const totalEntries = tabNames.reduce((sum, name) =&gt; sum + allTabsData[name].length, 0);
-        tabCountEl.textContent = tabNames.length;
-        entryCountEl.textContent = totalEntries;
+function updateTotals() {
+    const tabNames = Object.keys(allTabsData);
+    const totalEntries = tabNames.reduce((sum, name) =&gt; sum + allTabsData[name].length, 0);
+    tabCountEl.textContent = tabNames.length;
+    entryCountEl.textContent = totalEntries;
+}
+
+// 3. Capture button logic
+captureBtn.onclick = () =&gt; {
+    let activeTabName = "General";
+    const activeTab = document.querySelector('.page_tab__StlPv[data-active="true"]');
+    if (activeTab) {
+        activeTabName = activeTab.textContent.trim().replace(/[^a-zA-Z0-9]/g, "_");
     }
 
-    // 3. Capture button logic
-    captureBtn.onclick = () =&gt; {
-        let activeTabName = "General";
-        const activeTab = document.querySelector('.page_tab__StlPv[data-active="true"]');
-        if (activeTab) {
-            activeTabName = activeTab.textContent.trim().replace(/[^a-zA-Z0-9]/g, "_");
-        }
+    const cards = document.querySelectorAll('.page_knowledgeCard__QPCDk');
+    const scrapedCards = [];
 
-        const cards = document.querySelectorAll('.page_knowledgeCard__QPCDk');
-        const scrapedCards = [];
+    cards.forEach((card, cardIndex) =&gt; {
+        const contentEl = card.querySelector('.page_content__BdS5v');
+        const metaEl = card.querySelector('.page_meta__chVMO');
 
-        cards.forEach((card, cardIndex) =&gt; {
-            const contentEl = card.querySelector('.page_content__BdS5v');
-            const metaEl = card.querySelector('.page_meta__chVMO');
-
-            scrapedCards.push({
-                id: cardIndex + 1,
-                content: contentEl ? contentEl.innerText.trim() : "",
-                metadata: metaEl ? metaEl.innerText.trim() : ""
-            });
+        scrapedCards.push({
+            id: cardIndex + 1,
+            content: contentEl ? contentEl.innerText.trim() : "",
+            metadata: metaEl ? metaEl.innerText.trim() : ""
         });
+    });
 
-        allTabsData[activeTabName] = scrapedCards;
-        updateTotals();
-        statusEl.innerHTML = `✅ Captured &lt;b&gt;${activeTabName}&lt;/b&gt; (${scrapedCards.length} entries). Switch tabs and capture next!`;
-        console.log(`Captured tab: "${activeTabName}" with ${scrapedCards.length} items.`);
+    allTabsData[activeTabName] = scrapedCards;
+    updateTotals();
+    statusEl.innerHTML = `✅ Captured &lt;b&gt;${activeTabName}&lt;/b&gt; (${scrapedCards.length} entries). Switch tabs and capture next!`;
+    console.log(`Captured tab: "${activeTabName}" with ${scrapedCards.length} items.`);
+};
+
+// 4. Finish and download logic
+finishBtn.onclick = () =&gt; {
+    const exportPayload = {
+        Shape: shapeName,
+        ExportedAt: new Date().toISOString(),
+        Tabs: allTabsData
     };
 
-    // 4. Finish and download logic
-    finishBtn.onclick = () =&gt; {
-        const exportPayload = {
-            Shape: shapeName,
-            ExportedAt: new Date().toISOString(),
-            Tabs: allTabsData
-        };
+    const fileName = `${shapeName}_Knowledge_Complete_Export.json`.replace(/\s+/g, "_");
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
 
-        const fileName = `${shapeName}_Knowledge_Complete_Export.json`.replace(/\s+/g, "_");
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", fileName);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
 
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", fileName);
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
+    panel.remove();
+    console.log(`🎉 Knowledge export downloaded as: ${fileName}`);
+};
+```
 
-        panel.remove();
-        console.log(`🎉 Knowledge export downloaded as: ${fileName}`);
-    };
-})();</code></pre>
-        <button class="copy-btn" id="copy-btn">Copy script to clipboard</button>
-      </div>
-    </div>
+})();</code></pre> </details> <button class="copy-btn" id="copy-btn">Copy script to clipboard</button> </div> </div>
 
-    <div class="step">
-      <div class="step-number">4</div>
-      <div class="step-body">
-        <h2>Capture each tab, then download</h2>
-        <p>Click <strong>Capture Tab</strong> on your current tab, switch to the next one in the app, and click it again — repeat for every tab you want in the export. When you're finished, click <strong>Download</strong> to save the combined file and close the panel.</p>
-      </div>
-    </div>
+```
+<div class="step">
+  <div class="step-number">4</div>
+  <div class="step-body">
+    <h2>Capture each tab, then download</h2>
+    <p>Click <strong>Capture Tab</strong> on your current tab, switch to the next one in the app, and click it again — repeat for every tab you want in the export. When you're finished, click <strong>Download</strong> to save the combined file and close the panel.</p>
+  </div>
+</div>
+```
 
   </div>
 
@@ -441,9 +446,12 @@
     <p style="margin-bottom: 8px;">Created to make life easier and allow you to save your cherished chat memories by <strong>Kaihime</strong><br>
     <span style="font-size: 12px; opacity: 0.7;">(with a little syntax help from AI)</span></p>
 
-    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;"><em>Please give credit if you share this tool, and do not claim it as your own work.</em></p>
+```
+<p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;"><em>Please give credit if you share this tool, and do not claim it as your own work.</em></p>
 
-    <p style="font-size: 14px;">Need help? Find me in my <a href="https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390" target="_blank">Shapes.inc room</a>!</p>
+<p style="font-size: 14px;">Need help? Find me in my <a href="https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390" target="_blank">Shapes.inc room</a>!</p>
+```
+
   </div>
 
   <script>
