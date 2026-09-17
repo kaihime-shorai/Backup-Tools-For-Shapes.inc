@@ -110,14 +110,15 @@
         <h2>Step 2: Copy & Paste the Interceptor Code</h2>
         <p>Click the copy button below, paste the script into your browser's console prompt, and press <strong>Enter</strong>.</p>
         <button onclick="copyCode()">📋 Copy Script Code</button>
-        <pre id="scriptText">(function() {
+        
+        <details style="background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 10px; margin-top: 10px;">
+            <summary style="cursor: pointer; color: #4ec9b0; font-weight: bold; padding: 5px;">🔍 Click to View/Hide the Full Exporter Code</summary>
+            <pre id="scriptText" style="margin-top: 10px; margin-bottom: 0;">(function() {
     window._interceptedMessages = window._interceptedMessages || new Map();
 
-    // Remove any old badge if it exists
     let oldBadge = document.getElementById('chat-exporter-guide');
     if (oldBadge) oldBadge.remove();
 
-    // Create a larger, readable guide box with a built-in download button
     let guideBox = document.createElement('div');
     guideBox.id = 'chat-exporter-guide';
     guideBox.style.cssText = `
@@ -261,6 +262,7 @@
 
     console.log("🟢 Big Guided Interceptor Active with UI Button!");
 })();</pre>
+        </details>
     </div>
 
     <div class="step">
@@ -269,188 +271,6 @@
             <li>Gradually scroll from the bottom of your chat up to the very beginning, waiting 1-2 seconds for older messages to appear.</li>
             <li>After reaching the top, scroll back down to the bottom to lock in the newest messages.</li>
             <li>Click the <strong>📥 Download Chat File Now</strong> button right on your floating screen panel!</li>
-            <li>Your <code>full_chat_history.txt</code> file will instantly download to your device!</li>
-        </ol>
-    </div>
-
-    <div class="next-steps-box">
-        <h3>✨ Next Step: Make It Beautiful!</h3>
-        <p style="margin-bottom: 0;">Once you have your raw <code>.txt</code> file, you can use the <strong>Chat Story Formatter and Reader</strong> to automatically clean up the formatting, apply custom colors, and read your history like a real book. Check out the reader tool on this site to try it out!</p>
-    </div>
-
-    <script>
-        function copyCode() {
-            const code = document.getElementById('scriptText').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                alert('Guide code copied to clipboard!');
-            });
-        }
-    </script>
-
-    <div class="footer">
-        <p style="margin-bottom: 8px;">Created to make life easier and allow you to save your cherished chat memories by <strong>Kaihime</strong><br>
-        <span style="font-size: 12px; opacity: 0.7;">(with a little syntax help from AI)</span></p>
-        
-        <p style="font-size: 13px; color: #aaa; margin-bottom: 8px;"><em>Please give credit if you share this tool, and do not claim it as your own work.</em></p>
-        
-        <p style="font-size: 14px;">Need help? Find me in my <a href="https://talk.shapes.inc/chat/2df43177-b5e0-43af-a10b-4c39bf155390" target="_blank">Shapes.inc room</a>!</p>
-    </div>
-</body>
-</html>            font-weight: bold; 
-            margin-top: 10px; 
-            margin-bottom: 15px;
-            transition: background-color 0.2s;
-        }
-        button:hover { background-color: #1177bb; }
-        
-        .footer {
-            text-align: center; 
-            margin-top: 50px; 
-            padding-top: 25px; 
-            border-top: 1px solid #333; 
-            color: #888; 
-            font-size: 14px; 
-        }
-        .footer a {
-            color: #4ec9b0;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>How to Export Your Full Chat History</h1>
-    <p class="subtitle">Use this simple guide to safely capture 100% of your chat history directly in your browser.</p>
-
-    <div class="alert-box">
-        <h3>⚠️ Important Limitations & Disclaimer</h3>
-        <ul>
-            <li><strong>Text Only:</strong> This tool captures text, code snippets, and markdown. It <strong>cannot</strong> capture or download embedded images, GIFs, videos, or file attachments.</li>
-            <li><strong>Verify Before Deleting:</strong> While this tool is highly reliable, network glitches can happen. <strong>Always</strong> open your downloaded text file and verify that your entire chat was captured successfully BEFORE you delete any chat rooms!</li>
-        </ul>
-    </div>
-
-    <div class="step">
-        <h2>Step 1: Open Your Chat & Dev Console</h2>
-        <ol>
-            <li>Navigate to your specific chat room page.</li>
-            <li>Hit <code>F12</code> on your keyboard (or use <code>Ctrl+Shift+J</code> on Windows / <code>Cmd+Option+J</code> on Mac).</li>
-            <li>Select the <strong>Console</strong> tab at the top of the developer tools panel.</li>
-        </ol>
-    </div>
-
-    <div class="step">
-        <h2>Step 2: Copy & Paste the Interceptor Code</h2>
-        <p>Click the copy button below, paste the script into your browser's console prompt, and press <strong>Enter</strong>.</p>
-        <button onclick="copyCode()">📋 Copy Script Code</button>
-        <pre id="scriptText">(function() {
-    window._interceptedMessages = window._interceptedMessages || new Map();
-    
-    function parseParts(partsArray) {
-        if (!Array.isArray(partsArray)) return '';
-        return partsArray.map(part => {
-            if (typeof part === 'string') return part;
-            if (part && typeof part === 'object') {
-                return part.text || part.content || part.value || '';
-            }
-            return '';
-        }).join('');
-    }
-
-    async function processData(data) {
-        let arr = [];
-        if (Array.isArray(data)) arr = data;
-        else if (Array.isArray(data.messages)) arr = data.messages;
-        else if (data.data && Array.isArray(data.data.messages)) arr = data.data.messages;
-        else if (data.chat && Array.isArray(data.chat.messages)) arr = data.chat.messages;
-
-        arr.forEach(msg => {
-            if (!msg.role) return;
-            let text = '';
-            let engine = '';
-
-            // 1. Grab the text & hunt for the hidden AI engine label
-            if (msg.parts && Array.isArray(msg.parts)) {
-                text = parseParts(msg.parts);
-                
-                let enginePart = msg.parts.find(p => p && typeof p === 'object' && p.ai_engine);
-                if (enginePart && enginePart.ai_engine.label) {
-                    engine = enginePart.ai_engine.label;
-                }
-            } else if (msg.partsHistory && msg.selectedVariantIndex !== undefined) {
-                text = parseParts(msg.partsHistory[msg.selectedVariantIndex]);
-            }
-
-            if (text.trim() !== '') {
-                // Fallback for older message formats just in case
-                if (!engine) {
-                    engine = msg.model || msg.engine || (msg.metadata && msg.metadata.model) || '';
-                }
-                
-                let engineLabel = engine ? ` [${engine}]` : '';
-                const senderName = (msg.senderName || (msg.role.toLowerCase() === 'user' ? 'You' : 'AI')) + engineLabel;
-                const key = msg.id || `${senderName}:${text.substring(0, 40)}`;
-                
-                let timestamp = 0;
-                if (msg.createdAt) timestamp = new Date(msg.createdAt).getTime();
-                else if (msg.timestamp) timestamp = new Date(msg.timestamp).getTime();
-
-                if (!window._interceptedMessages.has(key)) {
-                    window._interceptedMessages.set(key, { name: senderName, text: text, timestamp: timestamp });
-                }
-            }
-        });
-        console.log(`📦 Total unique messages captured so far: ${window._interceptedMessages.size}`);
-    }
-
-    if (!window._originalFetch) {
-        window._originalFetch = window.fetch;
-        window.fetch = async function(...args) {
-            const response = await window._originalFetch.apply(this, args);
-            const url = args[0];
-            if (typeof url === 'string' && url.includes('/messages')) {
-                try {
-                    const clone = response.clone();
-                    const data = await clone.json();
-                    console.log(`🎯 Intercepted fetch for: ${url}`);
-                    processData(data);
-                } catch (e) {}
-            }
-            return response;
-        };
-    }
-
-    console.log("🟢 Live Interceptor Active! Scroll up to the top, then down to the bottom. When ready, type downloadChat() in this console and hit Enter.");
-
-    window.downloadChat = function() {
-        let sorted = Array.from(window._interceptedMessages.values());
-        sorted.sort((a, b) => a.timestamp - b.timestamp);
-
-        let textOutput = sorted.map(m => {
-            let timeString = m.timestamp > 0 ? new Date(m.timestamp).toLocaleString() : "Unknown Time";
-            return `[${timeString}] ${m.name}:\n${m.text}\n\n-----------------------------------\n\n`;
-        }).join('');
-        
-        const blob = new Blob([textOutput], { type: 'text/plain;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'full_chat_history.txt';
-        link.click();
-        console.log(`🎉 Downloaded ${sorted.length} messages successfully!`);
-    };
-})();</pre>
-    </div>
-
-    <div class="step">
-        <h2>Step 3: Scroll & Download</h2>
-        <ol>
-            <li>Gradually scroll from the bottom of your chat up to the very beginning, waiting 1-2 seconds for older messages to appear.</li>
-            <li>After reaching the top, scroll back down to the bottom to lock in the newest messages.</li>
-            <li>Return to the console, type <code>downloadChat()</code>, and hit <strong>Enter</strong>.</li>
             <li>Your <code>full_chat_history.txt</code> file will instantly download to your device!</li>
         </ol>
     </div>
