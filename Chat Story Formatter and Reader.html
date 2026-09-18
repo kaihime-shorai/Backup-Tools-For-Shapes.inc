@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page-theme="cafe">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +8,13 @@
 <meta property="og:title" content="Chat Story Formatter">
 <meta property="og:description" content="Turn a raw chat export into a beautifully formatted story.">
 <meta property="og:type" content="website">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4c-3.6-2.5-8.4-3.3-12.8-2.5v21.9c4.4-.8 9.2 0 12.8 2.5 3.6-2.5 8.4-3.3 12.8-2.5V1.5C24.4.7 19.6 1.5 16 4Z' fill='%23c9a15a'/%3E%3Cpath d='M16 4v21.9' stroke='%230f0d14' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4c-3.6-2.5-8.4-3.3-12.8-2.5v21.9c4.4-.8 9.2 0 12.8 2.5 3.6-2.5 8.4-3.3 12.8-2.5V1.5C24.4.7 19.6 1.5 16 4Z' fill='%23a0713a'/%3E%3Cpath d='M16 4v21.9' stroke='%23f7f0e3' stroke-width='1.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --page-bg:#0f0d14;--page-bg-rgb:15,13,20;
-    --page-surface:#1a1726;--page-surface-hover:#211e2e;--page-surface-alt:#15121f;
-    --page-line:rgba(200,190,220,0.08);--page-line-strong:rgba(200,190,220,0.14);
-    --page-text:#e8e2f0;--page-text-muted:#9d94ad;--page-text-dim:#6b637a;
-    --page-accent:#c9a15a;--page-accent-rgb:201,161,90;--page-accent-hover:#dab56e;
-    --page-accent-soft:rgba(201,161,90,0.1);--page-danger:#d16b60;
-    --page-glow:rgba(201,161,90,0.06);
-    --page-badge-bg:rgba(200,190,220,0.06);--page-badge-border:rgba(200,190,220,0.1);
-    --page-select-bg:#1e1a2c;--page-input-bg:#1e1a2c;
-    --page-info-bg:rgba(201,161,90,0.07);--page-info-border:rgba(201,161,90,0.25);--page-info-text:#e2cfa0;
-    --page-shadow:rgba(0,0,0,0.4);
-
-    --reader-bg:#1a1726;--reader-border:rgba(200,190,220,0.08);--reader-text:#e8e2f0;
-    --reader-bold:#c9a15a;--reader-italic:#c98d6a;--reader-meta:#9d94ad;
-    --reader-tag-bg:rgba(255,255,255,0.05);--reader-tag-text:#c9a3d6;--reader-tag-border:rgba(200,190,220,0.08);
-    --speaker-0:#d3ab68;--speaker-1:#6fb6ac;--speaker-2:#d1889c;
-    --speaker-3:#9cc08d;--speaker-4:#b79bd9;--speaker-5:#e0a67e;
-  }
-
-  [data-page-theme="cafe"] {
+    /* Cozy Cafe defaults */
     --page-bg:#f7f0e3;--page-bg-rgb:247,240,227;
     --page-surface:#fff8ee;--page-surface-hover:#fff3e0;--page-surface-alt:#f0e8d6;
     --page-line:rgba(80,50,20,0.1);--page-line-strong:rgba(80,50,20,0.18);
@@ -45,32 +26,12 @@
     --page-select-bg:#f0e8d6;--page-input-bg:#f0e8d6;
     --page-info-bg:rgba(160,113,58,0.08);--page-info-border:rgba(160,113,58,0.25);--page-info-text:#8a6530;
     --page-shadow:rgba(60,40,10,0.1);
-  }
-  [data-page-theme="studio"] {
-    --page-bg:#f8f8fa;--page-bg-rgb:248,248,250;
-    --page-surface:#ffffff;--page-surface-hover:#f0f0f4;--page-surface-alt:#f2f2f5;
-    --page-line:rgba(0,0,0,0.08);--page-line-strong:rgba(0,0,0,0.14);
-    --page-text:#1a1a24;--page-text-muted:#5e5e6e;--page-text-dim:#9494a4;
-    --page-accent:#5a4ec9;--page-accent-rgb:90,78,201;--page-accent-hover:#6e62dd;
-    --page-accent-soft:rgba(90,78,201,0.08);--page-danger:#d14;
-    --page-glow:rgba(90,78,201,0.04);
-    --page-badge-bg:rgba(0,0,0,0.04);--page-badge-border:rgba(0,0,0,0.08);
-    --page-select-bg:#f0f0f4;--page-input-bg:#f0f0f4;
-    --page-info-bg:rgba(90,78,201,0.06);--page-info-border:rgba(90,78,201,0.2);--page-info-text:#4a3ea0;
-    --page-shadow:rgba(0,0,0,0.08);
-  }
-  [data-page-theme="forest"] {
-    --page-bg:#0d1410;--page-bg-rgb:13,20,16;
-    --page-surface:#152018;--page-surface-hover:#1a2a1e;--page-surface-alt:#111b14;
-    --page-line:rgba(140,180,140,0.08);--page-line-strong:rgba(140,180,140,0.15);
-    --page-text:#dde8df;--page-text-muted:#8aaa8e;--page-text-dim:#5a7a5e;
-    --page-accent:#8ab66a;--page-accent-rgb:138,182,106;--page-accent-hover:#9ec87e;
-    --page-accent-soft:rgba(138,182,106,0.1);--page-danger:#d16b60;
-    --page-glow:rgba(138,182,106,0.05);
-    --page-badge-bg:rgba(140,180,140,0.06);--page-badge-border:rgba(140,180,140,0.1);
-    --page-select-bg:#1a2a1e;--page-input-bg:#1a2a1e;
-    --page-info-bg:rgba(138,182,106,0.08);--page-info-border:rgba(138,182,106,0.25);--page-info-text:#a8d48a;
-    --page-shadow:rgba(0,0,0,0.45);
+    /* Cozy Sepia reader defaults */
+    --reader-bg:#f3e9d2;--reader-border:rgba(0,0,0,0.08);--reader-text:#2b2523;
+    --reader-bold:#93631c;--reader-italic:#6b4f3b;--reader-meta:#4a3f31;
+    --reader-tag-bg:rgba(0,0,0,0.05);--reader-tag-text:#5f4a86;--reader-tag-border:rgba(0,0,0,0.08);
+    --speaker-0:#93631c;--speaker-1:#2f6b62;--speaker-2:#8a3348;
+    --speaker-3:#4c6a38;--speaker-4:#5f4a86;--speaker-5:#954a24;
   }
 
   *,*::before,*::after{box-sizing:border-box;margin:0;}
@@ -83,7 +44,7 @@
     line-height:1.65;transition:background .4s ease,color .3s ease;-webkit-font-smoothing:antialiased;
   }
   body::before{
-    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.025;
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.02;
     background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   body>*{position:relative;z-index:1;}
@@ -98,22 +59,33 @@
   }
 
   /* ===== MASTHEAD ===== */
-  .masthead{display:flex;align-items:flex-start;gap:18px;}
-  .masthead-text{flex:1;min-width:0;}
+  .masthead{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;}
+  .masthead-text{flex:1;min-width:220px;}
   .mark{width:42px;height:42px;color:var(--page-accent);flex-shrink:0;margin-top:4px;filter:drop-shadow(0 2px 8px rgba(var(--page-accent-rgb),0.15));}
   h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:2.2em;letter-spacing:-.015em;margin:0;line-height:1.12;color:var(--page-text);}
   .tagline{color:var(--page-text-muted);margin:10px 0 0;font-size:.94em;max-width:48ch;line-height:1.55;}
   .rule{border:none;border-top:1px solid var(--page-line);margin:34px 0 38px;}
 
-  /* Page theme dots in masthead */
-  .masthead-themes{display:flex;gap:6px;align-items:center;flex-shrink:0;margin-top:10px;}
-  .mt-btn{
-    width:30px;height:30px;border-radius:50%;border:2.5px solid transparent;
-    background:none;padding:3px;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;
+  /* Page theme picker */
+  .masthead-theme{
+    display:flex;align-items:center;gap:10px;flex-shrink:0;
+    background:var(--page-surface-alt);border:1px solid var(--page-line);
+    border-radius:10px;padding:8px 14px;margin-top:2px;
   }
-  .mt-btn:hover{transform:scale(1.12);}
-  .mt-btn.active{border-color:var(--page-text-muted);box-shadow:0 0 0 2px rgba(var(--page-accent-rgb),0.15);}
-  .mt-dot{display:block;width:100%;height:100%;border-radius:50%;}
+  .masthead-theme .mt-label{
+    font-size:.7em;font-weight:700;color:var(--page-text-dim);text-transform:uppercase;
+    letter-spacing:.08em;white-space:nowrap;display:flex;align-items:center;gap:5px;
+  }
+  .masthead-theme .mt-label svg{width:13px;height:13px;flex-shrink:0;}
+  .masthead-theme select{
+    background:var(--page-input-bg);border:1px solid var(--page-line);color:var(--page-text);
+    border-radius:7px;padding:6px 30px 6px 10px;font-family:inherit;font-size:13px;
+    font-weight:600;cursor:pointer;margin:0;appearance:none;-webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%239a90ab' stroke-width='1.8'><path d='M5 8l5 5 5-5'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center;
+    transition:border-color .15s,box-shadow .15s;
+  }
+  .masthead-theme select:focus{outline:none;border-color:var(--page-accent);box-shadow:0 0 0 2px rgba(var(--page-accent-rgb),0.12);}
 
   /* ===== CARDS ===== */
   .upload-card{
@@ -164,8 +136,11 @@
   .preset-name{font-size:.78em;font-weight:600;color:var(--page-text-muted);}
 
   .live-preview-wrap{margin-bottom:20px;}
-  .reader-preview-surface{border:1px solid var(--page-line);border-radius:12px;padding:20px 22px;transition:background-color .25s,border-color .25s;}
-  .reader-preview-surface .message-block{margin-bottom:14px;padding-bottom:14px;}
+  .reader-preview-surface{
+    background:var(--reader-bg);border:1px solid var(--reader-border);
+    border-radius:12px;padding:20px 22px;transition:background-color .25s,border-color .25s;
+  }
+  .reader-preview-surface .message-block{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--reader-border);}
   .reader-preview-surface .message-block:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
 
   .color-pickers{display:flex;gap:24px;background:var(--page-surface-alt);padding:16px 20px;border-radius:12px;border:1px solid var(--page-line);flex-wrap:wrap;}
@@ -187,7 +162,7 @@
 
   /* ===== BUTTONS ===== */
   button{
-    background-color:var(--page-accent);color:#1a1200;border:none;padding:13px 26px;cursor:pointer;
+    background-color:var(--page-accent);color:#fff;border:none;padding:13px 26px;cursor:pointer;
     border-radius:10px;font-size:14px;font-weight:700;font-family:inherit;letter-spacing:.02em;
     transition:transform .12s,opacity .12s,background-color .15s;display:inline-flex;align-items:center;gap:8px;
   }
@@ -224,7 +199,7 @@
   .stat-badge svg{width:13px;height:13px;flex-shrink:0;}
   .header-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
   .header-actions button{padding:10px 16px;font-size:13px;}
-  #settingsBtn.active{background:var(--page-accent);color:#1a1200;}
+  #settingsBtn.active{background:var(--page-accent);color:#fff;}
 
   /* ===== SETTINGS DRAWER ===== */
   .settings-drawer{
@@ -241,15 +216,17 @@
   .drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 32px;}
   .drawer-section-label{font-size:.72em;font-weight:700;color:var(--page-text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
 
-  .dt-row{display:flex;gap:6px;}
-  .dt-btn{
-    width:28px;height:28px;border-radius:50%;border:2px solid transparent;background:none;
-    padding:3px;cursor:pointer;transition:border-color .2s,transform .15s;
+  /* Drawer page theme select */
+  .drawer-pt-select{display:flex;align-items:center;gap:8px;}
+  .drawer-pt-select select{
+    padding:8px 32px 8px 12px;font-size:13px;margin-bottom:0;
+    background:var(--page-select-bg);border:1px solid var(--page-line);color:var(--page-text);border-radius:8px;
+    appearance:none;-webkit-appearance:none;cursor:pointer;font-family:inherit;font-weight:600;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%239a90ab' stroke-width='1.8'><path d='M5 8l5 5 5-5'/></svg>");
+    background-repeat:no-repeat;background-position:right 10px center;
   }
-  .dt-btn:hover{transform:scale(1.1);}
-  .dt-btn.active{border-color:var(--page-text-muted);}
-  .dt-dot{display:block;width:100%;height:100%;border-radius:50%;}
 
+  /* Drawer reader theme cards */
   .dp-row{display:flex;gap:8px;}
   .dp-card{
     flex:1;padding:8px 6px;border-radius:8px;border:2px solid transparent;background:var(--page-surface-alt);
@@ -290,19 +267,20 @@
   .search-row input:focus{outline:none;}
   .search-row input::placeholder{color:var(--page-text-dim);}
   .search-count{font-size:12px;color:var(--page-text-muted);white-space:nowrap;min-width:52px;text-align:right;}
-  .search-hint{font-size:11px;color:var(--page-text-dim);white-space:nowrap;padding:2px 6px;border:1px solid var(--page-line);border-radius:4px;}
+  .search-hint{font-size:10px;color:var(--page-text-dim);white-space:nowrap;padding:2px 6px;border:1px solid var(--page-line);border-radius:4px;letter-spacing:.02em;}
   .icon-btn{background:transparent;border:none;padding:4px;color:var(--page-text-dim);cursor:pointer;border-radius:6px;display:inline-flex;transition:color .15s,background .15s;}
   .icon-btn:hover{color:var(--page-text);background:var(--page-surface-hover);}
   .icon-btn svg{width:16px;height:16px;}
 
-  /* ===== STORY CONTAINER ===== */
+  /* ===== STORY CONTAINER — wide by default ===== */
   #storyContainer{
     font-family:'Lora',Georgia,serif;font-size:1.12em;line-height:1.9;
     background:var(--reader-bg);color:var(--reader-text);padding:50px 58px;border-radius:16px;
     border:1px solid var(--reader-border);box-shadow:0 16px 48px var(--page-shadow);
-    transition:background-color .3s,color .3s,border-color .3s;max-width:680px;margin:0 auto;
+    transition:background-color .3s,color .3s,border-color .3s,max-width .35s cubic-bezier(.4,0,.2,1);
+    max-width:100%;margin:0 auto;
   }
-  #storyContainer.wide{max-width:100%;}
+  #storyContainer.focused{max-width:680px;}
   .message-block{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--reader-border);transition:background-color .2s;border-radius:8px;}
   .message-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
   .message-block.search-match{background:rgba(var(--page-accent-rgb),0.06);box-shadow:inset 3px 0 0 0 var(--page-accent);}
@@ -322,18 +300,20 @@
   .floating-bar{
     position:fixed;bottom:24px;right:24px;background:var(--page-surface);backdrop-filter:blur(16px);
     border:1px solid var(--page-line);padding:8px 10px;border-radius:32px;display:none;align-items:center;
-    gap:4px;box-shadow:0 12px 32px var(--page-shadow);z-index:99;font-size:12.5px;
+    gap:2px;box-shadow:0 12px 32px var(--page-shadow);z-index:99;
   }
-  .fb-progress{color:var(--page-text-muted);padding:0 8px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .fb-read-wrap{display:inline-flex;align-items:baseline;gap:4px;padding:0 10px 0 6px;}
+  .fb-read-label{font-size:9.5px;color:var(--page-text-dim);text-transform:uppercase;letter-spacing:.08em;font-weight:700;}
+  .fb-read-pct{color:var(--page-text-muted);font-weight:700;font-variant-numeric:tabular-nums;font-size:12.5px;font-family:'DM Mono',monospace;}
   .fb-divider{width:1px;height:18px;background:var(--page-line);margin:0 4px;}
   .fb-btn{
-    background:transparent;color:var(--page-text-muted);border:none;padding:6px 9px;border-radius:20px;
-    font-family:'DM Mono',monospace;font-weight:700;font-size:12.5px;cursor:pointer;display:inline-flex;
-    align-items:center;transition:background .15s,color .15s;
+    background:transparent;color:var(--page-text-muted);border:none;padding:6px 10px;border-radius:20px;
+    font-family:'DM Mono',monospace;font-weight:700;font-size:12px;cursor:pointer;display:inline-flex;
+    align-items:center;gap:4px;transition:background .15s,color .15s;
   }
   .fb-btn:hover{background:var(--page-surface-hover);color:var(--page-text);}
   .fb-btn svg{width:15px;height:15px;}
-  .fb-btn[aria-pressed="true"]{color:var(--page-accent);}
+  .fb-btn[aria-pressed="true"]{color:var(--page-accent);background:var(--page-accent-soft);}
 
   /* ===== TOASTS ===== */
   #toastContainer{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;}
@@ -351,19 +331,20 @@
   @media(max-width:680px){
     body{padding:28px 14px 100px;}
     h1{font-size:1.65em;}
+    .masthead{flex-direction:column;gap:14px;}
+    .masthead-theme{align-self:flex-start;}
     .upload-card{padding:22px 18px;}
     #storyContainer{padding:28px 20px;font-size:1.02em;}
+    #storyContainer.focused{max-width:100%;}
     .reader-header{padding:20px;}
-    .floating-bar{right:10px;bottom:10px;}
+    .floating-bar{right:10px;bottom:10px;gap:1px;}
     .preset-container{gap:8px;}
     .drawer-grid{grid-template-columns:1fr;}
-    .masthead{flex-wrap:wrap;}
-    .masthead-themes{margin-top:0;}
   }
   @media print{
     body{background:white;color:black;padding:0;}
-    .upload-card,.reader-header .header-actions,.floating-bar,.footer,.search-row,.top-progress,.settings-drawer{display:none !important;}
-    #storyContainer{background:white !important;color:black !important;border:none !important;padding:0;box-shadow:none;max-width:100%;}
+    .upload-card,.reader-header .header-actions,.floating-bar,.footer,.search-row,.top-progress,.settings-drawer,.masthead-theme{display:none !important;}
+    #storyContainer{background:white !important;color:black !important;border:none !important;padding:0;box-shadow:none;max-width:100% !important;}
     body::before{display:none;}
   }
 </style>
@@ -384,19 +365,17 @@
       <h1>Chat Story Formatter</h1>
       <p class="tagline">Turn a raw chat export into a story worth reopening — clean typesetting, per-character color, and a proper reading view.</p>
     </div>
-    <div class="masthead-themes" role="radiogroup" aria-label="Page theme">
-      <button class="mt-btn active" data-pt="midnight" onclick="applyPageTheme('midnight')" title="Midnight Library" aria-label="Midnight Library">
-        <span class="mt-dot" style="background:#c9a15a;"></span>
-      </button>
-      <button class="mt-btn" data-pt="cafe" onclick="applyPageTheme('cafe')" title="Cozy Cafe" aria-label="Cozy Cafe">
-        <span class="mt-dot" style="background:#a0713a;"></span>
-      </button>
-      <button class="mt-btn" data-pt="studio" onclick="applyPageTheme('studio')" title="Clean Studio" aria-label="Clean Studio">
-        <span class="mt-dot" style="background:#5a4ec9;"></span>
-      </button>
-      <button class="mt-btn" data-pt="forest" onclick="applyPageTheme('forest')" title="Forest Study" aria-label="Forest Study">
-        <span class="mt-dot" style="background:#8ab66a;"></span>
-      </button>
+    <div class="masthead-theme">
+      <span class="mt-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        Page theme
+      </span>
+      <select id="pageThemeSelect" class="page-theme-select" onchange="applyPageTheme(this.value)">
+        <option value="cafe" selected>Cozy Cafe</option>
+        <option value="midnight">Midnight Library</option>
+        <option value="studio">Clean Studio</option>
+        <option value="forest">Forest Study</option>
+      </select>
     </div>
   </header>
   <hr class="rule">
@@ -432,11 +411,11 @@
     <div class="step-heading"><span class="step-num">3</span><h2>Reader theme</h2></div>
     <div class="step-body">
       <div class="preset-container">
-        <div class="preset-card active" data-rp="midnight" onclick="applyReaderPreset('midnight')">
+        <div class="preset-card" data-rp="midnight" onclick="applyReaderPreset('midnight')">
           <div class="preset-swatch" style="background:#1a1726;"><span class="aa" style="color:#d3ab68;">Aa</span><span class="aa" style="color:#6fb6ac;">Aa</span></div>
           <div class="preset-name">Velvet Midnight</div>
         </div>
-        <div class="preset-card" data-rp="sepia" onclick="applyReaderPreset('sepia')">
+        <div class="preset-card active" data-rp="sepia" onclick="applyReaderPreset('sepia')">
           <div class="preset-swatch" style="background:#f3e9d2;"><span class="aa" style="color:#93631c;">Aa</span><span class="aa" style="color:#2f6b62;">Aa</span></div>
           <div class="preset-name">Cozy Sepia</div>
         </div>
@@ -458,9 +437,9 @@
         </div>
       </div>
       <div class="color-pickers">
-        <label>Text <input type="color" id="textColorPicker" value="#e8e2f0" onchange="updateReaderColors()"></label>
-        <label>Bold <input type="color" id="boldColorPicker" value="#c9a15a" onchange="updateReaderColors()"></label>
-        <label>Italic <input type="color" id="italicColorPicker" value="#c98d6a" onchange="updateReaderColors()"></label>
+        <label>Text <input type="color" id="textColorPicker" value="#2b2523" onchange="updateReaderColors()"></label>
+        <label>Bold <input type="color" id="boldColorPicker" value="#93631c" onchange="updateReaderColors()"></label>
+        <label>Italic <input type="color" id="italicColorPicker" value="#6b4f3b" onchange="updateReaderColors()"></label>
       </div>
     </div>
 
@@ -527,21 +506,23 @@
       <div class="drawer-grid">
         <div class="drawer-section">
           <div class="drawer-section-label">Page Theme</div>
-          <div class="dt-row">
-            <button class="dt-btn active" data-pt="midnight" onclick="applyPageTheme('midnight')" title="Midnight Library"><span class="dt-dot" style="background:#c9a15a;"></span></button>
-            <button class="dt-btn" data-pt="cafe" onclick="applyPageTheme('cafe')" title="Cozy Cafe"><span class="dt-dot" style="background:#a0713a;"></span></button>
-            <button class="dt-btn" data-pt="studio" onclick="applyPageTheme('studio')" title="Clean Studio"><span class="dt-dot" style="background:#5a4ec9;"></span></button>
-            <button class="dt-btn" data-pt="forest" onclick="applyPageTheme('forest')" title="Forest Study"><span class="dt-dot" style="background:#8ab66a;"></span></button>
+          <div class="drawer-pt-select">
+            <select class="page-theme-select" onchange="applyPageTheme(this.value)">
+              <option value="cafe" selected>Cozy Cafe</option>
+              <option value="midnight">Midnight Library</option>
+              <option value="studio">Clean Studio</option>
+              <option value="forest">Forest Study</option>
+            </select>
           </div>
         </div>
         <div class="drawer-section">
           <div class="drawer-section-label">Reader Theme</div>
           <div class="dp-row">
-            <button class="dp-card active" data-rp="midnight" onclick="applyReaderPreset('midnight')">
+            <button class="dp-card" data-rp="midnight" onclick="applyReaderPreset('midnight')">
               <div class="dp-swatch" style="background:#1a1726;"><span style="color:#d3ab68;">Aa</span><span style="color:#6fb6ac;">Aa</span></div>
               <div class="dp-label">Midnight</div>
             </button>
-            <button class="dp-card" data-rp="sepia" onclick="applyReaderPreset('sepia')">
+            <button class="dp-card active" data-rp="sepia" onclick="applyReaderPreset('sepia')">
               <div class="dp-swatch" style="background:#f3e9d2;"><span style="color:#93631c;">Aa</span><span style="color:#2f6b62;">Aa</span></div>
               <div class="dp-label">Sepia</div>
             </button>
@@ -554,9 +535,9 @@
         <div class="drawer-section">
           <div class="drawer-section-label">Colors</div>
           <div class="drawer-colors">
-            <label>Text <input type="color" id="drawerTextColor" value="#e8e2f0" onchange="updateDrawerColors()"></label>
-            <label>Bold <input type="color" id="drawerBoldColor" value="#c9a15a" onchange="updateDrawerColors()"></label>
-            <label>Italic <input type="color" id="drawerItalicColor" value="#c98d6a" onchange="updateDrawerColors()"></label>
+            <label>Text <input type="color" id="drawerTextColor" value="#2b2523" onchange="updateDrawerColors()"></label>
+            <label>Bold <input type="color" id="drawerBoldColor" value="#93631c" onchange="updateDrawerColors()"></label>
+            <label>Italic <input type="color" id="drawerItalicColor" value="#6b4f3b" onchange="updateDrawerColors()"></label>
           </div>
         </div>
         <div class="drawer-section">
@@ -599,12 +580,16 @@
 </div>
 
 <div class="floating-bar" id="floatingBar">
-  <span class="fb-progress" id="readingProgress">0%</span>
+  <span class="fb-read-wrap">
+    <span class="fb-read-label">Read</span>
+    <span class="fb-read-pct" id="readingProgress">0%</span>
+  </span>
   <span class="fb-divider"></span>
   <button class="fb-btn" onclick="adjustFont(-0.1)" title="Smaller text" aria-label="Smaller text">A-</button>
   <button class="fb-btn" onclick="adjustFont(0.1)" title="Larger text" aria-label="Larger text">A+</button>
-  <button class="fb-btn" id="widthToggleBtn" onclick="toggleWidth()" title="Toggle column width" aria-label="Toggle column width" aria-pressed="false">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v18"/><path d="M16 3v18"/><path d="M3 12h2"/><path d="M19 12h2"/></svg>
+  <button class="fb-btn" id="focusToggleBtn" onclick="toggleFocus()" title="Narrow column for focused reading" aria-label="Toggle focus mode" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v18"/><path d="M16 3v18"/></svg>
+    Focus
   </button>
   <span class="fb-divider"></span>
   <button class="fb-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
@@ -626,9 +611,9 @@
   let matchBlocks = [];
   let currentMatchIndex = -1;
   let fontScale = 1;
-  let wideMode = false;
+  let focusMode = false;
   let currentSettings = { keepTimestamps:true, keepEngine:true, commandMode:'replace' };
-  let currentReaderColors = { text:'#e8e2f0', bold:'#c9a15a', italic:'#c98d6a' };
+  let currentReaderColors = { text:'#2b2523', bold:'#93631c', italic:'#6b4f3b' };
 
   /* ===== THEME DATA ===== */
   const PAGE_THEMES = {
@@ -662,7 +647,7 @@
     });
     document.documentElement.style.setProperty('--page-bg-rgb',t.bgRgb);
     document.documentElement.style.setProperty('--page-accent-rgb',t.accentRgb);
-    document.querySelectorAll('[data-pt]').forEach(b=>b.classList.toggle('active',b.dataset.pt===name));
+    document.querySelectorAll('.page-theme-select').forEach(s=>s.value=name);
     try{localStorage.setItem('csf-page-theme',name);}catch(e){}
   }
 
@@ -686,20 +671,17 @@
     ['boldColorPicker','drawerBoldColor'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=currentReaderColors.bold;});
     ['italicColorPicker','drawerItalicColor'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=currentReaderColors.italic;});
   }
-
   function updateReaderColors(){
     currentReaderColors.text=document.getElementById('textColorPicker').value;
     currentReaderColors.bold=document.getElementById('boldColorPicker').value;
     currentReaderColors.italic=document.getElementById('italicColorPicker').value;
-    applyCurrentReaderColors();
-    syncColorPickers();
+    applyCurrentReaderColors();syncColorPickers();
   }
   function updateDrawerColors(){
     currentReaderColors.text=document.getElementById('drawerTextColor').value;
     currentReaderColors.bold=document.getElementById('drawerBoldColor').value;
     currentReaderColors.italic=document.getElementById('drawerItalicColor').value;
-    applyCurrentReaderColors();
-    syncColorPickers();
+    applyCurrentReaderColors();syncColorPickers();
   }
   function applyCurrentReaderColors(){
     setThemeVars({'--reader-text':currentReaderColors.text,'--reader-bold':currentReaderColors.bold,'--reader-italic':currentReaderColors.italic});
@@ -802,7 +784,6 @@
       if(currentTextLines.length<=0)return;
       let filteredLines=currentTextLines.filter(l=>{let t=l.trim();return!(t.startsWith("Replying to")||(t.startsWith("http")&&t.includes("#message-")));});
       if(filteredLines.length<=0){currentTextLines=[];return;}
-
       let fullText=filteredLines.join('\n').trim();
       let lower=fullText.toLowerCase();
       let isCommand=lower.startsWith('!wack')||lower.startsWith('!sleep')||lower.startsWith('!reset');
@@ -810,38 +791,31 @@
         if(currentSettings.commandMode==='strip'){currentTextLines=[];return;}
         if(currentSettings.commandMode==='replace'){fullText='*[User sent a '+fullText.split(' ')[0].replace('!','')+' command]*';}
       }
-
       let block=document.createElement('div');block.className='message-block';
       let speakerExport="";
-
       if(currentSpeakerName){
         let spClass=speakerClassFor(currentSpeakerName);
         let header=document.createElement('div');header.className='speaker-header';
         let dot=document.createElement('span');dot.className='speaker-dot '+spClass;header.appendChild(dot);
-
         if(currentSettings.keepTimestamps&&currentTimestamp){
           let ts=document.createElement('span');ts.className='speaker-timestamp';ts.textContent='['+currentTimestamp+']';header.appendChild(ts);
           speakerExport+='['+currentTimestamp+'] ';
         }
         let name=document.createElement('span');name.className='speaker-name '+spClass;name.textContent=currentSpeakerName;header.appendChild(name);
         speakerExport+=currentSpeakerName;
-
         if(currentSettings.keepEngine&&currentEngineModel&&!currentEngineModel.toLowerCase().includes('shapes')){
           let eng=document.createElement('span');eng.className='speaker-engine';eng.textContent=currentEngineModel;header.appendChild(eng);
           speakerExport+=' ['+currentEngineModel+']';
         }
         block.appendChild(header);speakerExport+=":\n";
       }
-
       let textDiv=document.createElement('div');textDiv.className='message-text';
       totalWords+=fullText.split(/\s+/).filter(w=>w.length>0).length;
       textDiv.innerHTML=parseMarkdown(fullText);
-      block.appendChild(textDiv);
-      block.dataset.searchText=(currentSpeakerName+' '+fullText).toLowerCase();
+      block.appendChild(textDiv);block.dataset.searchText=(currentSpeakerName+' '+fullText).toLowerCase();
       storyContainer.appendChild(block);
       cleanExportData+=speakerExport+fullText+'\n\n-----------------------------------\n\n';
-      totalMessagesParsed++;
-      currentTextLines=[];
+      totalMessagesParsed++;currentTextLines=[];
     }
 
     for(let i=0;i<lines.length;i++){
@@ -918,10 +892,10 @@
     fontScale=Math.min(1.35,Math.max(0.85,Math.round((fontScale+d)*100)/100));
     document.getElementById('storyContainer').style.fontSize=(1.12*fontScale).toFixed(2)+'em';
   }
-  function toggleWidth(){
-    wideMode=!wideMode;
-    document.getElementById('storyContainer').classList.toggle('wide',wideMode);
-    document.getElementById('widthToggleBtn').setAttribute('aria-pressed',String(wideMode));
+  function toggleFocus(){
+    focusMode=!focusMode;
+    document.getElementById('storyContainer').classList.toggle('focused',focusMode);
+    document.getElementById('focusToggleBtn').setAttribute('aria-pressed',String(focusMode));
   }
 
   /* ===== SEARCH ===== */
@@ -950,8 +924,10 @@
   document.addEventListener('DOMContentLoaded',function(){
     // Restore saved themes
     try{
-      const sp=localStorage.getItem('csf-page-theme');if(sp&&PAGE_THEMES[sp])applyPageTheme(sp);
-      const sr=localStorage.getItem('csf-reader-preset');if(sr&&READER_PRESETS[sr])applyReaderPreset(sr);
+      const sp=localStorage.getItem('csf-page-theme');
+      if(sp&&PAGE_THEMES[sp])applyPageTheme(sp);
+      const sr=localStorage.getItem('csf-reader-preset');
+      if(sr&&READER_PRESETS[sr])applyReaderPreset(sr);
     }catch(e){}
 
     // Dropzone
