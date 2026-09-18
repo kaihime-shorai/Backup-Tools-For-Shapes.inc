@@ -14,7 +14,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Cozy Cafe defaults */
     --page-bg:#f7f0e3;--page-bg-rgb:247,240,227;
     --page-surface:#fff8ee;--page-surface-hover:#fff3e0;--page-surface-alt:#f0e8d6;
     --page-line:rgba(80,50,20,0.1);--page-line-strong:rgba(80,50,20,0.18);
@@ -26,7 +25,6 @@
     --page-select-bg:#f0e8d6;--page-input-bg:#f0e8d6;
     --page-info-bg:rgba(160,113,58,0.08);--page-info-border:rgba(160,113,58,0.25);--page-info-text:#8a6530;
     --page-shadow:rgba(60,40,10,0.1);
-    /* Cozy Sepia reader defaults */
     --reader-bg:#f3e9d2;--reader-border:rgba(0,0,0,0.08);--reader-text:#2b2523;
     --reader-bold:#93631c;--reader-italic:#6b4f3b;--reader-meta:#4a3f31;
     --reader-tag-bg:rgba(0,0,0,0.05);--reader-tag-text:#5f4a86;--reader-tag-border:rgba(0,0,0,0.08);
@@ -66,7 +64,6 @@
   .tagline{color:var(--page-text-muted);margin:10px 0 0;font-size:.94em;max-width:48ch;line-height:1.55;}
   .rule{border:none;border-top:1px solid var(--page-line);margin:34px 0 38px;}
 
-  /* Page theme picker */
   .masthead-theme{
     display:flex;align-items:center;gap:10px;flex-shrink:0;
     background:var(--page-surface-alt);border:1px solid var(--page-line);
@@ -216,7 +213,6 @@
   .drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 32px;}
   .drawer-section-label{font-size:.72em;font-weight:700;color:var(--page-text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
 
-  /* Drawer page theme select */
   .drawer-pt-select{display:flex;align-items:center;gap:8px;}
   .drawer-pt-select select{
     padding:8px 32px 8px 12px;font-size:13px;margin-bottom:0;
@@ -226,7 +222,6 @@
     background-repeat:no-repeat;background-position:right 10px center;
   }
 
-  /* Drawer reader theme cards */
   .dp-row{display:flex;gap:8px;}
   .dp-card{
     flex:1;padding:8px 6px;border-radius:8px;border:2px solid transparent;background:var(--page-surface-alt);
@@ -257,10 +252,14 @@
   .drawer-actions{display:flex;align-items:center;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid var(--page-line);}
   .drawer-actions button{padding:12px 28px;}
 
-  /* ===== SEARCH ===== */
+  /* ===== SEARCH (sticky) ===== */
   .search-row{
-    display:flex;align-items:center;gap:10px;background:var(--page-surface);border:1px solid var(--page-line);
+    display:flex;align-items:center;gap:10px;
+    background:var(--page-surface);backdrop-filter:blur(16px);
+    border:1px solid var(--page-line);
     border-radius:12px;padding:10px 16px;margin-bottom:20px;
+    position:sticky;top:12px;z-index:50;
+    box-shadow:0 6px 24px var(--page-shadow);
   }
   .search-row svg{width:16px;height:16px;color:var(--page-text-dim);flex-shrink:0;}
   .search-row input{flex:1;background:transparent;border:none;color:var(--page-text);font-size:14px;font-family:inherit;padding:2px 0;}
@@ -272,7 +271,7 @@
   .icon-btn:hover{color:var(--page-text);background:var(--page-surface-hover);}
   .icon-btn svg{width:16px;height:16px;}
 
-  /* ===== STORY CONTAINER — wide by default ===== */
+  /* ===== STORY CONTAINER ===== */
   #storyContainer{
     font-family:'Lora',Georgia,serif;font-size:1.12em;line-height:1.9;
     background:var(--reader-bg);color:var(--reader-text);padding:50px 58px;border-radius:16px;
@@ -595,6 +594,9 @@
   <button class="fb-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
   </button>
+  <button class="fb-btn" onclick="window.scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'})" title="Jump to bottom" aria-label="Jump to bottom">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
+  </button>
 </div>
 
 <div class="footer">
@@ -602,7 +604,6 @@
 </div>
 
 <script>
-  /* ===== STATE ===== */
   let rawFileContent = "";
   let cleanExportData = "";
   let currentCustomTitle = "cleaned_story_history";
@@ -615,7 +616,6 @@
   let currentSettings = { keepTimestamps:true, keepEngine:true, commandMode:'replace' };
   let currentReaderColors = { text:'#2b2523', bold:'#93631c', italic:'#6b4f3b' };
 
-  /* ===== THEME DATA ===== */
   const PAGE_THEMES = {
     midnight:{accent:'#c9a15a',accentRgb:'201,161,90',bg:'#0f0d14',bgRgb:'15,13,20',surface:'#1a1726',surfaceHover:'#211e2e',surfaceAlt:'#15121f',line:'rgba(200,190,220,0.08)',lineStrong:'rgba(200,190,220,0.14)',text:'#e8e2f0',textMuted:'#9d94ad',textDim:'#6b637a',accentHover:'#dab56e',accentSoft:'rgba(201,161,90,0.1)',danger:'#d16b60',glow:'rgba(201,161,90,0.06)',badgeBg:'rgba(200,190,220,0.06)',badgeBorder:'rgba(200,190,220,0.1)',selectBg:'#1e1a2c',inputBg:'#1e1a2c',infoBg:'rgba(201,161,90,0.07)',infoBorder:'rgba(201,161,90,0.25)',infoText:'#e2cfa0',shadow:'rgba(0,0,0,0.4)'},
     cafe:{accent:'#a0713a',accentRgb:'160,113,58',bg:'#f7f0e3',bgRgb:'247,240,227',surface:'#fff8ee',surfaceHover:'#fff3e0',surfaceAlt:'#f0e8d6',line:'rgba(80,50,20,0.1)',lineStrong:'rgba(80,50,20,0.18)',text:'#3a2e1e',textMuted:'#7a6b55',textDim:'#a89880',accentHover:'#b8834a',accentSoft:'rgba(160,113,58,0.1)',danger:'#c44',glow:'rgba(160,113,58,0.05)',badgeBg:'rgba(80,50,20,0.05)',badgeBorder:'rgba(80,50,20,0.1)',selectBg:'#f0e8d6',inputBg:'#f0e8d6',infoBg:'rgba(160,113,58,0.08)',infoBorder:'rgba(160,113,58,0.25)',infoText:'#8a6530',shadow:'rgba(60,40,10,0.1)'},
@@ -628,7 +628,6 @@
     studio:{bg:"#ffffff",border:"rgba(0,0,0,0.08)",text:"#1c1c21",bold:"#9c6c1f",italic:"#6c757d",meta:"#55606b",tagBg:"rgba(0,0,0,0.04)",tagText:"#55428c",tagBorder:"rgba(0,0,0,0.08)",speakers:["#9c6c1f","#227069","#9c3352","#3f6b34","#55428c","#a14e26"]}
   };
 
-  /* ===== THEME FUNCTIONS ===== */
   function setThemeVars(vars){const r=document.documentElement;Object.entries(vars).forEach(([k,v])=>r.style.setProperty(k,v));}
 
   function applyPageTheme(name){
@@ -687,7 +686,6 @@
     setThemeVars({'--reader-text':currentReaderColors.text,'--reader-bold':currentReaderColors.bold,'--reader-italic':currentReaderColors.italic});
   }
 
-  /* ===== SETTINGS DRAWER ===== */
   function toggleSettingsDrawer(){
     const drawer=document.getElementById('settingsDrawer');
     const btn=document.getElementById('settingsBtn');
@@ -702,7 +700,6 @@
     syncColorPickers();
   }
 
-  /* ===== MARKDOWN ===== */
   function parseMarkdown(text){
     let s=text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
     s=s.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/__(.*?)__/g,'<strong>$1</strong>');
@@ -710,13 +707,11 @@
     return s;
   }
 
-  /* ===== SPEAKER COLORS ===== */
   function speakerClassFor(name){
     if(!speakerColorMap.has(name)){speakerColorMap.set(name,speakerCount%6);speakerCount++;}
     return 'sp-'+speakerColorMap.get(name);
   }
 
-  /* ===== TOAST ===== */
   function showToast(msg,type){
     const c=document.getElementById('toastContainer'),t=document.createElement('div');
     t.className='toast'+(type==='error'?' toast-error':'');t.textContent=msg;c.appendChild(t);
@@ -724,7 +719,6 @@
     setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),250);},3000);
   }
 
-  /* ===== FILE HANDLING ===== */
   function handleFileSelected(){
     const f=document.getElementById('textFile').files[0];
     const dz=document.getElementById('dropzone'),fn=document.getElementById('fileNameDisplay'),btn=document.getElementById('openReaderBtn');
@@ -733,29 +727,24 @@
     fn.textContent='Selected: '+f.name;fn.hidden=false;dz.classList.add('has-file');btn.disabled=false;
   }
 
-  /* ===== RENDERING ===== */
   function renderReaderView(){
     const fileInput=document.getElementById('textFile');
     if(!fileInput.files.length){showToast('Choose a file to continue.','error');return;}
-
     const inputTitle=document.getElementById('storyTitle').value.trim();
     const inputDesc=document.getElementById('storyDesc').value.trim();
     document.getElementById('displayTitle').textContent=inputTitle||"Your Story Transcript";
     document.getElementById('displayDesc').textContent=inputDesc;
     document.title=inputTitle||"Chat Story Formatter";
     currentCustomTitle=inputTitle?inputTitle.replace(/[^a-z0-9]/gi,'_').toLowerCase():"cleaned_story_history";
-
     currentSettings={
       keepTimestamps:document.getElementById('toggleTimestamps').checked,
       keepEngine:document.getElementById('toggleEngine').checked,
       commandMode:document.getElementById('commandHandling').value
     };
-
     const reader=new FileReader();
     reader.onload=function(e){
       rawFileContent=e.target.result;
       renderStoryContent();
-
       document.getElementById('controlPanel').classList.add('view-exit');
       setTimeout(()=>{
         document.getElementById('controlPanel').style.display='none';
@@ -776,10 +765,8 @@
     storyContainer.innerHTML='';
     cleanExportData="";
     speakerColorMap=new Map();speakerCount=0;
-
     let currentSpeakerName="",currentTimestamp="",currentEngineModel="",currentTextLines=[];
     let isNextLineSpeaker=true,totalMessagesParsed=0,totalWords=0;
-
     function flushMessage(){
       if(currentTextLines.length<=0)return;
       let filteredLines=currentTextLines.filter(l=>{let t=l.trim();return!(t.startsWith("Replying to")||(t.startsWith("http")&&t.includes("#message-")));});
@@ -817,7 +804,6 @@
       cleanExportData+=speakerExport+fullText+'\n\n-----------------------------------\n\n';
       totalMessagesParsed++;currentTextLines=[];
     }
-
     for(let i=0;i<lines.length;i++){
       let trimmedLine=lines[i].trim();
       if(trimmedLine.includes('-----------------------------------')){flushMessage();isNextLineSpeaker=true;continue;}
@@ -835,7 +821,6 @@
       }else{currentTextLines.push(lines[i]);}
     }
     flushMessage();
-
     document.getElementById('msgCountDisplay').lastChild.textContent=totalMessagesParsed+' messages';
     document.getElementById('wordCountDisplay').lastChild.textContent=totalWords.toLocaleString()+' words';
     document.getElementById('readTimeDisplay').lastChild.textContent='~'+Math.max(1,Math.ceil(totalWords/200))+' min read';
@@ -856,19 +841,16 @@
   function startOver(){
     document.getElementById('settingsDrawer').classList.remove('open');
     document.getElementById('settingsBtn').classList.remove('active');
-    const rv=document.getElementById('readerView');
-    rv.classList.remove('view-enter');
+    const rv=document.getElementById('readerView');rv.classList.remove('view-enter');
     document.getElementById('floatingBar').style.display='none';
     document.getElementById('topProgressBar').style.display='none';
     setTimeout(()=>{
       rv.style.display='none';
-      const cp=document.getElementById('controlPanel');
-      cp.style.display='block';cp.classList.remove('view-exit');
+      const cp=document.getElementById('controlPanel');cp.style.display='block';cp.classList.remove('view-exit');
       window.scrollTo(0,0);
     },180);
   }
 
-  /* ===== EXPORTS ===== */
   function downloadCleanText(){
     if(!cleanExportData)return showToast('Nothing to export yet.','error');
     const blob=new Blob([cleanExportData],{type:'text/plain;charset=utf-8'});
@@ -880,7 +862,6 @@
     navigator.clipboard.writeText(cleanExportData).then(()=>showToast('Copied to clipboard')).catch(()=>showToast('Copy failed','error'));
   }
 
-  /* ===== FLOATING BAR ===== */
   window.onscroll=function(){
     const rv=document.getElementById('readerView');if(rv.style.display!=='block')return;
     let total=document.documentElement.scrollHeight-window.innerHeight;
@@ -898,7 +879,6 @@
     document.getElementById('focusToggleBtn').setAttribute('aria-pressed',String(focusMode));
   }
 
-  /* ===== SEARCH ===== */
   function performSearch(){
     const q=document.getElementById('searchInput').value.trim().toLowerCase();
     const blocks=Array.from(document.querySelectorAll('#storyContainer .message-block'));
@@ -920,9 +900,7 @@
   function searchNext(){if(!matchBlocks.length)return;currentMatchIndex=(currentMatchIndex+1)%matchBlocks.length;highlightCurrentMatch();updateSearchCount();}
   function searchPrev(){if(!matchBlocks.length)return;currentMatchIndex=(currentMatchIndex-1+matchBlocks.length)%matchBlocks.length;highlightCurrentMatch();updateSearchCount();}
 
-  /* ===== INIT ===== */
   document.addEventListener('DOMContentLoaded',function(){
-    // Restore saved themes
     try{
       const sp=localStorage.getItem('csf-page-theme');
       if(sp&&PAGE_THEMES[sp])applyPageTheme(sp);
@@ -930,7 +908,6 @@
       if(sr&&READER_PRESETS[sr])applyReaderPreset(sr);
     }catch(e){}
 
-    // Dropzone
     const dz=document.getElementById('dropzone'),fi=document.getElementById('textFile');
     dz.addEventListener('click',()=>fi.click());
     dz.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fi.click();}});
@@ -939,7 +916,6 @@
     dz.addEventListener('drop',e=>{const files=e.dataTransfer.files;if(files&&files.length){fi.files=files;handleFileSelected();}});
     fi.addEventListener('change',handleFileSelected);
 
-    // Search
     const si=document.getElementById('searchInput');
     si.addEventListener('input',performSearch);
     si.addEventListener('keydown',e=>{
