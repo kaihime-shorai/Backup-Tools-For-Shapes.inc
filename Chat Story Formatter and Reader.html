@@ -4,354 +4,182 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chat Story Formatter</title>
+<meta name="description" content="Turn a raw chat export into a beautifully formatted story with per-character colors, clean typesetting, and a proper reading view.">
+<meta property="og:title" content="Chat Story Formatter">
+<meta property="og:description" content="Turn a raw chat export into a beautifully formatted story.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4c-3.6-2.5-8.4-3.3-12.8-2.5v21.9c4.4-.8 9.2 0 12.8 2.5 3.6-2.5 8.4-3.3 12.8-2.5V1.5C24.4.7 19.6 1.5 16 4Z' fill='%23c9a15a'/%3E%3Cpath d='M16 4v21.9' stroke='%230f0d14' stroke-width='1.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-  /* ===== PAGE THEME TOKENS ===== */
   :root {
-    /* Midnight Library (default) */
-    --page-bg: #0f0d14;
-    --page-bg-rgb: 15,13,20;
-    --page-surface: #1a1726;
-    --page-surface-hover: #211e2e;
-    --page-surface-alt: #15121f;
-    --page-line: rgba(200,190,220,0.08);
-    --page-line-strong: rgba(200,190,220,0.14);
-    --page-text: #e8e2f0;
-    --page-text-muted: #9d94ad;
-    --page-text-dim: #6b637a;
-    --page-accent: #c9a15a;
-    --page-accent-rgb: 201,161,90;
-    --page-accent-hover: #dab56e;
-    --page-accent-soft: rgba(201,161,90,0.1);
-    --page-danger: #d16b60;
-    --page-glow: rgba(201,161,90,0.06);
-    --page-badge-bg: rgba(200,190,220,0.06);
-    --page-badge-border: rgba(200,190,220,0.1);
-    --page-select-bg: #1e1a2c;
-    --page-input-bg: #1e1a2c;
-    --page-info-bg: rgba(201,161,90,0.07);
-    --page-info-border: rgba(201,161,90,0.25);
-    --page-info-text: #e2cfa0;
-    --page-shadow: rgba(0,0,0,0.4);
-    --page-masthead-gradient: rgba(201,161,90,0.05);
+    --page-bg:#0f0d14;--page-bg-rgb:15,13,20;
+    --page-surface:#1a1726;--page-surface-hover:#211e2e;--page-surface-alt:#15121f;
+    --page-line:rgba(200,190,220,0.08);--page-line-strong:rgba(200,190,220,0.14);
+    --page-text:#e8e2f0;--page-text-muted:#9d94ad;--page-text-dim:#6b637a;
+    --page-accent:#c9a15a;--page-accent-rgb:201,161,90;--page-accent-hover:#dab56e;
+    --page-accent-soft:rgba(201,161,90,0.1);--page-danger:#d16b60;
+    --page-glow:rgba(201,161,90,0.06);
+    --page-badge-bg:rgba(200,190,220,0.06);--page-badge-border:rgba(200,190,220,0.1);
+    --page-select-bg:#1e1a2c;--page-input-bg:#1e1a2c;
+    --page-info-bg:rgba(201,161,90,0.07);--page-info-border:rgba(201,161,90,0.25);--page-info-text:#e2cfa0;
+    --page-shadow:rgba(0,0,0,0.4);
 
-    /* reader theme tokens */
-    --reader-bg:#1a1726;
-    --reader-border:rgba(200,190,220,0.08);
-    --reader-text:#e8e2f0;
-    --reader-bold:#c9a15a;
-    --reader-italic:#c98d6a;
-    --reader-meta:#9d94ad;
-    --reader-tag-bg:rgba(255,255,255,0.05);
-    --reader-tag-text:#c9a3d6;
-    --reader-tag-border:rgba(200,190,220,0.08);
-
-    /* speaker palette */
-    --speaker-0:#d3ab68;
-    --speaker-1:#6fb6ac;
-    --speaker-2:#d1889c;
-    --speaker-3:#9cc08d;
-    --speaker-4:#b79bd9;
-    --speaker-5:#e0a67e;
+    --reader-bg:#1a1726;--reader-border:rgba(200,190,220,0.08);--reader-text:#e8e2f0;
+    --reader-bold:#c9a15a;--reader-italic:#c98d6a;--reader-meta:#9d94ad;
+    --reader-tag-bg:rgba(255,255,255,0.05);--reader-tag-text:#c9a3d6;--reader-tag-border:rgba(200,190,220,0.08);
+    --speaker-0:#d3ab68;--speaker-1:#6fb6ac;--speaker-2:#d1889c;
+    --speaker-3:#9cc08d;--speaker-4:#b79bd9;--speaker-5:#e0a67e;
   }
 
-  /* ===== CAFÉ ===== */
   [data-page-theme="cafe"] {
-    --page-bg: #f7f0e3;
-    --page-bg-rgb: 247,240,227;
-    --page-surface: #fff8ee;
-    --page-surface-hover: #fff3e0;
-    --page-surface-alt: #f0e8d6;
-    --page-line: rgba(80,50,20,0.1);
-    --page-line-strong: rgba(80,50,20,0.18);
-    --page-text: #3a2e1e;
-    --page-text-muted: #7a6b55;
-    --page-text-dim: #a89880;
-    --page-accent: #a0713a;
-    --page-accent-rgb: 160,113,58;
-    --page-accent-hover: #b8834a;
-    --page-accent-soft: rgba(160,113,58,0.1);
-    --page-danger: #c44;
-    --page-glow: rgba(160,113,58,0.05);
-    --page-badge-bg: rgba(80,50,20,0.05);
-    --page-badge-border: rgba(80,50,20,0.1);
-    --page-select-bg: #f0e8d6;
-    --page-input-bg: #f0e8d6;
-    --page-info-bg: rgba(160,113,58,0.08);
-    --page-info-border: rgba(160,113,58,0.25);
-    --page-info-text: #8a6530;
-    --page-shadow: rgba(60,40,10,0.1);
-    --page-masthead-gradient: rgba(160,113,58,0.06);
+    --page-bg:#f7f0e3;--page-bg-rgb:247,240,227;
+    --page-surface:#fff8ee;--page-surface-hover:#fff3e0;--page-surface-alt:#f0e8d6;
+    --page-line:rgba(80,50,20,0.1);--page-line-strong:rgba(80,50,20,0.18);
+    --page-text:#3a2e1e;--page-text-muted:#7a6b55;--page-text-dim:#a89880;
+    --page-accent:#a0713a;--page-accent-rgb:160,113,58;--page-accent-hover:#b8834a;
+    --page-accent-soft:rgba(160,113,58,0.1);--page-danger:#c44;
+    --page-glow:rgba(160,113,58,0.05);
+    --page-badge-bg:rgba(80,50,20,0.05);--page-badge-border:rgba(80,50,20,0.1);
+    --page-select-bg:#f0e8d6;--page-input-bg:#f0e8d6;
+    --page-info-bg:rgba(160,113,58,0.08);--page-info-border:rgba(160,113,58,0.25);--page-info-text:#8a6530;
+    --page-shadow:rgba(60,40,10,0.1);
   }
-
-  /* ===== STUDIO ===== */
   [data-page-theme="studio"] {
-    --page-bg: #f8f8fa;
-    --page-bg-rgb: 248,248,250;
-    --page-surface: #ffffff;
-    --page-surface-hover: #f0f0f4;
-    --page-surface-alt: #f2f2f5;
-    --page-line: rgba(0,0,0,0.08);
-    --page-line-strong: rgba(0,0,0,0.14);
-    --page-text: #1a1a24;
-    --page-text-muted: #5e5e6e;
-    --page-text-dim: #9494a4;
-    --page-accent: #5a4ec9;
-    --page-accent-rgb: 90,78,201;
-    --page-accent-hover: #6e62dd;
-    --page-accent-soft: rgba(90,78,201,0.08);
-    --page-danger: #d14;
-    --page-glow: rgba(90,78,201,0.04);
-    --page-badge-bg: rgba(0,0,0,0.04);
-    --page-badge-border: rgba(0,0,0,0.08);
-    --page-select-bg: #f0f0f4;
-    --page-input-bg: #f0f0f4;
-    --page-info-bg: rgba(90,78,201,0.06);
-    --page-info-border: rgba(90,78,201,0.2);
-    --page-info-text: #4a3ea0;
-    --page-shadow: rgba(0,0,0,0.08);
-    --page-masthead-gradient: rgba(90,78,201,0.04);
+    --page-bg:#f8f8fa;--page-bg-rgb:248,248,250;
+    --page-surface:#ffffff;--page-surface-hover:#f0f0f4;--page-surface-alt:#f2f2f5;
+    --page-line:rgba(0,0,0,0.08);--page-line-strong:rgba(0,0,0,0.14);
+    --page-text:#1a1a24;--page-text-muted:#5e5e6e;--page-text-dim:#9494a4;
+    --page-accent:#5a4ec9;--page-accent-rgb:90,78,201;--page-accent-hover:#6e62dd;
+    --page-accent-soft:rgba(90,78,201,0.08);--page-danger:#d14;
+    --page-glow:rgba(90,78,201,0.04);
+    --page-badge-bg:rgba(0,0,0,0.04);--page-badge-border:rgba(0,0,0,0.08);
+    --page-select-bg:#f0f0f4;--page-input-bg:#f0f0f4;
+    --page-info-bg:rgba(90,78,201,0.06);--page-info-border:rgba(90,78,201,0.2);--page-info-text:#4a3ea0;
+    --page-shadow:rgba(0,0,0,0.08);
   }
-
-  /* ===== FOREST ===== */
   [data-page-theme="forest"] {
-    --page-bg: #0d1410;
-    --page-bg-rgb: 13,20,16;
-    --page-surface: #152018;
-    --page-surface-hover: #1a2a1e;
-    --page-surface-alt: #111b14;
-    --page-line: rgba(140,180,140,0.08);
-    --page-line-strong: rgba(140,180,140,0.15);
-    --page-text: #dde8df;
-    --page-text-muted: #8aaa8e;
-    --page-text-dim: #5a7a5e;
-    --page-accent: #8ab66a;
-    --page-accent-rgb: 138,182,106;
-    --page-accent-hover: #9ec87e;
-    --page-accent-soft: rgba(138,182,106,0.1);
-    --page-danger: #d16b60;
-    --page-glow: rgba(138,182,106,0.05);
-    --page-badge-bg: rgba(140,180,140,0.06);
-    --page-badge-border: rgba(140,180,140,0.1);
-    --page-select-bg: #1a2a1e;
-    --page-input-bg: #1a2a1e;
-    --page-info-bg: rgba(138,182,106,0.08);
-    --page-info-border: rgba(138,182,106,0.25);
-    --page-info-text: #a8d48a;
-    --page-shadow: rgba(0,0,0,0.45);
-    --page-masthead-gradient: rgba(138,182,106,0.05);
+    --page-bg:#0d1410;--page-bg-rgb:13,20,16;
+    --page-surface:#152018;--page-surface-hover:#1a2a1e;--page-surface-alt:#111b14;
+    --page-line:rgba(140,180,140,0.08);--page-line-strong:rgba(140,180,140,0.15);
+    --page-text:#dde8df;--page-text-muted:#8aaa8e;--page-text-dim:#5a7a5e;
+    --page-accent:#8ab66a;--page-accent-rgb:138,182,106;--page-accent-hover:#9ec87e;
+    --page-accent-soft:rgba(138,182,106,0.1);--page-danger:#d16b60;
+    --page-glow:rgba(138,182,106,0.05);
+    --page-badge-bg:rgba(140,180,140,0.06);--page-badge-border:rgba(140,180,140,0.1);
+    --page-select-bg:#1a2a1e;--page-input-bg:#1a2a1e;
+    --page-info-bg:rgba(138,182,106,0.08);--page-info-border:rgba(138,182,106,0.25);--page-info-text:#a8d48a;
+    --page-shadow:rgba(0,0,0,0.45);
   }
 
-  /* ===== RESET ===== */
   *,*::before,*::after{box-sizing:border-box;margin:0;}
+  html{scroll-behavior:smooth;}
 
   body{
     font-family:'DM Mono','Menlo',monospace;
-    background:
-      radial-gradient(ellipse 800px 500px at 10% -10%, var(--page-glow), transparent 60%),
-      var(--page-bg);
-    color:var(--page-text);
-    max-width:920px;
-    margin:0 auto;
-    padding:52px 28px 100px;
-    line-height:1.65;
-    transition:background .35s ease, color .35s ease;
-    -webkit-font-smoothing:antialiased;
+    background:radial-gradient(ellipse 800px 500px at 10% -10%,var(--page-glow),transparent 60%),var(--page-bg);
+    color:var(--page-text);max-width:920px;margin:0 auto;padding:52px 28px 100px;
+    line-height:1.65;transition:background .4s ease,color .3s ease;-webkit-font-smoothing:antialiased;
   }
-
-  /* grain overlay */
   body::before{
-    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.028;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-
-  body > *{position:relative;z-index:1;}
+  body>*{position:relative;z-index:1;}
 
   a{color:var(--page-accent);text-decoration:none;transition:color .15s;}
   a:hover{color:var(--page-accent-hover);}
   :focus-visible{outline:2px solid var(--page-accent);outline-offset:2px;}
 
-  /* transition everything that uses tokens */
-  .upload-card,.masthead,.step-heading,.dropzone,.preset-card,.reader-header,.search-row,
+  .upload-card,.masthead,.dropzone,.preset-card,.reader-header,.search-row,
   .floating-bar,.stat-badge,.options-group,.info-box,.color-pickers,.toast,.footer{
-    transition:background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
+    transition:background-color .3s ease,border-color .3s ease,color .3s ease,box-shadow .3s ease;
   }
 
   /* ===== MASTHEAD ===== */
   .masthead{display:flex;align-items:flex-start;gap:18px;}
-  .mark{
-    width:42px;height:42px;color:var(--page-accent);flex-shrink:0;margin-top:4px;
-    filter:drop-shadow(0 2px 8px rgba(var(--page-accent-rgb),0.15));
-  }
-  h1{
-    font-family:'Cormorant Garamond',Georgia,serif;
-    font-weight:600;font-size:2.2em;letter-spacing:-0.015em;
-    margin:0;line-height:1.12;color:var(--page-text);
-  }
-  .tagline{
-    color:var(--page-text-muted);margin:10px 0 0;font-size:.96em;
-    max-width:52ch;line-height:1.55;
-  }
+  .masthead-text{flex:1;min-width:0;}
+  .mark{width:42px;height:42px;color:var(--page-accent);flex-shrink:0;margin-top:4px;filter:drop-shadow(0 2px 8px rgba(var(--page-accent-rgb),0.15));}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:2.2em;letter-spacing:-.015em;margin:0;line-height:1.12;color:var(--page-text);}
+  .tagline{color:var(--page-text-muted);margin:10px 0 0;font-size:.94em;max-width:48ch;line-height:1.55;}
   .rule{border:none;border-top:1px solid var(--page-line);margin:34px 0 38px;}
+
+  /* Page theme dots in masthead */
+  .masthead-themes{display:flex;gap:6px;align-items:center;flex-shrink:0;margin-top:10px;}
+  .mt-btn{
+    width:30px;height:30px;border-radius:50%;border:2.5px solid transparent;
+    background:none;padding:3px;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;
+  }
+  .mt-btn:hover{transform:scale(1.12);}
+  .mt-btn.active{border-color:var(--page-text-muted);box-shadow:0 0 0 2px rgba(var(--page-accent-rgb),0.15);}
+  .mt-dot{display:block;width:100%;height:100%;border-radius:50%;}
 
   /* ===== CARDS ===== */
   .upload-card{
     background:var(--page-surface);padding:32px 34px;border-radius:18px;
-    border:1px solid var(--page-line);
-    box-shadow:0 16px 48px var(--page-shadow);
-    margin-bottom:22px;
+    border:1px solid var(--page-line);box-shadow:0 16px 48px var(--page-shadow);
   }
-
   .step-heading{display:flex;align-items:center;gap:14px;margin:0 0 18px;}
   .step-heading:not(:first-child){margin-top:8px;}
   .step-num{
-    width:28px;height:28px;border-radius:50%;
-    background:var(--page-accent-soft);color:var(--page-accent);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;font-size:.78em;flex-shrink:0;
+    width:28px;height:28px;border-radius:50%;background:var(--page-accent-soft);color:var(--page-accent);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78em;flex-shrink:0;
   }
-  .step-heading h2{
-    margin:0;font-size:1em;font-weight:700;color:var(--page-text);
-    letter-spacing:.02em;text-transform:uppercase;
-  }
+  .step-heading h2{margin:0;font-size:1em;font-weight:700;color:var(--page-text);letter-spacing:.02em;text-transform:uppercase;}
   .step-body{margin-bottom:32px;}
   .step-body:last-child{margin-bottom:0;}
-
-  label.field-label{
-    display:block;font-size:.78em;font-weight:600;color:var(--page-text-muted);
-    margin-bottom:7px;letter-spacing:.03em;text-transform:uppercase;
-  }
+  label.field-label{display:block;font-size:.78em;font-weight:600;color:var(--page-text-muted);margin-bottom:7px;letter-spacing:.03em;text-transform:uppercase;}
 
   input[type="text"],select{
-    width:100%;padding:12px 16px;
-    background:var(--page-input-bg);border:1px solid var(--page-line);
-    color:var(--page-text);border-radius:10px;
-    font-family:inherit;font-size:14px;margin-bottom:16px;
-    transition:border-color .18s ease, box-shadow .18s ease;
+    width:100%;padding:12px 16px;background:var(--page-input-bg);border:1px solid var(--page-line);
+    color:var(--page-text);border-radius:10px;font-family:inherit;font-size:14px;margin-bottom:16px;
+    transition:border-color .18s,box-shadow .18s;
   }
-  input[type="text"]:focus,select:focus{
-    outline:none;border-color:var(--page-accent);
-    box-shadow:0 0 0 3px rgba(var(--page-accent-rgb),0.12);
-  }
+  input[type="text"]:focus,select:focus{outline:none;border-color:var(--page-accent);box-shadow:0 0 0 3px rgba(var(--page-accent-rgb),0.12);}
   input[type="text"]:last-child{margin-bottom:0;}
   input::placeholder{color:var(--page-text-dim);}
-
   select{
     appearance:none;-webkit-appearance:none;cursor:pointer;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%239a90ab' stroke-width='1.8'><path d='M5 8l5 5 5-5'/></svg>");
     background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;
   }
 
-  .options-group{
-    background:var(--page-surface-alt);padding:20px 22px;border-radius:12px;
-    border:1px solid var(--page-line);display:flex;flex-direction:column;gap:18px;
-  }
-  .options-group > label,.options-group .checkbox-row{
-    display:flex;align-items:center;gap:10px;cursor:pointer;
-    font-weight:500;color:var(--page-text);font-size:14px;
-  }
-  .options-group input[type="checkbox"]{
-    width:17px;height:17px;accent-color:var(--page-accent);cursor:pointer;
-  }
-  .select-row label{
-    display:block;font-size:13px;font-weight:500;color:var(--page-text-muted);margin-bottom:8px;
-  }
-
-  .info-box{
-    background:var(--page-info-bg);border-left:3px solid var(--page-accent);
-    padding:11px 16px;border-radius:8px;font-size:.82em;color:var(--page-info-text);
-    margin-top:4px;line-height:1.5;
-  }
-
-  /* ===== PAGE THEME PRESETS ===== */
-  .page-theme-section{margin-bottom:20px;}
-  .page-theme-section > label.field-label{margin-bottom:12px;}
-  .page-theme-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-  .page-theme-btn{
-    display:flex;flex-direction:column;align-items:center;gap:8px;
-    padding:14px 8px;border-radius:12px;border:2px solid var(--page-line);
-    background:var(--page-surface-alt);cursor:pointer;
-    transition:transform .15s ease, border-color .2s ease, box-shadow .2s ease;
-    text-align:center;
-  }
-  .page-theme-btn:hover{transform:translateY(-2px);}
-  .page-theme-btn.active{
-    border-color:var(--page-accent);
-    box-shadow:0 0 0 1px rgba(var(--page-accent-rgb),0.15), 0 4px 16px var(--page-shadow);
-  }
-  .page-theme-swatch{
-    width:42px;height:42px;border-radius:10px;border:1px solid var(--page-line);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;
-    position:relative;overflow:hidden;
-  }
-  .page-theme-swatch::after{
-    content:'';position:absolute;bottom:0;left:0;right:0;height:50%;
-    border-radius:0 0 9px 9px;
-  }
-  .page-theme-name{font-size:.72em;font-weight:600;color:var(--page-text-muted);letter-spacing:.03em;}
+  .options-group{background:var(--page-surface-alt);padding:20px 22px;border-radius:12px;border:1px solid var(--page-line);display:flex;flex-direction:column;gap:18px;}
+  .options-group>label,.options-group .checkbox-row{display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:500;color:var(--page-text);font-size:14px;}
+  .options-group input[type="checkbox"]{width:17px;height:17px;accent-color:var(--page-accent);cursor:pointer;}
+  .select-row label{display:block;font-size:13px;font-weight:500;color:var(--page-text-muted);margin-bottom:8px;}
+  .info-box{background:var(--page-info-bg);border-left:3px solid var(--page-accent);padding:11px 16px;border-radius:8px;font-size:.82em;color:var(--page-info-text);margin-top:4px;line-height:1.5;}
 
   /* ===== READER THEME PRESETS ===== */
   .preset-container{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
   .preset-card{
-    border-radius:12px;border:2px solid transparent;cursor:pointer;
-    padding:12px;text-align:left;
-    transition:transform .15s ease, border-color .2s ease, box-shadow .2s ease;
-    background:var(--page-surface-alt);
+    border-radius:12px;border:2px solid transparent;cursor:pointer;padding:12px;text-align:left;
+    background:var(--page-surface-alt);transition:transform .15s,border-color .2s,box-shadow .2s;
   }
   .preset-card:hover{transform:translateY(-2px);}
-  .preset-card.active{
-    border-color:var(--page-accent);
-    box-shadow:0 0 0 1px rgba(var(--page-accent-rgb),0.1);
-  }
-  .preset-swatch{
-    border-radius:8px;height:56px;display:flex;align-items:center;justify-content:center;
-    gap:6px;margin-bottom:10px;
-  }
+  .preset-card.active{border-color:var(--page-accent);box-shadow:0 0 0 1px rgba(var(--page-accent-rgb),0.1);}
+  .preset-swatch{border-radius:8px;height:56px;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;}
   .preset-swatch .aa{font-family:'Cormorant Garamond',serif;font-size:1.3em;font-weight:600;}
   .preset-name{font-size:.78em;font-weight:600;color:var(--page-text-muted);}
 
   .live-preview-wrap{margin-bottom:20px;}
-  .reader-preview-surface{
-    border:1px solid var(--page-line);border-radius:12px;padding:20px 22px;
-    transition:background-color .25s ease, border-color .25s ease;
-  }
+  .reader-preview-surface{border:1px solid var(--page-line);border-radius:12px;padding:20px 22px;transition:background-color .25s,border-color .25s;}
   .reader-preview-surface .message-block{margin-bottom:14px;padding-bottom:14px;}
   .reader-preview-surface .message-block:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
 
-  .color-pickers{
-    display:flex;gap:24px;background:var(--page-surface-alt);padding:16px 20px;
-    border-radius:12px;border:1px solid var(--page-line);flex-wrap:wrap;
-  }
-  .color-pickers label{
-    display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
-    color:var(--page-text-muted);cursor:pointer;letter-spacing:.02em;text-transform:uppercase;
-  }
-  input[type="color"]{
-    border:none;width:28px;height:28px;border-radius:8px;cursor:pointer;
-    background:none;padding:0;
-  }
+  .color-pickers{display:flex;gap:24px;background:var(--page-surface-alt);padding:16px 20px;border-radius:12px;border:1px solid var(--page-line);flex-wrap:wrap;}
+  .color-pickers label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--page-text-muted);cursor:pointer;letter-spacing:.02em;text-transform:uppercase;}
+  input[type="color"]{border:none;width:28px;height:28px;border-radius:8px;cursor:pointer;background:none;padding:0;}
 
   /* ===== DROPZONE ===== */
   .dropzone{
-    border:1.5px dashed var(--page-line-strong);border-radius:14px;padding:40px 24px;
-    text-align:center;cursor:pointer;
-    background:var(--page-surface-alt);
-    transition:border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+    border:1.5px dashed var(--page-line-strong);border-radius:14px;padding:40px 24px;text-align:center;cursor:pointer;
+    background:var(--page-surface-alt);transition:border-color .2s,background-color .2s,box-shadow .2s;
   }
-  .dropzone:hover,.dropzone:focus-visible{
-    border-color:var(--page-accent);box-shadow:0 0 0 3px rgba(var(--page-accent-rgb),0.06);
-  }
-  .dropzone.drag-active{
-    border-color:var(--page-accent);background:var(--page-accent-soft);
-    box-shadow:0 0 0 4px rgba(var(--page-accent-rgb),0.1);
-  }
-  .dropzone.has-file{
-    border-style:solid;border-color:rgba(var(--page-accent-rgb),0.4);
-    background:var(--page-accent-soft);
-  }
+  .dropzone:hover,.dropzone:focus-visible{border-color:var(--page-accent);box-shadow:0 0 0 3px rgba(var(--page-accent-rgb),0.06);}
+  .dropzone.drag-active{border-color:var(--page-accent);background:var(--page-accent-soft);box-shadow:0 0 0 4px rgba(var(--page-accent-rgb),0.1);}
+  .dropzone.has-file{border-style:solid;border-color:rgba(var(--page-accent-rgb),0.4);background:var(--page-accent-soft);}
   .dz-icon{width:34px;height:34px;color:var(--page-text-dim);margin:0 auto 14px;}
   .dz-title{font-weight:700;margin:0 0 6px;color:var(--page-text);font-size:.96em;}
   .dz-sub{color:var(--page-text-dim);font-size:.82em;margin:0;}
@@ -359,110 +187,131 @@
 
   /* ===== BUTTONS ===== */
   button{
-    background-color:var(--page-accent);color:#1a1200;border:none;padding:13px 26px;
-    cursor:pointer;border-radius:10px;font-size:14px;font-weight:700;
-    font-family:inherit;letter-spacing:.02em;
-    transition:transform .12s ease, opacity .12s ease, background-color .15s ease;
-    display:inline-flex;align-items:center;gap:8px;
+    background-color:var(--page-accent);color:#1a1200;border:none;padding:13px 26px;cursor:pointer;
+    border-radius:10px;font-size:14px;font-weight:700;font-family:inherit;letter-spacing:.02em;
+    transition:transform .12s,opacity .12s,background-color .15s;display:inline-flex;align-items:center;gap:8px;
   }
   button:hover:not(:disabled){transform:translateY(-1px);background:var(--page-accent-hover);}
   button:disabled{opacity:.35;cursor:not-allowed;transform:none;}
-  .secondary-btn{
-    background-color:var(--page-surface-alt);color:var(--page-text);
-    border:1px solid var(--page-line);
-  }
-  .secondary-btn:hover:not(:disabled){
-    background:var(--page-surface-hover);color:var(--page-text);transform:translateY(-1px);
-  }
+  .secondary-btn{background-color:var(--page-surface-alt);color:var(--page-text);border:1px solid var(--page-line);}
+  .secondary-btn:hover:not(:disabled){background:var(--page-surface-hover);color:var(--page-text);transform:translateY(-1px);}
   .primary-row{margin-top:28px;}
   .primary-row button{width:100%;justify-content:center;padding:16px;font-size:15px;}
   .icon-inline{width:16px;height:16px;}
+  .link-btn{
+    background:none;border:none;color:var(--page-text-muted);cursor:pointer;font-family:inherit;
+    font-size:13px;padding:0;text-decoration:underline;text-underline-offset:2px;
+  }
+  .link-btn:hover{color:var(--page-text);}
 
   /* ===== VIEW TRANSITIONS ===== */
   #readerView{display:none;opacity:0;transform:translateY(12px);}
-  #readerView.view-enter{opacity:1;transform:translateY(0);transition:opacity .36s ease, transform .36s ease;}
-  #controlPanel.view-exit{opacity:0;transform:translateY(-10px);transition:opacity .22s ease, transform .22s ease;}
+  #readerView.view-enter{opacity:1;transform:translateY(0);transition:opacity .36s ease,transform .36s ease;}
+  #controlPanel.view-exit{opacity:0;transform:translateY(-10px);transition:opacity .22s ease,transform .22s ease;}
 
   /* ===== READER HEADER ===== */
   .reader-header{
-    background:var(--page-surface);padding:28px 32px;border-radius:16px;
-    border:1px solid var(--page-line);margin-bottom:18px;
-    display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;
+    background:var(--page-surface);padding:28px 32px;border-radius:16px;border:1px solid var(--page-line);
+    margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;
   }
-  .reader-title-area h2{
-    margin:0;color:var(--page-text);font-size:1.65em;
-    font-family:'Cormorant Garamond',serif;font-weight:600;
-  }
-  .reader-title-area p.desc{
-    margin:7px 0 16px;color:var(--page-text-muted);font-style:italic;font-size:.92em;
-    font-family:'Lora',serif;
-  }
+  .reader-title-area h2{margin:0;color:var(--page-text);font-size:1.65em;font-family:'Cormorant Garamond',serif;font-weight:600;}
+  .reader-title-area p.desc{margin:7px 0 16px;color:var(--page-text-muted);font-style:italic;font-size:.92em;font-family:'Lora',serif;}
   .stats-container{display:flex;gap:8px;flex-wrap:wrap;}
   .stat-badge{
-    background:var(--page-badge-bg);color:var(--page-text-muted);
-    padding:6px 13px 6px 10px;border-radius:20px;font-size:.76em;font-weight:600;
-    border:1px solid var(--page-badge-border);display:inline-flex;align-items:center;gap:6px;
+    background:var(--page-badge-bg);color:var(--page-text-muted);padding:6px 13px 6px 10px;border-radius:20px;
+    font-size:.76em;font-weight:600;border:1px solid var(--page-badge-border);display:inline-flex;align-items:center;gap:6px;
   }
   .stat-badge svg{width:13px;height:13px;flex-shrink:0;}
-  .header-actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .header-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
   .header-actions button{padding:10px 16px;font-size:13px;}
+  #settingsBtn.active{background:var(--page-accent);color:#1a1200;}
+
+  /* ===== SETTINGS DRAWER ===== */
+  .settings-drawer{
+    overflow:hidden;max-height:0;opacity:0;margin-bottom:0;
+    transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .3s ease .05s,margin .3s ease;
+  }
+  .settings-drawer.open{max-height:600px;opacity:1;margin-bottom:18px;}
+  .settings-drawer-inner{
+    background:var(--page-surface);border:1px solid var(--page-line);border-radius:16px;
+    padding:24px 28px;box-shadow:0 8px 32px var(--page-shadow);
+  }
+  .drawer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+  .drawer-top h3{margin:0;font-size:1em;font-weight:700;color:var(--page-text);letter-spacing:.02em;text-transform:uppercase;}
+  .drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 32px;}
+  .drawer-section-label{font-size:.72em;font-weight:700;color:var(--page-text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+
+  .dt-row{display:flex;gap:6px;}
+  .dt-btn{
+    width:28px;height:28px;border-radius:50%;border:2px solid transparent;background:none;
+    padding:3px;cursor:pointer;transition:border-color .2s,transform .15s;
+  }
+  .dt-btn:hover{transform:scale(1.1);}
+  .dt-btn.active{border-color:var(--page-text-muted);}
+  .dt-dot{display:block;width:100%;height:100%;border-radius:50%;}
+
+  .dp-row{display:flex;gap:8px;}
+  .dp-card{
+    flex:1;padding:8px 6px;border-radius:8px;border:2px solid transparent;background:var(--page-surface-alt);
+    cursor:pointer;text-align:center;transition:border-color .2s,transform .15s;
+  }
+  .dp-card:hover{transform:translateY(-1px);}
+  .dp-card.active{border-color:var(--page-accent);}
+  .dp-swatch{height:24px;border-radius:4px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:2px;}
+  .dp-swatch span{font-family:'Cormorant Garamond',serif;font-size:.75em;font-weight:600;}
+  .dp-label{font-size:.62em;font-weight:600;color:var(--page-text-muted);}
+
+  .drawer-colors{display:flex;gap:16px;flex-wrap:wrap;}
+  .drawer-colors label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--page-text-muted);cursor:pointer;text-transform:uppercase;letter-spacing:.02em;}
+  .drawer-colors input[type="color"]{width:24px;height:24px;border-radius:6px;}
+
+  .drawer-opts{display:flex;flex-direction:column;gap:12px;}
+  .drawer-opts .checkbox-row{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:500;color:var(--page-text);font-size:13px;}
+  .drawer-opts input[type="checkbox"]{width:16px;height:16px;accent-color:var(--page-accent);cursor:pointer;}
+  .drawer-opts select{
+    width:100%;padding:9px 12px;font-size:13px;margin-bottom:0;
+    background:var(--page-select-bg);border:1px solid var(--page-line);color:var(--page-text);border-radius:8px;
+    appearance:none;-webkit-appearance:none;cursor:pointer;font-family:inherit;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%239a90ab' stroke-width='1.8'><path d='M5 8l5 5 5-5'/></svg>");
+    background-repeat:no-repeat;background-position:right 10px center;padding-right:32px;
+  }
+  .drawer-opts .select-mini label{display:block;font-size:12px;font-weight:500;color:var(--page-text-muted);margin-bottom:6px;}
+
+  .drawer-actions{display:flex;align-items:center;gap:18px;margin-top:22px;padding-top:18px;border-top:1px solid var(--page-line);}
+  .drawer-actions button{padding:12px 28px;}
 
   /* ===== SEARCH ===== */
   .search-row{
-    display:flex;align-items:center;gap:10px;background:var(--page-surface);
-    border:1px solid var(--page-line);border-radius:12px;padding:10px 16px;margin-bottom:20px;
+    display:flex;align-items:center;gap:10px;background:var(--page-surface);border:1px solid var(--page-line);
+    border-radius:12px;padding:10px 16px;margin-bottom:20px;
   }
   .search-row svg{width:16px;height:16px;color:var(--page-text-dim);flex-shrink:0;}
-  .search-row input{
-    flex:1;background:transparent;border:none;color:var(--page-text);font-size:14px;
-    font-family:inherit;padding:2px 0;
-  }
+  .search-row input{flex:1;background:transparent;border:none;color:var(--page-text);font-size:14px;font-family:inherit;padding:2px 0;}
   .search-row input:focus{outline:none;}
   .search-row input::placeholder{color:var(--page-text-dim);}
   .search-count{font-size:12px;color:var(--page-text-muted);white-space:nowrap;min-width:52px;text-align:right;}
-  .icon-btn{
-    background:transparent;border:none;padding:4px;color:var(--page-text-dim);cursor:pointer;
-    border-radius:6px;display:inline-flex;transition:color .15s, background .15s;
-  }
+  .search-hint{font-size:11px;color:var(--page-text-dim);white-space:nowrap;padding:2px 6px;border:1px solid var(--page-line);border-radius:4px;}
+  .icon-btn{background:transparent;border:none;padding:4px;color:var(--page-text-dim);cursor:pointer;border-radius:6px;display:inline-flex;transition:color .15s,background .15s;}
   .icon-btn:hover{color:var(--page-text);background:var(--page-surface-hover);}
   .icon-btn svg{width:16px;height:16px;}
 
   /* ===== STORY CONTAINER ===== */
   #storyContainer{
     font-family:'Lora',Georgia,serif;font-size:1.12em;line-height:1.9;
-    background:var(--reader-bg);color:var(--reader-text);
-    padding:50px 58px;border-radius:16px;border:1px solid var(--reader-border);
-    box-shadow:0 16px 48px var(--page-shadow);
-    transition:background-color .3s ease, color .3s ease, border-color .3s ease;
-    max-width:680px;margin:0 auto;
+    background:var(--reader-bg);color:var(--reader-text);padding:50px 58px;border-radius:16px;
+    border:1px solid var(--reader-border);box-shadow:0 16px 48px var(--page-shadow);
+    transition:background-color .3s,color .3s,border-color .3s;max-width:680px;margin:0 auto;
   }
   #storyContainer.wide{max-width:100%;}
-
-  .message-block{
-    margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--reader-border);
-    transition:background-color .2s ease;border-radius:8px;
-  }
+  .message-block{margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--reader-border);transition:background-color .2s;border-radius:8px;}
   .message-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-  .message-block.search-match{
-    background:rgba(var(--page-accent-rgb),0.06);
-    box-shadow:inset 3px 0 0 0 var(--page-accent);
-  }
-  .message-block.search-match.search-current{
-    background:rgba(var(--page-accent-rgb),0.12);
-  }
-
-  .speaker-header{
-    margin-bottom:10px;font-family:'DM Mono',monospace;
-    display:flex;align-items:center;gap:9px;flex-wrap:wrap;
-  }
+  .message-block.search-match{background:rgba(var(--page-accent-rgb),0.06);box-shadow:inset 3px 0 0 0 var(--page-accent);}
+  .message-block.search-match.search-current{background:rgba(var(--page-accent-rgb),0.12);}
+  .speaker-header{margin-bottom:10px;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
   .speaker-dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;}
   .speaker-name{font-weight:700;font-size:.84em;letter-spacing:.01em;}
   .speaker-timestamp{color:var(--reader-meta);font-size:.72em;opacity:.7;}
-  .speaker-engine{
-    background:var(--reader-tag-bg);color:var(--reader-tag-text);
-    font-size:.68em;padding:2px 8px;border-radius:4px;
-    border:1px solid var(--reader-tag-border);font-family:'DM Mono',monospace;
-  }
+  .speaker-engine{background:var(--reader-tag-bg);color:var(--reader-tag-text);font-size:.68em;padding:2px 8px;border-radius:4px;border:1px solid var(--reader-tag-border);font-family:'DM Mono',monospace;}
   .message-text{white-space:pre-wrap;word-break:break-word;color:var(--reader-text);}
   .sp-0{color:var(--speaker-0);} .sp-1{color:var(--speaker-1);} .sp-2{color:var(--speaker-2);}
   .sp-3{color:var(--speaker-3);} .sp-4{color:var(--speaker-4);} .sp-5{color:var(--speaker-5);}
@@ -470,47 +319,35 @@
   /* ===== FLOATING BAR ===== */
   .top-progress{position:fixed;top:0;left:0;width:100%;height:3px;background:rgba(255,255,255,0.04);z-index:100;display:none;}
   .top-progress-fill{height:100%;width:0%;background:var(--page-accent);transition:width .08s linear;}
-
   .floating-bar{
-    position:fixed;bottom:24px;right:24px;
-    background:var(--page-surface);backdrop-filter:blur(16px);
-    border:1px solid var(--page-line);padding:8px 10px;border-radius:32px;
-    display:none;align-items:center;gap:4px;
-    box-shadow:0 12px 32px var(--page-shadow);z-index:99;font-size:12.5px;
+    position:fixed;bottom:24px;right:24px;background:var(--page-surface);backdrop-filter:blur(16px);
+    border:1px solid var(--page-line);padding:8px 10px;border-radius:32px;display:none;align-items:center;
+    gap:4px;box-shadow:0 12px 32px var(--page-shadow);z-index:99;font-size:12.5px;
   }
   .fb-progress{color:var(--page-text-muted);padding:0 8px;font-weight:600;font-variant-numeric:tabular-nums;}
   .fb-divider{width:1px;height:18px;background:var(--page-line);margin:0 4px;}
   .fb-btn{
-    background:transparent;color:var(--page-text-muted);border:none;padding:6px 9px;
-    border-radius:20px;font-family:'DM Mono',monospace;font-weight:700;font-size:12.5px;
-    cursor:pointer;display:inline-flex;align-items:center;transition:background .15s, color .15s;
+    background:transparent;color:var(--page-text-muted);border:none;padding:6px 9px;border-radius:20px;
+    font-family:'DM Mono',monospace;font-weight:700;font-size:12.5px;cursor:pointer;display:inline-flex;
+    align-items:center;transition:background .15s,color .15s;
   }
   .fb-btn:hover{background:var(--page-surface-hover);color:var(--page-text);}
   .fb-btn svg{width:15px;height:15px;}
   .fb-btn[aria-pressed="true"]{color:var(--page-accent);}
 
   /* ===== TOASTS ===== */
-  #toastContainer{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;
-    display:flex;flex-direction:column;gap:8px;align-items:center;
-  }
+  #toastContainer{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;}
   .toast{
-    background:var(--page-surface);border:1px solid var(--page-line);
-    color:var(--page-text);padding:12px 20px;border-radius:12px;font-size:13px;
-    box-shadow:0 12px 32px var(--page-shadow);
-    opacity:0;transform:translateY(8px);transition:opacity .22s ease, transform .22s ease;
+    background:var(--page-surface);border:1px solid var(--page-line);color:var(--page-text);
+    padding:12px 20px;border-radius:12px;font-size:13px;box-shadow:0 12px 32px var(--page-shadow);
+    opacity:0;transform:translateY(8px);transition:opacity .22s,transform .22s;
   }
   .toast.show{opacity:1;transform:translateY(0);}
   .toast.toast-error{border-color:rgba(201,98,87,0.4);color:var(--page-danger);}
 
-  .footer{
-    text-align:center;margin-top:60px;padding-top:28px;
-    border-top:1px solid var(--page-line);
-    color:var(--page-text-dim);font-size:12px;letter-spacing:.02em;
-  }
+  .footer{text-align:center;margin-top:60px;padding-top:28px;border-top:1px solid var(--page-line);color:var(--page-text-dim);font-size:12px;letter-spacing:.02em;}
   .footer strong{color:var(--page-text-muted);}
 
-  /* ===== RESPONSIVE ===== */
   @media(max-width:680px){
     body{padding:28px 14px 100px;}
     h1{font-size:1.65em;}
@@ -518,13 +355,14 @@
     #storyContainer{padding:28px 20px;font-size:1.02em;}
     .reader-header{padding:20px;}
     .floating-bar{right:10px;bottom:10px;}
-    .page-theme-grid{grid-template-columns:repeat(2,1fr);}
     .preset-container{gap:8px;}
+    .drawer-grid{grid-template-columns:1fr;}
+    .masthead{flex-wrap:wrap;}
+    .masthead-themes{margin-top:0;}
   }
-
   @media print{
     body{background:white;color:black;padding:0;}
-    .upload-card,.reader-header .header-actions,.floating-bar,.footer,.search-row,.top-progress{display:none !important;}
+    .upload-card,.reader-header .header-actions,.floating-bar,.footer,.search-row,.top-progress,.settings-drawer{display:none !important;}
     #storyContainer{background:white !important;color:black !important;border:none !important;padding:0;box-shadow:none;max-width:100%;}
     body::before{display:none;}
   }
@@ -532,711 +370,613 @@
 </head>
 <body>
 
-  <div id="toastContainer"></div>
-  <div class="top-progress" id="topProgressBar"><div class="top-progress-fill" id="topProgressFill"></div></div>
+<div id="toastContainer"></div>
+<div class="top-progress" id="topProgressBar"><div class="top-progress-fill" id="topProgressFill"></div></div>
 
-  <div id="controlPanel">
-    <header class="masthead">
-      <svg class="mark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M24 11c-4.5-3.2-10.5-4.2-16-3.2v27.4c5.5-1 11.5 0 16 3.2 4.5-3.2 10.5-4.2 16-3.2V7.8c-5.5-1-11.5 0-16 3.2Z"/>
-        <path d="M24 11v27.4"/>
-      </svg>
-      <div>
-        <h1>Chat Story Formatter</h1>
-        <p class="tagline">Turn a raw chat export into a story worth reopening — clean typesetting, per-character color, and a proper reading view.</p>
-      </div>
-    </header>
-    <hr class="rule">
-
-    <div class="upload-card">
-      <div class="step-heading"><span class="step-num">1</span><h2>Title &amp; notes</h2></div>
-      <div class="step-body">
-        <label class="field-label" for="storyTitle">Story title</label>
-        <input type="text" id="storyTitle" placeholder="e.g. The Shadow Ruins">
-        <label class="field-label" for="storyDesc">Author or notes</label>
-        <input type="text" id="storyDesc" placeholder="e.g. Roleplay, October arc">
-      </div>
-
-      <div class="step-heading"><span class="step-num">2</span><h2>Cleanup</h2></div>
-      <div class="step-body">
-        <div class="options-group">
-          <label class="checkbox-row"><input type="checkbox" id="toggleTimestamps" checked> Include timestamps</label>
-          <div>
-            <label class="checkbox-row"><input type="checkbox" id="toggleEngine" checked> Include AI engine / model names</label>
-            <div class="info-box">Model names only appear where a manual engine switch was recorded in the raw export.</div>
-          </div>
-          <div class="select-row">
-            <label for="commandHandling">Command handling (!wack, !sleep, !reset)</label>
-            <select id="commandHandling">
-              <option value="keep">Keep raw commands as-is</option>
-              <option value="replace" selected>Replace with story text — e.g. [User sent a command]</option>
-              <option value="strip">Strip out entirely</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="step-heading"><span class="step-num">3</span><h2>Page theme</h2></div>
-      <div class="step-body">
-        <div class="page-theme-section">
-          <div class="page-theme-grid">
-            <div class="page-theme-btn active" id="pt-midnight" onclick="applyPageTheme('midnight')">
-              <div class="page-theme-swatch" style="background:#1a1726;color:#c9a15a;">
-                <span>Ag</span>
-                <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:#0f0d14;border-radius:0 0 9px 9px;"></div>
-              </div>
-              <span class="page-theme-name">Midnight Library</span>
-            </div>
-            <div class="page-theme-btn" id="pt-cafe" onclick="applyPageTheme('cafe')">
-              <div class="page-theme-swatch" style="background:#fff8ee;color:#a0713a;">
-                <span>Ag</span>
-                <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:#f7f0e3;border-radius:0 0 9px 9px;"></div>
-              </div>
-              <span class="page-theme-name">Cozy Cafe</span>
-            </div>
-            <div class="page-theme-btn" id="pt-studio" onclick="applyPageTheme('studio')">
-              <div class="page-theme-swatch" style="background:#ffffff;color:#5a4ec9;border:1px solid rgba(0,0,0,0.08);">
-                <span>Ag</span>
-                <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:#f8f8fa;border-radius:0 0 9px 9px;"></div>
-              </div>
-              <span class="page-theme-name">Clean Studio</span>
-            </div>
-            <div class="page-theme-btn" id="pt-forest" onclick="applyPageTheme('forest')">
-              <div class="page-theme-swatch" style="background:#152018;color:#8ab66a;">
-                <span>Ag</span>
-                <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:#0d1410;border-radius:0 0 9px 9px;"></div>
-              </div>
-              <span class="page-theme-name">Forest Study</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="step-heading"><span class="step-num">4</span><h2>Reader theme</h2></div>
-      <div class="step-body">
-        <div class="preset-container">
-          <div class="preset-card active" id="preset-midnight" onclick="applyPreset('midnight')">
-            <div class="preset-swatch" style="background:#1a1726;"><span class="aa" style="color:#d3ab68;">Aa</span><span class="aa" style="color:#6fb6ac;">Aa</span></div>
-            <div class="preset-name">Velvet Midnight</div>
-          </div>
-          <div class="preset-card" id="preset-sepia" onclick="applyPreset('sepia')">
-            <div class="preset-swatch" style="background:#f3e9d2;"><span class="aa" style="color:#93631c;">Aa</span><span class="aa" style="color:#2f6b62;">Aa</span></div>
-            <div class="preset-name">Cozy Sepia</div>
-          </div>
-          <div class="preset-card" id="preset-studio" onclick="applyPreset('studio')">
-            <div class="preset-swatch" style="background:#ffffff;border:1px solid rgba(0,0,0,0.08);"><span class="aa" style="color:#9c6c1f;">Aa</span><span class="aa" style="color:#227069;">Aa</span></div>
-            <div class="preset-name">Clean Studio</div>
-          </div>
-        </div>
-
-        <div class="live-preview-wrap">
-          <div class="reader-preview-surface">
-            <div class="message-block">
-              <div class="speaker-header">
-                <span class="speaker-dot sp-0"></span>
-                <span class="speaker-name sp-0">Kestrel</span>
-                <span class="speaker-timestamp">[2:14 PM]</span>
-              </div>
-              <div class="message-text">The door won't budge. Try the <em>other</em> handle.</div>
-            </div>
-            <div class="message-block">
-              <div class="speaker-header">
-                <span class="speaker-dot sp-1"></span>
-                <span class="speaker-name sp-1">Mira</span>
-                <span class="speaker-timestamp">[2:15 PM]</span>
-              </div>
-              <div class="message-text">That's not a handle — that's the <strong>fire alarm</strong>.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="color-pickers">
-          <label>Text <input type="color" id="textColorPicker" value="#e8e2f0" onchange="updateColors()"></label>
-          <label>Bold <input type="color" id="boldColorPicker" value="#c9a15a" onchange="updateColors()"></label>
-          <label>Italic <input type="color" id="italicColorPicker" value="#c98d6a" onchange="updateColors()"></label>
-        </div>
-      </div>
-
-      <div class="step-heading"><span class="step-num">5</span><h2>Upload</h2></div>
-      <div class="step-body">
-        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload transcript text file">
-          <input type="file" id="textFile" accept=".txt" hidden>
-          <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
-          </svg>
-          <p class="dz-title">Drop your exported chat log here</p>
-          <p class="dz-sub">or click to browse — .txt files only</p>
-          <p class="dz-filename" id="fileNameDisplay" hidden></p>
-        </div>
-      </div>
-
-      <div class="primary-row">
-        <button id="openReaderBtn" onclick="renderReaderView()" disabled>
-          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5c3-1.5 6-1.5 9 0v14c-3-1.5-6-1.5-9 0Z"/><path d="M22 5c-3-1.5-6-1.5-9 0v14c3-1.5 6-1.5 9 0Z"/></svg>
-          Open styled reader
-        </button>
-      </div>
+<!-- ===== CONTROL PANEL ===== -->
+<div id="controlPanel">
+  <header class="masthead">
+    <svg class="mark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 11c-4.5-3.2-10.5-4.2-16-3.2v27.4c5.5-1 11.5 0 16 3.2 4.5-3.2 10.5-4.2 16-3.2V7.8c-5.5-1-11.5 0-16 3.2Z"/>
+      <path d="M24 11v27.4"/>
+    </svg>
+    <div class="masthead-text">
+      <h1>Chat Story Formatter</h1>
+      <p class="tagline">Turn a raw chat export into a story worth reopening — clean typesetting, per-character color, and a proper reading view.</p>
     </div>
-  </div>
-
-  <div id="readerView">
-    <div class="reader-header">
-      <div class="reader-title-area">
-        <h2 id="displayTitle">Your Story Transcript</h2>
-        <p class="desc" id="displayDesc"></p>
-        <div class="stats-container">
-          <span class="stat-badge" id="msgCountDisplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>0 messages</span>
-          <span class="stat-badge" id="wordCountDisplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>0 words</span>
-          <span class="stat-badge" id="readTimeDisplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>0 min read</span>
-        </div>
-      </div>
-      <div class="header-actions">
-        <button class="secondary-btn" onclick="applyPreset('midnight')" title="Velvet Midnight theme">🌙</button>
-        <button class="secondary-btn" onclick="applyPreset('sepia')" title="Cozy Sepia theme">☕</button>
-        <button class="secondary-btn" onclick="applyPreset('studio')" title="Clean Studio theme">☀️</button>
-        <button onclick="downloadCleanText()">
-          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
-          Export text
-        </button>
-        <button class="secondary-btn" onclick="window.print()">
-          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M4 17H2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5h-2"/></svg>
-          Print
-        </button>
-        <button class="secondary-btn" onclick="editSettings()">
-          <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
-          Settings
-        </button>
-      </div>
-    </div>
-
-    <div class="search-row">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="text" id="searchInput" placeholder="Find in this story…" aria-label="Search story text">
-      <span class="search-count" id="searchCount"></span>
-      <button class="icon-btn" id="searchPrevBtn" title="Previous match" aria-label="Previous match">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+    <div class="masthead-themes" role="radiogroup" aria-label="Page theme">
+      <button class="mt-btn active" data-pt="midnight" onclick="applyPageTheme('midnight')" title="Midnight Library" aria-label="Midnight Library">
+        <span class="mt-dot" style="background:#c9a15a;"></span>
       </button>
-      <button class="icon-btn" id="searchNextBtn" title="Next match" aria-label="Next match">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      <button class="mt-btn" data-pt="cafe" onclick="applyPageTheme('cafe')" title="Cozy Cafe" aria-label="Cozy Cafe">
+        <span class="mt-dot" style="background:#a0713a;"></span>
+      </button>
+      <button class="mt-btn" data-pt="studio" onclick="applyPageTheme('studio')" title="Clean Studio" aria-label="Clean Studio">
+        <span class="mt-dot" style="background:#5a4ec9;"></span>
+      </button>
+      <button class="mt-btn" data-pt="forest" onclick="applyPageTheme('forest')" title="Forest Study" aria-label="Forest Study">
+        <span class="mt-dot" style="background:#8ab66a;"></span>
       </button>
     </div>
+  </header>
+  <hr class="rule">
 
-    <div id="storyContainer"></div>
+  <div class="upload-card">
+    <div class="step-heading"><span class="step-num">1</span><h2>Title &amp; notes</h2></div>
+    <div class="step-body">
+      <label class="field-label" for="storyTitle">Story title</label>
+      <input type="text" id="storyTitle" placeholder="e.g. The Shadow Ruins">
+      <label class="field-label" for="storyDesc">Author or notes</label>
+      <input type="text" id="storyDesc" placeholder="e.g. Roleplay, October arc">
+    </div>
+
+    <div class="step-heading"><span class="step-num">2</span><h2>Cleanup</h2></div>
+    <div class="step-body">
+      <div class="options-group">
+        <label class="checkbox-row"><input type="checkbox" id="toggleTimestamps" checked> Include timestamps</label>
+        <div>
+          <label class="checkbox-row"><input type="checkbox" id="toggleEngine" checked> Include AI engine / model names</label>
+          <div class="info-box">Model names only appear where a manual engine switch was recorded in the raw export.</div>
+        </div>
+        <div class="select-row">
+          <label for="commandHandling">Command handling (!wack, !sleep, !reset)</label>
+          <select id="commandHandling">
+            <option value="keep">Keep raw commands as-is</option>
+            <option value="replace" selected>Replace with story text — e.g. [User sent a command]</option>
+            <option value="strip">Strip out entirely</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-heading"><span class="step-num">3</span><h2>Reader theme</h2></div>
+    <div class="step-body">
+      <div class="preset-container">
+        <div class="preset-card active" data-rp="midnight" onclick="applyReaderPreset('midnight')">
+          <div class="preset-swatch" style="background:#1a1726;"><span class="aa" style="color:#d3ab68;">Aa</span><span class="aa" style="color:#6fb6ac;">Aa</span></div>
+          <div class="preset-name">Velvet Midnight</div>
+        </div>
+        <div class="preset-card" data-rp="sepia" onclick="applyReaderPreset('sepia')">
+          <div class="preset-swatch" style="background:#f3e9d2;"><span class="aa" style="color:#93631c;">Aa</span><span class="aa" style="color:#2f6b62;">Aa</span></div>
+          <div class="preset-name">Cozy Sepia</div>
+        </div>
+        <div class="preset-card" data-rp="studio" onclick="applyReaderPreset('studio')">
+          <div class="preset-swatch" style="background:#ffffff;border:1px solid rgba(0,0,0,0.08);"><span class="aa" style="color:#9c6c1f;">Aa</span><span class="aa" style="color:#227069;">Aa</span></div>
+          <div class="preset-name">Clean Studio</div>
+        </div>
+      </div>
+      <div class="live-preview-wrap">
+        <div class="reader-preview-surface">
+          <div class="message-block">
+            <div class="speaker-header"><span class="speaker-dot sp-0"></span><span class="speaker-name sp-0">Kestrel</span><span class="speaker-timestamp">[2:14 PM]</span></div>
+            <div class="message-text">The door won't budge. Try the <em>other</em> handle.</div>
+          </div>
+          <div class="message-block">
+            <div class="speaker-header"><span class="speaker-dot sp-1"></span><span class="speaker-name sp-1">Mira</span><span class="speaker-timestamp">[2:15 PM]</span></div>
+            <div class="message-text">That's not a handle — that's the <strong>fire alarm</strong>.</div>
+          </div>
+        </div>
+      </div>
+      <div class="color-pickers">
+        <label>Text <input type="color" id="textColorPicker" value="#e8e2f0" onchange="updateReaderColors()"></label>
+        <label>Bold <input type="color" id="boldColorPicker" value="#c9a15a" onchange="updateReaderColors()"></label>
+        <label>Italic <input type="color" id="italicColorPicker" value="#c98d6a" onchange="updateReaderColors()"></label>
+      </div>
+    </div>
+
+    <div class="step-heading"><span class="step-num">4</span><h2>Upload</h2></div>
+    <div class="step-body">
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload transcript text file">
+        <input type="file" id="textFile" accept=".txt" hidden>
+        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+        <p class="dz-title">Drop your exported chat log here</p>
+        <p class="dz-sub">or click to browse — .txt files only</p>
+        <p class="dz-filename" id="fileNameDisplay" hidden></p>
+      </div>
+    </div>
+    <div class="primary-row">
+      <button id="openReaderBtn" onclick="renderReaderView()" disabled>
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5c3-1.5 6-1.5 9 0v14c-3-1.5-6-1.5-9 0Z"/><path d="M22 5c-3-1.5-6-1.5-9 0v14c3-1.5 6-1.5 9 0Z"/></svg>
+        Open styled reader
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== READER VIEW ===== -->
+<div id="readerView">
+  <div class="reader-header">
+    <div class="reader-title-area">
+      <h2 id="displayTitle">Your Story Transcript</h2>
+      <p class="desc" id="displayDesc"></p>
+      <div class="stats-container">
+        <span class="stat-badge" id="msgCountDisplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>0 messages</span>
+        <span class="stat-badge" id="wordCountDisplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>0 words</span>
+        <span class="stat-badge" id="readTimeDisplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>0 min read</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button onclick="copyCleanText()" title="Copy clean text to clipboard">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+      <button onclick="downloadCleanText()">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Export
+      </button>
+      <button class="secondary-btn" onclick="window.print()" title="Print this story">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="13" width="12" height="8"/><path d="M4 17H2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5h-2"/></svg>
+        Print
+      </button>
+      <button class="secondary-btn" id="settingsBtn" onclick="toggleSettingsDrawer()" title="Reader settings">
+        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+        Settings
+      </button>
+    </div>
   </div>
 
-  <div class="floating-bar" id="floatingBar">
-    <span class="fb-progress" id="readingProgress">0%</span>
-    <span class="fb-divider"></span>
-    <button class="fb-btn" onclick="adjustFont(-0.1)" title="Smaller text" aria-label="Smaller text">A-</button>
-    <button class="fb-btn" onclick="adjustFont(0.1)" title="Larger text" aria-label="Larger text">A+</button>
-    <button class="fb-btn" id="widthToggleBtn" onclick="toggleWidth()" title="Toggle column width" aria-label="Toggle column width" aria-pressed="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v18"/><path d="M16 3v18"/><path d="M3 12h2"/><path d="M19 12h2"/></svg>
+  <!-- Settings Drawer -->
+  <div class="settings-drawer" id="settingsDrawer">
+    <div class="settings-drawer-inner">
+      <div class="drawer-top">
+        <h3>Reader Settings</h3>
+        <button class="icon-btn" onclick="toggleSettingsDrawer()" aria-label="Close settings" style="background:transparent;border:none;color:var(--page-text-dim);cursor:pointer;padding:4px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="drawer-grid">
+        <div class="drawer-section">
+          <div class="drawer-section-label">Page Theme</div>
+          <div class="dt-row">
+            <button class="dt-btn active" data-pt="midnight" onclick="applyPageTheme('midnight')" title="Midnight Library"><span class="dt-dot" style="background:#c9a15a;"></span></button>
+            <button class="dt-btn" data-pt="cafe" onclick="applyPageTheme('cafe')" title="Cozy Cafe"><span class="dt-dot" style="background:#a0713a;"></span></button>
+            <button class="dt-btn" data-pt="studio" onclick="applyPageTheme('studio')" title="Clean Studio"><span class="dt-dot" style="background:#5a4ec9;"></span></button>
+            <button class="dt-btn" data-pt="forest" onclick="applyPageTheme('forest')" title="Forest Study"><span class="dt-dot" style="background:#8ab66a;"></span></button>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <div class="drawer-section-label">Reader Theme</div>
+          <div class="dp-row">
+            <button class="dp-card active" data-rp="midnight" onclick="applyReaderPreset('midnight')">
+              <div class="dp-swatch" style="background:#1a1726;"><span style="color:#d3ab68;">Aa</span><span style="color:#6fb6ac;">Aa</span></div>
+              <div class="dp-label">Midnight</div>
+            </button>
+            <button class="dp-card" data-rp="sepia" onclick="applyReaderPreset('sepia')">
+              <div class="dp-swatch" style="background:#f3e9d2;"><span style="color:#93631c;">Aa</span><span style="color:#2f6b62;">Aa</span></div>
+              <div class="dp-label">Sepia</div>
+            </button>
+            <button class="dp-card" data-rp="studio" onclick="applyReaderPreset('studio')">
+              <div class="dp-swatch" style="background:#fff;border:1px solid rgba(0,0,0,.08);"><span style="color:#9c6c1f;">Aa</span><span style="color:#227069;">Aa</span></div>
+              <div class="dp-label">Studio</div>
+            </button>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <div class="drawer-section-label">Colors</div>
+          <div class="drawer-colors">
+            <label>Text <input type="color" id="drawerTextColor" value="#e8e2f0" onchange="updateDrawerColors()"></label>
+            <label>Bold <input type="color" id="drawerBoldColor" value="#c9a15a" onchange="updateDrawerColors()"></label>
+            <label>Italic <input type="color" id="drawerItalicColor" value="#c98d6a" onchange="updateDrawerColors()"></label>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <div class="drawer-section-label">Display</div>
+          <div class="drawer-opts">
+            <label class="checkbox-row"><input type="checkbox" id="drawerTimestamps" checked> Timestamps</label>
+            <label class="checkbox-row"><input type="checkbox" id="drawerEngine" checked> AI engine names</label>
+            <div class="select-mini">
+              <label for="drawerCommands">Commands</label>
+              <select id="drawerCommands">
+                <option value="keep">Keep as-is</option>
+                <option value="replace" selected>Replace with text</option>
+                <option value="strip">Strip out</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-actions">
+        <button onclick="refreshReader()">Apply &amp; Refresh</button>
+        <button class="link-btn" onclick="startOver()">Start over with a new file</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-row">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="searchInput" placeholder="Find in this story…" aria-label="Search story text">
+    <span class="search-count" id="searchCount"></span>
+    <span class="search-hint" aria-hidden="true">/ to focus</span>
+    <button class="icon-btn" id="searchPrevBtn" title="Previous match" aria-label="Previous match">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
     </button>
-    <span class="fb-divider"></span>
-    <button class="fb-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+    <button class="icon-btn" id="searchNextBtn" title="Next match" aria-label="Next match">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </button>
   </div>
 
-  <div class="footer">
-    <p>Created by <strong>Kaihime</strong> — Chat Backup &amp; Reader Suite</p>
-  </div>
+  <div id="storyContainer"></div>
+</div>
 
-  <script>
-    let cleanExportData = "";
-    let currentCustomTitle = "cleaned_story_history";
-    let speakerColorMap = new Map();
-    let speakerCount = 0;
-    let matchBlocks = [];
-    let currentMatchIndex = -1;
-    let fontScale = 1;
-    let wideMode = false;
+<div class="floating-bar" id="floatingBar">
+  <span class="fb-progress" id="readingProgress">0%</span>
+  <span class="fb-divider"></span>
+  <button class="fb-btn" onclick="adjustFont(-0.1)" title="Smaller text" aria-label="Smaller text">A-</button>
+  <button class="fb-btn" onclick="adjustFont(0.1)" title="Larger text" aria-label="Larger text">A+</button>
+  <button class="fb-btn" id="widthToggleBtn" onclick="toggleWidth()" title="Toggle column width" aria-label="Toggle column width" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v18"/><path d="M16 3v18"/><path d="M3 12h2"/><path d="M19 12h2"/></svg>
+  </button>
+  <span class="fb-divider"></span>
+  <button class="fb-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+  </button>
+</div>
 
-    const PAGE_THEMES = {
-      midnight: {
-        pageBg:'#0f0d14', pageBgRgb:'15,13,20', pageSurface:'#1a1726', pageSurfaceHover:'#211e2e',
-        pageSurfaceAlt:'#15121f', pageLine:'rgba(200,190,220,0.08)', pageLineStrong:'rgba(200,190,220,0.14)',
-        pageText:'#e8e2f0', pageTextMuted:'#9d94ad', pageTextDim:'#6b637a',
-        pageAccent:'#c9a15a', pageAccentRgb:'201,161,90', pageAccentHover:'#dab56e',
-        pageAccentSoft:'rgba(201,161,90,0.1)', pageDanger:'#d16b60',
-        pageGlow:'rgba(201,161,90,0.06)', pageBadgeBg:'rgba(200,190,220,0.06)',
-        pageBadgeBorder:'rgba(200,190,220,0.1)', pageSelectBg:'#1e1a2c', pageInputBg:'#1e1a2c',
-        pageInfoBg:'rgba(201,161,90,0.07)', pageInfoBorder:'rgba(201,161,90,0.25)',
-        pageInfoText:'#e2cfa0', pageShadow:'rgba(0,0,0,0.4)',
-        pageMastheadGradient:'rgba(201,161,90,0.05)'
-      },
-      cafe: {
-        pageBg:'#f7f0e3', pageBgRgb:'247,240,227', pageSurface:'#fff8ee', pageSurfaceHover:'#fff3e0',
-        pageSurfaceAlt:'#f0e8d6', pageLine:'rgba(80,50,20,0.1)', pageLineStrong:'rgba(80,50,20,0.18)',
-        pageText:'#3a2e1e', pageTextMuted:'#7a6b55', pageTextDim:'#a89880',
-        pageAccent:'#a0713a', pageAccentRgb:'160,113,58', pageAccentHover:'#b8834a',
-        pageAccentSoft:'rgba(160,113,58,0.1)', pageDanger:'#c44',
-        pageGlow:'rgba(160,113,58,0.05)', pageBadgeBg:'rgba(80,50,20,0.05)',
-        pageBadgeBorder:'rgba(80,50,20,0.1)', pageSelectBg:'#f0e8d6', pageInputBg:'#f0e8d6',
-        pageInfoBg:'rgba(160,113,58,0.08)', pageInfoBorder:'rgba(160,113,58,0.25)',
-        pageInfoText:'#8a6530', pageShadow:'rgba(60,40,10,0.1)',
-        pageMastheadGradient:'rgba(160,113,58,0.06)'
-      },
-      studio: {
-        pageBg:'#f8f8fa', pageBgRgb:'248,248,250', pageSurface:'#ffffff', pageSurfaceHover:'#f0f0f4',
-        pageSurfaceAlt:'#f2f2f5', pageLine:'rgba(0,0,0,0.08)', pageLineStrong:'rgba(0,0,0,0.14)',
-        pageText:'#1a1a24', pageTextMuted:'#5e5e6e', pageTextDim:'#9494a4',
-        pageAccent:'#5a4ec9', pageAccentRgb:'90,78,201', pageAccentHover:'#6e62dd',
-        pageAccentSoft:'rgba(90,78,201,0.08)', pageDanger:'#d14',
-        pageGlow:'rgba(90,78,201,0.04)', pageBadgeBg:'rgba(0,0,0,0.04)',
-        pageBadgeBorder:'rgba(0,0,0,0.08)', pageSelectBg:'#f0f0f4', pageInputBg:'#f0f0f4',
-        pageInfoBg:'rgba(90,78,201,0.06)', pageInfoBorder:'rgba(90,78,201,0.2)',
-        pageInfoText:'#4a3ea0', pageShadow:'rgba(0,0,0,0.08)',
-        pageMastheadGradient:'rgba(90,78,201,0.04)'
-      },
-      forest: {
-        pageBg:'#0d1410', pageBgRgb:'13,20,16', pageSurface:'#152018', pageSurfaceHover:'#1a2a1e',
-        pageSurfaceAlt:'#111b14', pageLine:'rgba(140,180,140,0.08)', pageLineStrong:'rgba(140,180,140,0.15)',
-        pageText:'#dde8df', pageTextMuted:'#8aaa8e', pageTextDim:'#5a7a5e',
-        pageAccent:'#8ab66a', pageAccentRgb:'138,182,106', pageAccentHover:'#9ec87e',
-        pageAccentSoft:'rgba(138,182,106,0.1)', pageDanger:'#d16b60',
-        pageGlow:'rgba(138,182,106,0.05)', pageBadgeBg:'rgba(140,180,140,0.06)',
-        pageBadgeBorder:'rgba(140,180,140,0.1)', pageSelectBg:'#1a2a1e', pageInputBg:'#1a2a1e',
-        pageInfoBg:'rgba(138,182,106,0.08)', pageInfoBorder:'rgba(138,182,106,0.25)',
-        pageInfoText:'#a8d48a', pageShadow:'rgba(0,0,0,0.45)',
-        pageMastheadGradient:'rgba(138,182,106,0.05)'
-      }
-    };
+<div class="footer">
+  <p>Created by <strong>Kaihime</strong> — Chat Backup &amp; Reader Suite</p>
+</div>
 
-    const PRESETS = {
-      midnight: { bg:"#1a1726", border:"rgba(200,190,220,0.08)", text:"#e8e2f0", bold:"#c9a15a", italic:"#c98d6a", meta:"#9d94ad",
-        tagBg:"rgba(255,255,255,0.05)", tagText:"#c9a3d6", tagBorder:"rgba(200,190,220,0.08)",
-        speakers:["#d3ab68","#6fb6ac","#d1889c","#9cc08d","#b79bd9","#e0a67e"] },
-      sepia: { bg:"#f3e9d2", border:"rgba(0,0,0,0.08)", text:"#2b2523", bold:"#93631c", italic:"#6b4f3b", meta:"#4a3f31",
-        tagBg:"rgba(0,0,0,0.05)", tagText:"#5f4a86", tagBorder:"rgba(0,0,0,0.08)",
-        speakers:["#93631c","#2f6b62","#8a3348","#4c6a38","#5f4a86","#954a24"] },
-      studio: { bg:"#ffffff", border:"rgba(0,0,0,0.08)", text:"#1c1c21", bold:"#9c6c1f", italic:"#6c757d", meta:"#55606b",
-        tagBg:"rgba(0,0,0,0.04)", tagText:"#55428c", tagBorder:"rgba(0,0,0,0.08)",
-        speakers:["#9c6c1f","#227069","#9c3352","#3f6b34","#55428c","#a14e26"] }
-    };
+<script>
+  /* ===== STATE ===== */
+  let rawFileContent = "";
+  let cleanExportData = "";
+  let currentCustomTitle = "cleaned_story_history";
+  let speakerColorMap = new Map();
+  let speakerCount = 0;
+  let matchBlocks = [];
+  let currentMatchIndex = -1;
+  let fontScale = 1;
+  let wideMode = false;
+  let currentSettings = { keepTimestamps:true, keepEngine:true, commandMode:'replace' };
+  let currentReaderColors = { text:'#e8e2f0', bold:'#c9a15a', italic:'#c98d6a' };
 
-    function setThemeVars(vars){
-      const root = document.documentElement;
-      Object.entries(vars).forEach(([k,v]) => root.style.setProperty(k, v));
-    }
+  /* ===== THEME DATA ===== */
+  const PAGE_THEMES = {
+    midnight:{accent:'#c9a15a',accentRgb:'201,161,90',bg:'#0f0d14',bgRgb:'15,13,20',surface:'#1a1726',surfaceHover:'#211e2e',surfaceAlt:'#15121f',line:'rgba(200,190,220,0.08)',lineStrong:'rgba(200,190,220,0.14)',text:'#e8e2f0',textMuted:'#9d94ad',textDim:'#6b637a',accentHover:'#dab56e',accentSoft:'rgba(201,161,90,0.1)',danger:'#d16b60',glow:'rgba(201,161,90,0.06)',badgeBg:'rgba(200,190,220,0.06)',badgeBorder:'rgba(200,190,220,0.1)',selectBg:'#1e1a2c',inputBg:'#1e1a2c',infoBg:'rgba(201,161,90,0.07)',infoBorder:'rgba(201,161,90,0.25)',infoText:'#e2cfa0',shadow:'rgba(0,0,0,0.4)'},
+    cafe:{accent:'#a0713a',accentRgb:'160,113,58',bg:'#f7f0e3',bgRgb:'247,240,227',surface:'#fff8ee',surfaceHover:'#fff3e0',surfaceAlt:'#f0e8d6',line:'rgba(80,50,20,0.1)',lineStrong:'rgba(80,50,20,0.18)',text:'#3a2e1e',textMuted:'#7a6b55',textDim:'#a89880',accentHover:'#b8834a',accentSoft:'rgba(160,113,58,0.1)',danger:'#c44',glow:'rgba(160,113,58,0.05)',badgeBg:'rgba(80,50,20,0.05)',badgeBorder:'rgba(80,50,20,0.1)',selectBg:'#f0e8d6',inputBg:'#f0e8d6',infoBg:'rgba(160,113,58,0.08)',infoBorder:'rgba(160,113,58,0.25)',infoText:'#8a6530',shadow:'rgba(60,40,10,0.1)'},
+    studio:{accent:'#5a4ec9',accentRgb:'90,78,201',bg:'#f8f8fa',bgRgb:'248,248,250',surface:'#ffffff',surfaceHover:'#f0f0f4',surfaceAlt:'#f2f2f5',line:'rgba(0,0,0,0.08)',lineStrong:'rgba(0,0,0,0.14)',text:'#1a1a24',textMuted:'#5e5e6e',textDim:'#9494a4',accentHover:'#6e62dd',accentSoft:'rgba(90,78,201,0.08)',danger:'#d14',glow:'rgba(90,78,201,0.04)',badgeBg:'rgba(0,0,0,0.04)',badgeBorder:'rgba(0,0,0,0.08)',selectBg:'#f0f0f4',inputBg:'#f0f0f4',infoBg:'rgba(90,78,201,0.06)',infoBorder:'rgba(90,78,201,0.2)',infoText:'#4a3ea0',shadow:'rgba(0,0,0,0.08)'},
+    forest:{accent:'#8ab66a',accentRgb:'138,182,106',bg:'#0d1410',bgRgb:'13,20,16',surface:'#152018',surfaceHover:'#1a2a1e',surfaceAlt:'#111b14',line:'rgba(140,180,140,0.08)',lineStrong:'rgba(140,180,140,0.15)',text:'#dde8df',textMuted:'#8aaa8e',textDim:'#5a7a5e',accentHover:'#9ec87e',accentSoft:'rgba(138,182,106,0.1)',danger:'#d16b60',glow:'rgba(138,182,106,0.05)',badgeBg:'rgba(140,180,140,0.06)',badgeBorder:'rgba(140,180,140,0.1)',selectBg:'#1a2a1e',inputBg:'#1a2a1e',infoBg:'rgba(138,182,106,0.08)',infoBorder:'rgba(138,182,106,0.25)',infoText:'#a8d48a',shadow:'rgba(0,0,0,0.45)'}
+  };
+  const READER_PRESETS = {
+    midnight:{bg:"#1a1726",border:"rgba(200,190,220,0.08)",text:"#e8e2f0",bold:"#c9a15a",italic:"#c98d6a",meta:"#9d94ad",tagBg:"rgba(255,255,255,0.05)",tagText:"#c9a3d6",tagBorder:"rgba(200,190,220,0.08)",speakers:["#d3ab68","#6fb6ac","#d1889c","#9cc08d","#b79bd9","#e0a67e"]},
+    sepia:{bg:"#f3e9d2",border:"rgba(0,0,0,0.08)",text:"#2b2523",bold:"#93631c",italic:"#6b4f3b",meta:"#4a3f31",tagBg:"rgba(0,0,0,0.05)",tagText:"#5f4a86",tagBorder:"rgba(0,0,0,0.08)",speakers:["#93631c","#2f6b62","#8a3348","#4c6a38","#5f4a86","#954a24"]},
+    studio:{bg:"#ffffff",border:"rgba(0,0,0,0.08)",text:"#1c1c21",bold:"#9c6c1f",italic:"#6c757d",meta:"#55606b",tagBg:"rgba(0,0,0,0.04)",tagText:"#55428c",tagBorder:"rgba(0,0,0,0.08)",speakers:["#9c6c1f","#227069","#9c3352","#3f6b34","#55428c","#a14e26"]}
+  };
 
-    function applyPageTheme(name){
-      const t = PAGE_THEMES[name];
-      if(!t) return;
-      document.querySelectorAll('.page-theme-btn').forEach(c => c.classList.remove('active'));
-      const card = document.getElementById('pt-' + name);
-      if(card) card.classList.add('active');
+  /* ===== THEME FUNCTIONS ===== */
+  function setThemeVars(vars){const r=document.documentElement;Object.entries(vars).forEach(([k,v])=>r.style.setProperty(k,v));}
 
-      const varMap = {
-        '--page-bg':t.pageBg, '--page-surface':t.pageSurface, '--page-surface-hover':t.pageSurfaceHover,
-        '--page-surface-alt':t.pageSurfaceAlt, '--page-line':t.pageLine, '--page-line-strong':t.pageLineStrong,
-        '--page-text':t.pageText, '--page-text-muted':t.pageTextMuted, '--page-text-dim':t.pageTextDim,
-        '--page-accent':t.pageAccent, '--page-accent-hover':t.pageAccentHover, '--page-accent-soft':t.pageAccentSoft,
-        '--page-danger':t.pageDanger, '--page-glow':t.pageGlow,
-        '--page-badge-bg':t.pageBadgeBg, '--page-badge-border':t.pageBadgeBorder,
-        '--page-select-bg':t.pageSelectBg, '--page-input-bg':t.pageInputBg,
-        '--page-info-bg':t.pageInfoBg, '--page-info-border':t.pageInfoBorder, '--page-info-text':t.pageInfoText,
-        '--page-shadow':t.pageShadow, '--page-masthead-gradient':t.pageMastheadGradient
-      };
-      const root = document.documentElement;
-      Object.entries(varMap).forEach(([k,v]) => root.style.setProperty(k, v));
-      root.style.setProperty('--page-bg-rgb', t.pageBgRgb);
-      root.style.setProperty('--page-accent-rgb', t.pageAccentRgb);
-      document.documentElement.setAttribute('data-page-theme', name);
-
-      // Update body background to use new tokens
-      document.body.style.background = `radial-gradient(ellipse 800px 500px at 10% -10%, var(--page-glow), transparent 60%), var(--page-bg)`;
-    }
-
-    function applyPreset(name){
-      const p = PRESETS[name];
-      if(!p) return;
-      document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
-      const card = document.getElementById('preset-' + name);
-      if(card) card.classList.add('active');
-
-      setThemeVars({
-        '--reader-bg': p.bg, '--reader-border': p.border, '--reader-text': p.text,
-        '--reader-bold': p.bold, '--reader-italic': p.italic, '--reader-meta': p.meta,
-        '--reader-tag-bg': p.tagBg, '--reader-tag-text': p.tagText, '--reader-tag-border': p.tagBorder,
-        '--speaker-0': p.speakers[0], '--speaker-1': p.speakers[1], '--speaker-2': p.speakers[2],
-        '--speaker-3': p.speakers[3], '--speaker-4': p.speakers[4], '--speaker-5': p.speakers[5]
-      });
-
-      document.getElementById('textColorPicker').value = p.text;
-      document.getElementById('boldColorPicker').value = p.bold;
-      document.getElementById('italicColorPicker').value = p.italic;
-    }
-
-    function updateColors(){
-      setThemeVars({
-        '--reader-text': document.getElementById('textColorPicker').value,
-        '--reader-bold': document.getElementById('boldColorPicker').value,
-        '--reader-italic': document.getElementById('italicColorPicker').value
-      });
-    }
-
-    function parseMarkdown(text){
-      let safeText = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      safeText = safeText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      safeText = safeText.replace(/__(.*?)__/g, '<strong>$1</strong>');
-      safeText = safeText.replace(/\*(?!\*)(.*?)\*/g, '<em>$1</em>');
-      safeText = safeText.replace(/_(?!_)(.*?)_/g, '<em>$1</em>');
-      return safeText;
-    }
-
-    function speakerClassFor(name){
-      if(!speakerColorMap.has(name)){
-        speakerColorMap.set(name, speakerCount % 6);
-        speakerCount++;
-      }
-      return 'sp-' + speakerColorMap.get(name);
-    }
-
-    function showToast(msg, type){
-      const container = document.getElementById('toastContainer');
-      const t = document.createElement('div');
-      t.className = 'toast' + (type === 'error' ? ' toast-error' : '');
-      t.textContent = msg;
-      container.appendChild(t);
-      requestAnimationFrame(() => t.classList.add('show'));
-      setTimeout(() => {
-        t.classList.remove('show');
-        setTimeout(() => t.remove(), 250);
-      }, 3000);
-    }
-
-    function handleFileSelected(){
-      const fileInput = document.getElementById('textFile');
-      const f = fileInput.files[0];
-      const dropzone = document.getElementById('dropzone');
-      const fileNameDisplay = document.getElementById('fileNameDisplay');
-      const openReaderBtn = document.getElementById('openReaderBtn');
-      if(!f){
-        dropzone.classList.remove('has-file');
-        fileNameDisplay.hidden = true;
-        openReaderBtn.disabled = true;
-        return;
-      }
-      if(!f.name.toLowerCase().endsWith('.txt')){
-        showToast('Please choose a .txt file.', 'error');
-        fileInput.value = '';
-        dropzone.classList.remove('has-file');
-        fileNameDisplay.hidden = true;
-        openReaderBtn.disabled = true;
-        return;
-      }
-      fileNameDisplay.textContent = 'Selected: ' + f.name;
-      fileNameDisplay.hidden = false;
-      dropzone.classList.add('has-file');
-      openReaderBtn.disabled = false;
-    }
-
-    function renderReaderView(){
-      const fileInput = document.getElementById('textFile');
-      if(!fileInput.files.length){
-        showToast('Choose a file to continue.', 'error');
-        return;
-      }
-
-      const inputTitle = document.getElementById('storyTitle').value.trim();
-      const inputDesc = document.getElementById('storyDesc').value.trim();
-      const keepTimestamps = document.getElementById('toggleTimestamps').checked;
-      const keepEngine = document.getElementById('toggleEngine').checked;
-      const commandMode = document.getElementById('commandHandling').value;
-
-      document.getElementById('displayTitle').textContent = inputTitle || "Your Story Transcript";
-      document.getElementById('displayDesc').textContent = inputDesc;
-      document.title = inputTitle || "Chat Story Formatter";
-      currentCustomTitle = inputTitle ? inputTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase() : "cleaned_story_history";
-
-      speakerColorMap = new Map();
-      speakerCount = 0;
-
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = function(e){
-        let lines = e.target.result.split(/\r?\n/);
-        let storyContainer = document.getElementById('storyContainer');
-        storyContainer.innerHTML = '';
-        cleanExportData = "";
-
-        let currentSpeakerName = "", currentTimestamp = "", currentEngineModel = "", currentTextLines = [];
-        let isNextLineSpeaker = true, totalMessagesParsed = 0, totalWords = 0;
-
-        function flushMessage(){
-          if(currentTextLines.length > 0){
-            let filteredLines = currentTextLines.filter(line => {
-              let trimmed = line.trim();
-              return !(trimmed.startsWith("Replying to") || (trimmed.startsWith("http") && trimmed.includes("#message-")));
-            });
-
-            if(filteredLines.length > 0){
-              let fullText = filteredLines.join('\n').trim();
-              let lowerText = fullText.toLowerCase();
-              let isCommand = lowerText.startsWith('!wack') || lowerText.startsWith('!sleep') || lowerText.startsWith('!reset');
-
-              if(isCommand){
-                if(commandMode === 'strip') return;
-                if(commandMode === 'replace'){
-                  let cmdName = fullText.split(' ')[0].replace('!', '');
-                  fullText = '*[User sent a ' + cmdName + ' command]*';
-                }
-              }
-
-              let block = document.createElement('div');
-              block.className = 'message-block';
-              let speakerTextForExport = "";
-
-              if(currentSpeakerName){
-                let spClass = speakerClassFor(currentSpeakerName);
-                let speakerDiv = document.createElement('div');
-                speakerDiv.className = 'speaker-header';
-
-                let dotSpan = document.createElement('span');
-                dotSpan.className = 'speaker-dot ' + spClass;
-                speakerDiv.appendChild(dotSpan);
-
-                if(keepTimestamps && currentTimestamp){
-                  let tsSpan = document.createElement('span');
-                  tsSpan.className = 'speaker-timestamp';
-                  tsSpan.textContent = '[' + currentTimestamp + ']';
-                  speakerDiv.appendChild(tsSpan);
-                  speakerTextForExport += '[' + currentTimestamp + '] ';
-                }
-
-                let nameSpan = document.createElement('span');
-                nameSpan.className = 'speaker-name ' + spClass;
-                nameSpan.textContent = currentSpeakerName;
-                speakerDiv.appendChild(nameSpan);
-                speakerTextForExport += currentSpeakerName;
-
-                if(keepEngine && currentEngineModel && !currentEngineModel.toLowerCase().includes('shapes')){
-                  let engSpan = document.createElement('span');
-                  engSpan.className = 'speaker-engine';
-                  engSpan.textContent = currentEngineModel;
-                  speakerDiv.appendChild(engSpan);
-                  speakerTextForExport += ' [' + currentEngineModel + ']';
-                }
-
-                block.appendChild(speakerDiv);
-                speakerTextForExport += ":\n";
-              }
-
-              let textDiv = document.createElement('div');
-              textDiv.className = 'message-text';
-              totalWords += fullText.split(/\s+/).filter(w => w.length > 0).length;
-
-              textDiv.innerHTML = parseMarkdown(fullText);
-              block.appendChild(textDiv);
-              block.dataset.searchText = (currentSpeakerName + ' ' + fullText).toLowerCase();
-              storyContainer.appendChild(block);
-
-              cleanExportData += speakerTextForExport + fullText + '\n\n-----------------------------------\n\n';
-              totalMessagesParsed++;
-            }
-            currentTextLines = [];
-          }
-        }
-
-        for(let i = 0; i < lines.length; i++){
-          let trimmedLine = lines[i].trim();
-
-          if(trimmedLine.includes('-----------------------------------')){
-            flushMessage();
-            isNextLineSpeaker = true;
-            continue;
-          }
-
-          if(isNextLineSpeaker && trimmedLine !== ''){
-            if(trimmedLine.endsWith(':')){
-              let speakerStr = trimmedLine.slice(0, -1).trim();
-              currentTimestamp = ""; currentEngineModel = "";
-
-              if(speakerStr.startsWith('[')){
-                let closeIdx = speakerStr.indexOf(']');
-                if(closeIdx !== -1){
-                  currentTimestamp = speakerStr.substring(1, closeIdx);
-                  speakerStr = speakerStr.substring(closeIdx + 1).trim();
-                }
-              }
-
-              let lastOpen = speakerStr.lastIndexOf('['), lastClose = speakerStr.lastIndexOf(']');
-              if(lastOpen !== -1 && lastClose !== -1 && lastClose > lastOpen){
-                currentEngineModel = speakerStr.substring(lastOpen + 1, lastClose);
-                speakerStr = speakerStr.substring(0, lastOpen).trim();
-              }
-
-              speakerStr = speakerStr.replace(/^shapes\.inc\//i, '').trim();
-              if(speakerStr.length > 0) speakerStr = speakerStr.charAt(0).toUpperCase() + speakerStr.slice(1);
-
-              currentSpeakerName = speakerStr;
-            } else {
-              currentSpeakerName = "Unknown";
-              currentTextLines.push(lines[i]);
-            }
-            isNextLineSpeaker = false;
-          } else {
-            currentTextLines.push(lines[i]);
-          }
-        }
-        flushMessage();
-
-        document.getElementById('msgCountDisplay').lastChild.textContent = totalMessagesParsed + ' messages';
-        document.getElementById('wordCountDisplay').lastChild.textContent = totalWords.toLocaleString() + ' words';
-        document.getElementById('readTimeDisplay').lastChild.textContent = '~' + Math.max(1, Math.ceil(totalWords / 200)) + ' min read';
-
-        document.getElementById('controlPanel').classList.add('view-exit');
-        setTimeout(() => {
-          document.getElementById('controlPanel').style.display = 'none';
-          const rv = document.getElementById('readerView');
-          rv.style.display = 'block';
-          document.getElementById('floatingBar').style.display = 'flex';
-          document.getElementById('topProgressBar').style.display = 'block';
-          requestAnimationFrame(() => rv.classList.add('view-enter'));
-          window.scrollTo(0, 0);
-        }, 200);
-      };
-
-      reader.readAsText(file);
-    }
-
-    window.onscroll = function(){
-      const readerView = document.getElementById('readerView');
-      if(readerView.style.display !== 'block') return;
-      let totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      let progress = totalHeight > 0 ? Math.round((window.scrollY / totalHeight) * 100) : 0;
-      document.getElementById('readingProgress').textContent = progress + '%';
-      document.getElementById('topProgressFill').style.width = progress + '%';
-    };
-
-    function downloadCleanText(){
-      if(!cleanExportData) return showToast('Nothing to export yet.', 'error');
-      const blob = new Blob([cleanExportData], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = currentCustomTitle + '.txt';
-      link.click();
-      showToast('Exported ' + currentCustomTitle + '.txt');
-    }
-
-    function editSettings(){
-      const readerView = document.getElementById('readerView');
-      readerView.classList.remove('view-enter');
-      document.getElementById('floatingBar').style.display = 'none';
-      document.getElementById('topProgressBar').style.display = 'none';
-      setTimeout(() => {
-        readerView.style.display = 'none';
-        const cp = document.getElementById('controlPanel');
-        cp.style.display = 'block';
-        cp.classList.remove('view-exit');
-        window.scrollTo(0, 0);
-      }, 180);
-    }
-
-    function adjustFont(delta){
-      fontScale = Math.min(1.35, Math.max(0.85, Math.round((fontScale + delta) * 100) / 100));
-      document.getElementById('storyContainer').style.fontSize = (1.12 * fontScale).toFixed(2) + 'em';
-    }
-
-    function toggleWidth(){
-      wideMode = !wideMode;
-      const container = document.getElementById('storyContainer');
-      container.classList.toggle('wide', wideMode);
-      document.getElementById('widthToggleBtn').setAttribute('aria-pressed', String(wideMode));
-    }
-
-    function performSearch(){
-      const query = document.getElementById('searchInput').value.trim().toLowerCase();
-      const blocks = Array.from(document.querySelectorAll('#storyContainer .message-block'));
-      blocks.forEach(b => b.classList.remove('search-match', 'search-current'));
-
-      if(!query){
-        matchBlocks = [];
-        currentMatchIndex = -1;
-        document.getElementById('searchCount').textContent = '';
-        return;
-      }
-
-      matchBlocks = blocks.filter(b => (b.dataset.searchText || '').includes(query));
-      matchBlocks.forEach(b => b.classList.add('search-match'));
-      currentMatchIndex = matchBlocks.length ? 0 : -1;
-      highlightCurrentMatch();
-      updateSearchCount();
-    }
-
-    function highlightCurrentMatch(){
-      matchBlocks.forEach(b => b.classList.remove('search-current'));
-      if(currentMatchIndex >= 0 && matchBlocks[currentMatchIndex]){
-        const el = matchBlocks[currentMatchIndex];
-        el.classList.add('search-current');
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-
-    function updateSearchCount(){
-      const el = document.getElementById('searchCount');
-      if(!matchBlocks.length){
-        el.textContent = document.getElementById('searchInput').value.trim() ? 'No matches' : '';
-        return;
-      }
-      el.textContent = (currentMatchIndex + 1) + ' / ' + matchBlocks.length;
-    }
-
-    function searchNext(){
-      if(!matchBlocks.length) return;
-      currentMatchIndex = (currentMatchIndex + 1) % matchBlocks.length;
-      highlightCurrentMatch();
-      updateSearchCount();
-    }
-
-    function searchPrev(){
-      if(!matchBlocks.length) return;
-      currentMatchIndex = (currentMatchIndex - 1 + matchBlocks.length) % matchBlocks.length;
-      highlightCurrentMatch();
-      updateSearchCount();
-    }
-
-    document.addEventListener('DOMContentLoaded', function(){
-      const dropzone = document.getElementById('dropzone');
-      const fileInput = document.getElementById('textFile');
-
-      dropzone.addEventListener('click', () => fileInput.click());
-      dropzone.addEventListener('keydown', e => {
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fileInput.click(); }
-      });
-      ['dragenter', 'dragover'].forEach(evt => dropzone.addEventListener(evt, e => {
-        e.preventDefault(); dropzone.classList.add('drag-active');
-      }));
-      ['dragleave', 'drop'].forEach(evt => dropzone.addEventListener(evt, e => {
-        e.preventDefault(); dropzone.classList.remove('drag-active');
-      }));
-      dropzone.addEventListener('drop', e => {
-        const files = e.dataTransfer.files;
-        if(files && files.length){ fileInput.files = files; handleFileSelected(); }
-      });
-      fileInput.addEventListener('change', handleFileSelected);
-
-      const searchInput = document.getElementById('searchInput');
-      searchInput.addEventListener('input', performSearch);
-      searchInput.addEventListener('keydown', e => {
-        if(e.key === 'Enter'){ e.preventDefault(); e.shiftKey ? searchPrev() : searchNext(); }
-        if(e.key === 'Escape'){ searchInput.value = ''; performSearch(); searchInput.blur(); }
-      });
-      document.getElementById('searchNextBtn').addEventListener('click', searchNext);
-      document.getElementById('searchPrevBtn').addEventListener('click', searchPrev);
-
-      document.addEventListener('keydown', e => {
-        const readerView = document.getElementById('readerView');
-        if(readerView.style.display !== 'block') return;
-        const tag = document.activeElement.tagName;
-        if(e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA'){
-          e.preventDefault();
-          searchInput.focus();
-        }
-      });
+  function applyPageTheme(name){
+    const t=PAGE_THEMES[name];if(!t)return;
+    document.documentElement.setAttribute('data-page-theme',name);
+    setThemeVars({
+      '--page-bg':t.bg,'--page-surface':t.surface,'--page-surface-hover':t.surfaceHover,
+      '--page-surface-alt':t.surfaceAlt,'--page-line':t.line,'--page-line-strong':t.lineStrong,
+      '--page-text':t.text,'--page-text-muted':t.textMuted,'--page-text-dim':t.textDim,
+      '--page-accent':t.accent,'--page-accent-hover':t.accentHover,'--page-accent-soft':t.accentSoft,
+      '--page-danger':t.danger,'--page-glow':t.glow,
+      '--page-badge-bg':t.badgeBg,'--page-badge-border':t.badgeBorder,
+      '--page-select-bg':t.selectBg,'--page-input-bg':t.inputBg,
+      '--page-info-bg':t.infoBg,'--page-info-border':t.infoBorder,'--page-info-text':t.infoText,
+      '--page-shadow':t.shadow
     });
-  </script>
+    document.documentElement.style.setProperty('--page-bg-rgb',t.bgRgb);
+    document.documentElement.style.setProperty('--page-accent-rgb',t.accentRgb);
+    document.querySelectorAll('[data-pt]').forEach(b=>b.classList.toggle('active',b.dataset.pt===name));
+    try{localStorage.setItem('csf-page-theme',name);}catch(e){}
+  }
+
+  function applyReaderPreset(name){
+    const p=READER_PRESETS[name];if(!p)return;
+    setThemeVars({
+      '--reader-bg':p.bg,'--reader-border':p.border,'--reader-text':p.text,
+      '--reader-bold':p.bold,'--reader-italic':p.italic,'--reader-meta':p.meta,
+      '--reader-tag-bg':p.tagBg,'--reader-tag-text':p.tagText,'--reader-tag-border':p.tagBorder,
+      '--speaker-0':p.speakers[0],'--speaker-1':p.speakers[1],'--speaker-2':p.speakers[2],
+      '--speaker-3':p.speakers[3],'--speaker-4':p.speakers[4],'--speaker-5':p.speakers[5]
+    });
+    currentReaderColors={text:p.text,bold:p.bold,italic:p.italic};
+    syncColorPickers();
+    document.querySelectorAll('[data-rp]').forEach(b=>b.classList.toggle('active',b.dataset.rp===name));
+    try{localStorage.setItem('csf-reader-preset',name);}catch(e){}
+  }
+
+  function syncColorPickers(){
+    ['textColorPicker','drawerTextColor'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=currentReaderColors.text;});
+    ['boldColorPicker','drawerBoldColor'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=currentReaderColors.bold;});
+    ['italicColorPicker','drawerItalicColor'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=currentReaderColors.italic;});
+  }
+
+  function updateReaderColors(){
+    currentReaderColors.text=document.getElementById('textColorPicker').value;
+    currentReaderColors.bold=document.getElementById('boldColorPicker').value;
+    currentReaderColors.italic=document.getElementById('italicColorPicker').value;
+    applyCurrentReaderColors();
+    syncColorPickers();
+  }
+  function updateDrawerColors(){
+    currentReaderColors.text=document.getElementById('drawerTextColor').value;
+    currentReaderColors.bold=document.getElementById('drawerBoldColor').value;
+    currentReaderColors.italic=document.getElementById('drawerItalicColor').value;
+    applyCurrentReaderColors();
+    syncColorPickers();
+  }
+  function applyCurrentReaderColors(){
+    setThemeVars({'--reader-text':currentReaderColors.text,'--reader-bold':currentReaderColors.bold,'--reader-italic':currentReaderColors.italic});
+  }
+
+  /* ===== SETTINGS DRAWER ===== */
+  function toggleSettingsDrawer(){
+    const drawer=document.getElementById('settingsDrawer');
+    const btn=document.getElementById('settingsBtn');
+    const isOpen=drawer.classList.toggle('open');
+    btn.classList.toggle('active',isOpen);
+    if(isOpen)syncDrawerInputs();
+  }
+  function syncDrawerInputs(){
+    document.getElementById('drawerTimestamps').checked=currentSettings.keepTimestamps;
+    document.getElementById('drawerEngine').checked=currentSettings.keepEngine;
+    document.getElementById('drawerCommands').value=currentSettings.commandMode;
+    syncColorPickers();
+  }
+
+  /* ===== MARKDOWN ===== */
+  function parseMarkdown(text){
+    let s=text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    s=s.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/__(.*?)__/g,'<strong>$1</strong>');
+    s=s.replace(/\*(?!\*)(.*?)\*/g,'<em>$1</em>').replace(/_(?!_)(.*?)_/g,'<em>$1</em>');
+    return s;
+  }
+
+  /* ===== SPEAKER COLORS ===== */
+  function speakerClassFor(name){
+    if(!speakerColorMap.has(name)){speakerColorMap.set(name,speakerCount%6);speakerCount++;}
+    return 'sp-'+speakerColorMap.get(name);
+  }
+
+  /* ===== TOAST ===== */
+  function showToast(msg,type){
+    const c=document.getElementById('toastContainer'),t=document.createElement('div');
+    t.className='toast'+(type==='error'?' toast-error':'');t.textContent=msg;c.appendChild(t);
+    requestAnimationFrame(()=>t.classList.add('show'));
+    setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),250);},3000);
+  }
+
+  /* ===== FILE HANDLING ===== */
+  function handleFileSelected(){
+    const f=document.getElementById('textFile').files[0];
+    const dz=document.getElementById('dropzone'),fn=document.getElementById('fileNameDisplay'),btn=document.getElementById('openReaderBtn');
+    if(!f){dz.classList.remove('has-file');fn.hidden=true;btn.disabled=true;return;}
+    if(!f.name.toLowerCase().endsWith('.txt')){showToast('Please choose a .txt file.','error');document.getElementById('textFile').value='';dz.classList.remove('has-file');fn.hidden=true;btn.disabled=true;return;}
+    fn.textContent='Selected: '+f.name;fn.hidden=false;dz.classList.add('has-file');btn.disabled=false;
+  }
+
+  /* ===== RENDERING ===== */
+  function renderReaderView(){
+    const fileInput=document.getElementById('textFile');
+    if(!fileInput.files.length){showToast('Choose a file to continue.','error');return;}
+
+    const inputTitle=document.getElementById('storyTitle').value.trim();
+    const inputDesc=document.getElementById('storyDesc').value.trim();
+    document.getElementById('displayTitle').textContent=inputTitle||"Your Story Transcript";
+    document.getElementById('displayDesc').textContent=inputDesc;
+    document.title=inputTitle||"Chat Story Formatter";
+    currentCustomTitle=inputTitle?inputTitle.replace(/[^a-z0-9]/gi,'_').toLowerCase():"cleaned_story_history";
+
+    currentSettings={
+      keepTimestamps:document.getElementById('toggleTimestamps').checked,
+      keepEngine:document.getElementById('toggleEngine').checked,
+      commandMode:document.getElementById('commandHandling').value
+    };
+
+    const reader=new FileReader();
+    reader.onload=function(e){
+      rawFileContent=e.target.result;
+      renderStoryContent();
+
+      document.getElementById('controlPanel').classList.add('view-exit');
+      setTimeout(()=>{
+        document.getElementById('controlPanel').style.display='none';
+        const rv=document.getElementById('readerView');
+        rv.style.display='block';
+        document.getElementById('floatingBar').style.display='flex';
+        document.getElementById('topProgressBar').style.display='block';
+        requestAnimationFrame(()=>rv.classList.add('view-enter'));
+        window.scrollTo(0,0);
+      },200);
+    };
+    reader.readAsText(fileInput.files[0]);
+  }
+
+  function renderStoryContent(){
+    let lines=rawFileContent.split(/\r?\n/);
+    let storyContainer=document.getElementById('storyContainer');
+    storyContainer.innerHTML='';
+    cleanExportData="";
+    speakerColorMap=new Map();speakerCount=0;
+
+    let currentSpeakerName="",currentTimestamp="",currentEngineModel="",currentTextLines=[];
+    let isNextLineSpeaker=true,totalMessagesParsed=0,totalWords=0;
+
+    function flushMessage(){
+      if(currentTextLines.length<=0)return;
+      let filteredLines=currentTextLines.filter(l=>{let t=l.trim();return!(t.startsWith("Replying to")||(t.startsWith("http")&&t.includes("#message-")));});
+      if(filteredLines.length<=0){currentTextLines=[];return;}
+
+      let fullText=filteredLines.join('\n').trim();
+      let lower=fullText.toLowerCase();
+      let isCommand=lower.startsWith('!wack')||lower.startsWith('!sleep')||lower.startsWith('!reset');
+      if(isCommand){
+        if(currentSettings.commandMode==='strip'){currentTextLines=[];return;}
+        if(currentSettings.commandMode==='replace'){fullText='*[User sent a '+fullText.split(' ')[0].replace('!','')+' command]*';}
+      }
+
+      let block=document.createElement('div');block.className='message-block';
+      let speakerExport="";
+
+      if(currentSpeakerName){
+        let spClass=speakerClassFor(currentSpeakerName);
+        let header=document.createElement('div');header.className='speaker-header';
+        let dot=document.createElement('span');dot.className='speaker-dot '+spClass;header.appendChild(dot);
+
+        if(currentSettings.keepTimestamps&&currentTimestamp){
+          let ts=document.createElement('span');ts.className='speaker-timestamp';ts.textContent='['+currentTimestamp+']';header.appendChild(ts);
+          speakerExport+='['+currentTimestamp+'] ';
+        }
+        let name=document.createElement('span');name.className='speaker-name '+spClass;name.textContent=currentSpeakerName;header.appendChild(name);
+        speakerExport+=currentSpeakerName;
+
+        if(currentSettings.keepEngine&&currentEngineModel&&!currentEngineModel.toLowerCase().includes('shapes')){
+          let eng=document.createElement('span');eng.className='speaker-engine';eng.textContent=currentEngineModel;header.appendChild(eng);
+          speakerExport+=' ['+currentEngineModel+']';
+        }
+        block.appendChild(header);speakerExport+=":\n";
+      }
+
+      let textDiv=document.createElement('div');textDiv.className='message-text';
+      totalWords+=fullText.split(/\s+/).filter(w=>w.length>0).length;
+      textDiv.innerHTML=parseMarkdown(fullText);
+      block.appendChild(textDiv);
+      block.dataset.searchText=(currentSpeakerName+' '+fullText).toLowerCase();
+      storyContainer.appendChild(block);
+      cleanExportData+=speakerExport+fullText+'\n\n-----------------------------------\n\n';
+      totalMessagesParsed++;
+      currentTextLines=[];
+    }
+
+    for(let i=0;i<lines.length;i++){
+      let trimmedLine=lines[i].trim();
+      if(trimmedLine.includes('-----------------------------------')){flushMessage();isNextLineSpeaker=true;continue;}
+      if(isNextLineSpeaker&&trimmedLine!==''){
+        if(trimmedLine.endsWith(':')){
+          let speakerStr=trimmedLine.slice(0,-1).trim();currentTimestamp="";currentEngineModel="";
+          if(speakerStr.startsWith('[')){let ci=speakerStr.indexOf(']');if(ci!==-1){currentTimestamp=speakerStr.substring(1,ci);speakerStr=speakerStr.substring(ci+1).trim();}}
+          let lo=speakerStr.lastIndexOf('['),lc=speakerStr.lastIndexOf(']');
+          if(lo!==-1&&lc!==-1&&lc>lo){currentEngineModel=speakerStr.substring(lo+1,lc);speakerStr=speakerStr.substring(0,lo).trim();}
+          speakerStr=speakerStr.replace(/^shapes\.inc\//i,'').trim();
+          if(speakerStr.length>0)speakerStr=speakerStr.charAt(0).toUpperCase()+speakerStr.slice(1);
+          currentSpeakerName=speakerStr;
+        }else{currentSpeakerName="Unknown";currentTextLines.push(lines[i]);}
+        isNextLineSpeaker=false;
+      }else{currentTextLines.push(lines[i]);}
+    }
+    flushMessage();
+
+    document.getElementById('msgCountDisplay').lastChild.textContent=totalMessagesParsed+' messages';
+    document.getElementById('wordCountDisplay').lastChild.textContent=totalWords.toLocaleString()+' words';
+    document.getElementById('readTimeDisplay').lastChild.textContent='~'+Math.max(1,Math.ceil(totalWords/200))+' min read';
+  }
+
+  function refreshReader(){
+    if(!rawFileContent){showToast('No content to refresh.','error');return;}
+    currentSettings={
+      keepTimestamps:document.getElementById('drawerTimestamps').checked,
+      keepEngine:document.getElementById('drawerEngine').checked,
+      commandMode:document.getElementById('drawerCommands').value
+    };
+    renderStoryContent();
+    if(document.getElementById('settingsDrawer').classList.contains('open'))toggleSettingsDrawer();
+    showToast('Reader refreshed');
+  }
+
+  function startOver(){
+    document.getElementById('settingsDrawer').classList.remove('open');
+    document.getElementById('settingsBtn').classList.remove('active');
+    const rv=document.getElementById('readerView');
+    rv.classList.remove('view-enter');
+    document.getElementById('floatingBar').style.display='none';
+    document.getElementById('topProgressBar').style.display='none';
+    setTimeout(()=>{
+      rv.style.display='none';
+      const cp=document.getElementById('controlPanel');
+      cp.style.display='block';cp.classList.remove('view-exit');
+      window.scrollTo(0,0);
+    },180);
+  }
+
+  /* ===== EXPORTS ===== */
+  function downloadCleanText(){
+    if(!cleanExportData)return showToast('Nothing to export yet.','error');
+    const blob=new Blob([cleanExportData],{type:'text/plain;charset=utf-8'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentCustomTitle+'.txt';a.click();
+    showToast('Exported '+currentCustomTitle+'.txt');
+  }
+  function copyCleanText(){
+    if(!cleanExportData)return showToast('Nothing to copy yet.','error');
+    navigator.clipboard.writeText(cleanExportData).then(()=>showToast('Copied to clipboard')).catch(()=>showToast('Copy failed','error'));
+  }
+
+  /* ===== FLOATING BAR ===== */
+  window.onscroll=function(){
+    const rv=document.getElementById('readerView');if(rv.style.display!=='block')return;
+    let total=document.documentElement.scrollHeight-window.innerHeight;
+    let pct=total>0?Math.round((window.scrollY/total)*100):0;
+    document.getElementById('readingProgress').textContent=pct+'%';
+    document.getElementById('topProgressFill').style.width=pct+'%';
+  };
+  function adjustFont(d){
+    fontScale=Math.min(1.35,Math.max(0.85,Math.round((fontScale+d)*100)/100));
+    document.getElementById('storyContainer').style.fontSize=(1.12*fontScale).toFixed(2)+'em';
+  }
+  function toggleWidth(){
+    wideMode=!wideMode;
+    document.getElementById('storyContainer').classList.toggle('wide',wideMode);
+    document.getElementById('widthToggleBtn').setAttribute('aria-pressed',String(wideMode));
+  }
+
+  /* ===== SEARCH ===== */
+  function performSearch(){
+    const q=document.getElementById('searchInput').value.trim().toLowerCase();
+    const blocks=Array.from(document.querySelectorAll('#storyContainer .message-block'));
+    blocks.forEach(b=>b.classList.remove('search-match','search-current'));
+    if(!q){matchBlocks=[];currentMatchIndex=-1;document.getElementById('searchCount').textContent='';return;}
+    matchBlocks=blocks.filter(b=>(b.dataset.searchText||'').includes(q));
+    matchBlocks.forEach(b=>b.classList.add('search-match'));
+    currentMatchIndex=matchBlocks.length?0:-1;highlightCurrentMatch();updateSearchCount();
+  }
+  function highlightCurrentMatch(){
+    matchBlocks.forEach(b=>b.classList.remove('search-current'));
+    if(currentMatchIndex>=0&&matchBlocks[currentMatchIndex]){const el=matchBlocks[currentMatchIndex];el.classList.add('search-current');el.scrollIntoView({behavior:'smooth',block:'center'});}
+  }
+  function updateSearchCount(){
+    const el=document.getElementById('searchCount');
+    if(!matchBlocks.length){el.textContent=document.getElementById('searchInput').value.trim()?'No matches':'';return;}
+    el.textContent=(currentMatchIndex+1)+' / '+matchBlocks.length;
+  }
+  function searchNext(){if(!matchBlocks.length)return;currentMatchIndex=(currentMatchIndex+1)%matchBlocks.length;highlightCurrentMatch();updateSearchCount();}
+  function searchPrev(){if(!matchBlocks.length)return;currentMatchIndex=(currentMatchIndex-1+matchBlocks.length)%matchBlocks.length;highlightCurrentMatch();updateSearchCount();}
+
+  /* ===== INIT ===== */
+  document.addEventListener('DOMContentLoaded',function(){
+    // Restore saved themes
+    try{
+      const sp=localStorage.getItem('csf-page-theme');if(sp&&PAGE_THEMES[sp])applyPageTheme(sp);
+      const sr=localStorage.getItem('csf-reader-preset');if(sr&&READER_PRESETS[sr])applyReaderPreset(sr);
+    }catch(e){}
+
+    // Dropzone
+    const dz=document.getElementById('dropzone'),fi=document.getElementById('textFile');
+    dz.addEventListener('click',()=>fi.click());
+    dz.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fi.click();}});
+    ['dragenter','dragover'].forEach(evt=>dz.addEventListener(evt,e=>{e.preventDefault();dz.classList.add('drag-active');}));
+    ['dragleave','drop'].forEach(evt=>dz.addEventListener(evt,e=>{e.preventDefault();dz.classList.remove('drag-active');}));
+    dz.addEventListener('drop',e=>{const files=e.dataTransfer.files;if(files&&files.length){fi.files=files;handleFileSelected();}});
+    fi.addEventListener('change',handleFileSelected);
+
+    // Search
+    const si=document.getElementById('searchInput');
+    si.addEventListener('input',performSearch);
+    si.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){e.preventDefault();e.shiftKey?searchPrev():searchNext();}
+      if(e.key==='Escape'){si.value='';performSearch();si.blur();}
+    });
+    document.getElementById('searchNextBtn').addEventListener('click',searchNext);
+    document.getElementById('searchPrevBtn').addEventListener('click',searchPrev);
+    document.addEventListener('keydown',e=>{
+      if(document.getElementById('readerView').style.display!=='block')return;
+      if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();si.focus();}
+    });
+  });
+</script>
 </body>
 </html>
